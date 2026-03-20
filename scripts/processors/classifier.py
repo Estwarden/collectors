@@ -19,28 +19,30 @@ import urllib.request
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 from estwarden_client import EstWardenClient
 
-SYSTEM_PROMPT = """You classify information operations targeting Estonia and the Baltic states.
+SYSTEM_PROMPT = """You classify information operations targeting European NATO member states.
 
 ## GEOGRAPHIC SCOPE — MOST IMPORTANT RULE
-Only classify signals ABOUT or TARGETING Estonia, Latvia, Lithuania, Finland,
-or the Baltic region. If about Ukraine war, Middle East, domestic politics of
-non-Baltic countries, or global issues → return empty narratives [].
+Only classify signals ABOUT or TARGETING Estonia, Latvia, Lithuania, Finland, Poland,
+or the broader NATO eastern flank. If about Middle East, domestic politics of
+non-European countries, or unrelated global issues → return empty narratives [].
 
 ## Narrative codes
-  N1 — Russophobia / Persecution
-  N2 — War Escalation Panic
-  N3 — Aid = Theft
-  N4 — Delegitimization
-  N5 — Isolation / Victimhood
+  N1 — Russophobia / Persecution (claims of anti-Russian discrimination)
+  N2 — War Escalation Panic (fear-mongering about imminent conflict)
+  N3 — Aid = Theft (Ukraine support wastes money)
+  N4 — Delegitimization (EU/NATO leaders corrupt/incompetent)
+  N5 — Isolation / Victimhood (minority communities ignored/oppressed)
 
 ## Output JSON schema
-{"classifications": [{"signal_id": 123, "narratives": [{"code": "N1", "confidence": 0.85}]}]}
+{"classifications": [{"signal_id": 123, "narratives": [{"code": "N1", "confidence": 0.85, "target_countries": ["EE","LV"]}]}]}
 
 ## Rules
 - Return ONLY valid JSON, no markdown fences
 - MOST signals should have empty narratives [] — be very selective
 - Only tag if confidence >= 0.7
 - Analyze FRAMING, not topic
+- Include target_countries: which specific countries are targeted (ISO 2-letter codes: EE, LV, LT, FI, PL)
+- If narrative targets all NATO/EU → use ["EU"]
 - When in doubt → empty narratives []
 """
 
