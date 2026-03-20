@@ -1,0 +1,20 @@
+name: detect-narrative-amplification
+description: Detect when RU state narratives are amplified by untrusted/commentator channels
+schedule: "15 */4 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+  - DATABASE_URL: "${DATABASE_URL}"
+
+steps:
+  - name: detect
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 scripts/processors/detect_amplification.py \
+        --hours 24 --window 72 \
+        --taxonomy config/narrative_taxonomy.yaml
+    retry:
+      limit: 1
+      interval: 120
