@@ -1,0 +1,16 @@
+name: data-quality
+description: Fix orphaned tags, self-loops, duplicates, NEUTRAL tags
+schedule: "30 5 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - name: quality-audit
+    type: http
+    command: "POST ${ESTWARDEN_API_URL}/api/v1/maintenance/quality"
+    config:
+      headers:
+        X-Pipeline-Key: "${ESTWARDEN_API_KEY}"
+      timeout: 120

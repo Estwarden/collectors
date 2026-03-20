@@ -1,0 +1,47 @@
+name: compute-threat-index
+description: Compute daily Composite Threat Index from signals and indicators
+schedule: "15 */3 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - name: compute
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, os, json
+      from datetime import datetime, timezone
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+      client = EstWardenClient()
+
+      baselines = client.query_baselines()
+      today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+
+      # Simple CTI: weighted anomaly score across all sources
+      score = 0
+      weights = {'adsb': 15, 'ais': 10, 'firms': 15, 'gpsjam': 20,
+                 'rss': 5, 'telegram': 10, 'acled': 15, 'gdelt': 5, 'ioda': 5}
+      total_weight = sum(weights.values())
+
+      for b in baselines:
+          st = b.get('source_type', '')
+          w = weights.get(st, 0)
+          if w == 0: continue
+          mean = b.get('mean_7d', 0)
+          stddev = max(b.get('stddev_7d', 1), 1)
+          current = b.get('current_24h', 0)
+          z = max((current - mean) / stddev, 0)
+          # Normalize z-score to 0-100 contribution
+          contrib = min(z * 10, 100) * (w / total_weight)
+          score += contrib
+
+      score = min(score, 100)
+      level = 'GREEN' if score < 25 else 'YELLOW' if score < 50 else 'ORANGE' if score < 75 else 'RED'
+
+      result = client.ingest_threat_index(today, score, level)
+      print(f'Threat Index: {score:.1f}/100 ({level}) for {today}')
+      "

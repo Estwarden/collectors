@@ -1,0 +1,16 @@
+name: dedup-signals
+description: Remove duplicate signals by content_hash
+schedule: "30 4 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - name: dedup
+    type: http
+    command: "POST ${ESTWARDEN_API_URL}/api/v1/maintenance/dedup"
+    config:
+      headers:
+        X-Pipeline-Key: "${ESTWARDEN_API_KEY}"
+      timeout: 120

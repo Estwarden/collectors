@@ -1,0 +1,45 @@
+name: detect-campaigns
+description: Detect coordinated influence campaigns from narrative spikes
+schedule: "50 */3 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - name: detect
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, os, json
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+      client = EstWardenClient()
+
+      # Get baselines to detect narrative spikes
+      baselines = client.query_baselines()
+      campaigns = []
+      for b in baselines:
+          st = b.get('source_type', '')
+          if st not in ('rss', 'telegram', 'youtube'): continue
+          mean = b.get('mean_7d', 0)
+          stddev = b.get('stddev_7d', 1)
+          current = b.get('current_24h', 0)
+          if stddev == 0: stddev = 1
+          z = (current - mean) / stddev
+          if z >= 3.0 and current > 10:
+              campaigns.append({
+                  'name': f'{st} volume spike ({current} vs avg {mean:.0f})',
+                  'confidence': min(z / 5.0, 1.0),
+                  'severity': 'HIGH' if z >= 4.0 else 'WARNING',
+                  'summary': f'{st}: {current} signals in 24h vs 7-day avg {mean:.0f} (z={z:.1f})',
+                  'signal_ids': [],
+              })
+
+      if campaigns:
+          result = client.ingest_campaigns(campaigns)
+          print(f'Campaigns: {result.get(\"created\", 0)} detected')
+      else:
+          print('No campaign spikes detected')
+      "

@@ -1,0 +1,320 @@
+feeds:
+# ── Counter-disinfo / OSINT (EXCLUDED from narrative classifier) ──
+- handle: propastop
+  name: Propastop
+  source_type: rss
+  tier: T1
+  category: counter_disinfo
+  url: https://propastop.org/eng/feed/
+- handle: euvsdisinfo
+  name: EUvsDisinfo
+  source_type: rss
+  tier: T1
+  category: counter_disinfo
+  url: https://euvsdisinfo.eu/feed/
+- handle: bellingcat
+  name: Bellingcat
+  source_type: rss
+  tier: T1
+  category: counter_disinfo
+  url: https://www.bellingcat.com/feed/
+- handle: diplomaatia
+  name: Diplomaatia
+  source_type: rss_security
+  tier: T1
+  category: counter_disinfo
+  url: https://diplomaatia.ee/feed/
+- handle: disinfo_eu
+  name: Disinfo.eu
+  source_type: rss_security
+  tier: T1
+  category: counter_disinfo
+  url: https://www.disinfo.eu/feed/
+# ── Government / institutional ──
+- handle: cert_ee
+  name: CERT-EE / RIA
+  source_type: rss
+  tier: T1
+  category: government
+  url: https://www.ria.ee/en/rss-feeds/rss.xml
+- handle: est_mod
+  name: Estonian MOD
+  source_type: rss
+  tier: T2
+  category: government
+  url: https://www.kaitseministeerium.ee/en/rss.xml
+# ── Estonian / Baltic media ──
+- handle: err_rus
+  name: ERR RUS
+  source_type: rss
+  tier: T1
+  category: estonian_media
+  url: https://rus.err.ee/rss
+- handle: postimees_rus
+  name: Postimees RUS
+  source_type: rss
+  tier: T2
+  category: estonian_media
+  url: https://rus.postimees.ee/rss
+- handle: postimees_en
+  name: Postimees (EN)
+  source_type: rss
+  tier: T1
+  category: estonian_media
+  url: https://news.postimees.ee/rss
+- handle: err_business
+  name: ERR Majandus
+  source_type: rss
+  tier: T2
+  category: estonian_media
+  url: https://www.err.ee/rss/majandus
+- handle: lsm_rus
+  name: LSM RUS
+  source_type: rss
+  tier: T2
+  category: baltic_media
+  url: https://rus.lsm.lv/rss
+- handle: lsm_en
+  name: LSM (EN)
+  source_type: rss
+  tier: T1
+  category: baltic_media
+  url: https://eng.lsm.lv/rss
+- handle: delfi_lt_rus
+  name: Delfi LT RUS
+  source_type: rss
+  tier: T2
+  category: baltic_media
+  url: https://feed.delfi.lt/v2/articles/14677616?format=rss
+- handle: bnn
+  name: BNN (Baltic)
+  source_type: rss
+  tier: T2
+  category: baltic_media
+  url: https://bnn-news.com/feed
+- handle: baltictimes
+  name: The Baltic Times
+  source_type: rss
+  tier: T1
+  category: baltic_media
+  url: https://www.baltictimes.com/rss/
+- handle: narvaleht
+  name: Narva Leht
+  source_type: rss
+  tier: T1
+  category: estonian_media
+  url: https://narvaleht.ee/feed
+# ── Russian-language Estonian outlets (potential disinfo vectors) ──
+- handle: mke_ee
+  name: МК-Эстония
+  source_type: rss
+  tier: T1
+  category: russian_language_ee
+  url: https://www.mke.ee/feed
+- handle: tribuna_ee
+  name: Tribuna.ee
+  source_type: rss
+  tier: T1
+  category: russian_language_ee
+  url: https://tribuna.ee/feed/
+- handle: stolitsa_ee
+  name: Stolitsa.ee
+  source_type: rss
+  tier: T1
+  category: russian_language_ee
+  url: https://stolitsa.ee/rss
+- handle: gazeta_ee
+  name: Gazeta.ee
+  source_type: rss
+  tier: T2
+  category: russian_language_ee
+  url: https://gazeta.ee/feed
+# ── Pro-Kremlin / state-adjacent ──
+- handle: baltnews_ee
+  name: Baltnews Estonia
+  source_type: rss
+  tier: T1
+  category: pro_kremlin
+  url: https://ee.baltnews.com/export/rss2/index.xml
+- handle: baltnews_lt
+  name: Baltnews Lithuania
+  source_type: rss
+  tier: T1
+  category: pro_kremlin
+  url: https://lt.baltnews.com/export/rss2/index.xml
+- handle: baltnews_lv
+  name: Baltnews Latvia
+  source_type: rss
+  tier: T1
+  category: pro_kremlin
+  url: https://lv.baltnews.com/export/rss2/index.xml
+- handle: rubaltic
+  name: RuBaltic
+  source_type: rss
+  tier: RU_STATE
+  category: pro_kremlin
+  url: https://rubaltic.ru/rss/
+# ── Russian state media ──
+- handle: tass_ru
+  name: TASS
+  source_type: rss
+  tier: RU_STATE
+  category: russian_state
+  url: https://tass.ru/rss/v2.xml
+- handle: rt_russian
+  name: RT Russian
+  source_type: rss
+  tier: RU_STATE
+  category: russian_state
+  url: https://russian.rt.com/rss
+- handle: kommersant
+  name: Kommersant
+  source_type: rss
+  tier: RU_STATE
+  category: russian_state
+  url: https://www.kommersant.ru/RSS/news.xml
+- handle: interfax
+  name: Interfax
+  source_type: rss
+  tier: RU_STATE
+  category: russian_state
+  url: https://www.interfax.ru/rss.asp
+# ── Russian independent (exile) ──
+- handle: meduza
+  name: Meduza
+  source_type: rss
+  tier: T2
+  category: russian_independent
+  url: https://meduza.io/rss/all
+# ── Defense / OSINT think tanks ──
+- handle: csis
+  name: CSIS
+  source_type: rss
+  tier: T2
+  category: defense_osint
+  url: https://www.csis.org/rss.xml
+- handle: nordic_defence
+  name: Nordic Defence Review
+  source_type: rss
+  tier: T2
+  category: defense_osint
+  url: https://nordicdefencereview.com/feed/
+- handle: defence_blog
+  name: Defence Blog
+  source_type: rss
+  tier: T2
+  category: defense_osint
+  url: https://defence-blog.com/feed/
+- handle: breaking_defense
+  name: Breaking Defense
+  source_type: rss
+  tier: T2
+  category: defense_osint
+  url: https://breakingdefense.com/feed/
+- handle: err_business
+  name: ERR Business
+  source_type: business
+  tier: T2
+  category: estonian_media
+  url: https://www.err.ee/rss/majandus
+# ── Baltic English-language ──
+- handle: err_en
+  name: ERR News (EN)
+  source_type: rss
+  tier: T1
+  category: estonian_media
+  url: https://news.err.ee/rss
+- handle: icds
+  name: ICDS Estonia
+  source_type: rss_security
+  tier: T1
+  category: counter_disinfo
+  url: https://icds.ee/en/feed/
+# ── Ukraine (frontline context) ──
+- handle: ukrinform
+  name: Ukrinform
+  source_type: rss
+  tier: T2
+  category: ukraine_media
+  url: https://www.ukrinform.net/rss/block-lastnews
+- handle: pravda_en
+  name: Ukrayinska Pravda (EN)
+  source_type: rss
+  tier: T2
+  category: ukraine_media
+  url: https://www.pravda.com.ua/eng/rss/
+# ── Russian independent media (exile) ──
+- handle: moscowtimes
+  name: Moscow Times
+  source_type: rss
+  tier: T2
+  category: russian_independent
+  url: https://www.themoscowtimes.com/rss/news
+- handle: verstka
+  name: Verstka Media
+  source_type: rss
+  tier: T2
+  category: russian_independent
+  url: https://verstka.media/feed
+# ── Defense & security think tanks ──
+- handle: warontherocks
+  name: War on the Rocks
+  source_type: rss_security
+  tier: T2
+  category: defense_osint
+  url: https://warontherocks.com/feed/
+- handle: cepa
+  name: CEPA
+  source_type: rss_security
+  tier: T1
+  category: counter_disinfo
+  url: https://cepa.org/feed/
+- handle: jamestown
+  name: Jamestown Foundation
+  source_type: rss_security
+  tier: T1
+  category: defense_osint
+  url: https://jamestown.org/feed/
+- handle: atlantic_council
+  name: Atlantic Council
+  source_type: rss_security
+  tier: T2
+  category: defense_osint
+  url: https://www.atlanticcouncil.org/feed/
+- handle: ecfr
+  name: ECFR
+  source_type: rss_security
+  tier: T2
+  category: defense_osint
+  url: https://www.ecfr.eu/rss
+- handle: euro_sd
+  name: European Security & Defence
+  source_type: rss_security
+  tier: T2
+  category: defense_osint
+  url: https://euro-sd.com/feed/
+- handle: defense_news
+  name: Defense News
+  source_type: rss_security
+  tier: T2
+  category: defense_osint
+  url: https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml
+- handle: fpri
+  name: FPRI
+  source_type: rss_security
+  tier: T2
+  category: defense_osint
+  url: https://www.fpri.org/feed/
+- handle: recorded_future
+  name: Recorded Future
+  source_type: rss_security
+  tier: T2
+  category: defense_osint
+  url: https://www.recordedfuture.com/feed
+- handle: 15min_lt
+  name: 15min.lt
+  source_type: rss
+  tier: T2
+  category: baltic_media
+  url: https://www.15min.lt/rss
+schedule: 2h

@@ -1,0 +1,17 @@
+name: collect-acled
+description: Collect ACLED European conflict events
+schedule: "0 */12 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - name: collect
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 scripts/collectors/acled_collector.py
+    retry:
+      limit: 2
+      interval: 300

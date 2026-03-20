@@ -1,0 +1,51 @@
+name: collect-space-weather
+description: Collect solar/geomagnetic data from NOAA Space Weather
+schedule: "0 */6 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - name: fetch-noaa
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, json, os, urllib.request
+      from datetime import datetime, timezone
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+
+      client = EstWardenClient()
+      # Planetary K-index (geomagnetic storm indicator)
+      url = 'https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json'
+      with urllib.request.urlopen(url, timeout=15) as r:
+          rows = json.loads(r.read())
+
+      # Skip header row, take last 8 entries
+      signals = []
+      for row in rows[-8:]:
+          if len(row) < 2 or row[0] == 'time_tag':
+              continue
+          ts = row[0]
+          kp = float(row[1])
+          severity = 'LOW' if kp < 4 else 'MODERATE' if kp < 6 else 'HIGH' if kp < 8 else 'EXTREME'
+          signals.append({
+              'source_type': 'space_weather',
+              'source_id': f'noaa:kp:{ts}',
+              'title': f'Planetary Kp index: {kp:.1f} ({severity})',
+              'content': f'NOAA Planetary K-index at {ts}: {kp:.1f}. Storm level: {severity}',
+              'published_at': ts.replace(' ', 'T') + 'Z' if ' ' in ts else ts,
+              'severity': severity,
+              'metric_value': kp,
+              'metadata': {'source': 'noaa_swpc', 'index': 'kp'},
+          })
+
+      if signals:
+          result = client.ingest_signals(signals)
+          print(f'Space weather: {result[\"inserted\"]} new')
+      "
+    retry:
+      limit: 2
+      interval: 300

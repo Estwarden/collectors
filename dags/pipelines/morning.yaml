@@ -1,0 +1,35 @@
+name: morning-pipeline
+description: Daily intelligence pipeline — collect → translate → classify → enrich
+schedule: "0 8 * * *"
+
+steps:
+  - name: collect-rss
+    type: dag
+    call: collect/rss
+
+  - name: collect-energy
+    type: dag
+    call: collect/energy
+
+  - name: collect-deepstate
+    type: dag
+    call: collect/deepstate
+
+  - name: translate-extract
+    type: dag
+    call: process/translate-and-extract
+    depends: [collect-rss]
+
+  - name: classify
+    type: dag
+    call: process/classify
+    depends: [translate-extract]
+
+  - name: healthcheck
+    type: dag
+    call: maintain/healthcheck
+    depends: [collect-rss, collect-energy, collect-deepstate]
+
+  - name: log-complete
+    command: echo "Morning pipeline complete at $(date)"
+    depends: [classify, healthcheck]

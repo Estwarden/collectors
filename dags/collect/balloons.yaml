@@ -1,0 +1,61 @@
+name: collect-balloons
+description: Collect weather balloon data from SondeHub API (Baltic region)
+schedule: "0 */4 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - name: fetch-sondehub
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, json, os, urllib.request
+      from datetime import datetime, timezone, timedelta
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+
+      client = EstWardenClient()
+      # Baltic bounding box
+      lat_min, lat_max = 53.0, 62.0
+      lon_min, lon_max = 18.0, 32.0
+      duration = '6h'
+      url = f'https://api.v2.sondehub.org/sondes?lat={lat_min},{lat_max}&lon={lon_min},{lon_max}&duration={duration}'
+
+      req = urllib.request.Request(url, headers={'User-Agent': 'EstWarden/1.0'})
+      try:
+          with urllib.request.urlopen(req, timeout=30) as r:
+              data = json.loads(r.read())
+      except Exception as e:
+          print(f'SondeHub error: {e}', file=sys.stderr)
+          sys.exit(1)
+
+      signals = []
+      for serial, info in (data if isinstance(data, dict) else {}).items():
+          lat = info.get('lat', 0)
+          lon = info.get('lon', 0)
+          alt = info.get('alt', 0)
+          ts = info.get('datetime', '')
+
+          signals.append({
+              'source_type': 'balloon',
+              'source_id': f'sondehub:{serial}:{ts[:13] if ts else \"now\"}',
+              'title': f'Radiosonde {serial} at {alt:.0f}m',
+              'content': f'Weather balloon {serial} detected at {lat:.3f},{lon:.3f} altitude {alt:.0f}m',
+              'published_at': ts or datetime.now(timezone.utc).isoformat(),
+              'latitude': lat,
+              'longitude': lon,
+              'metadata': {'serial': serial, 'altitude_m': alt, 'source': 'sondehub'},
+          })
+
+      if signals:
+          result = client.ingest_signals(signals[:200])
+          print(f'Balloons: {result[\"inserted\"]} new from {len(signals)} detected')
+      else:
+          print('No balloon data')
+      "
+    retry:
+      limit: 2
+      interval: 300

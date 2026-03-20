@@ -1,0 +1,17 @@
+name: collect-gdelt
+description: Collect GDELT military news near bases
+schedule: "0 */4 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - name: collect
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 scripts/collectors/gdelt_collector.py
+    retry:
+      limit: 2
+      interval: 300
