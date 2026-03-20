@@ -1,0 +1,15 @@
+name: collect-youtube
+description: Collect YouTube videos from Baltic security channels
+schedule: "0 */12 * * *"
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+  - YOUTUBE_API_KEY: "${YOUTUBE_API_KEY}"
+steps:
+  - id: collect
+    shell: /bin/bash
+    script: |
+      cd /dags && python3 scripts/collectors/youtube_collector.py
+    retry_policy:
+      limit: 1
+      interval_sec: 300

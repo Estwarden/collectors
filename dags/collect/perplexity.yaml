@@ -1,0 +1,15 @@
+name: collect-perplexity-osint
+description: AI-powered Baltic security research via Perplexity
+schedule: "45 7,13,19 * * *"
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+  - PERPLEXITY_API_KEY: "${PERPLEXITY_API_KEY}"
+steps:
+  - id: collect
+    shell: /bin/bash
+    script: |
+      cd /dags && python3 scripts/collectors/perplexity_collector.py
+    retry_policy:
+      limit: 1
+      interval_sec: 600
