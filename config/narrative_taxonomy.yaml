@@ -1,150 +1,353 @@
-# Known Russian Information Operation narratives targeting Baltic states.
-#
-# Sources: EU EastStratCom, NATO StratCom COE Riga, EUvsDisinfo database,
-# Detector Media, Propastop.org, CEPA publications.
-#
-# Each narrative has keywords in EN/RU/UK for matching.
-# The amplification detector checks if these themes appear in
-# non-RU sources within 72h of appearing in RU state/proxy channels.
-
 narratives:
-
-# ── Military threats to Baltic states ──
-
 - id: baltic_attack_imminent
-  theme: "Russia will attack Baltic states"
-  description: "Claims that Russia is preparing or planning military attack on Estonia, Latvia, or Lithuania. Designed to create panic and test Western reaction."
+  theme: Russia will attack Baltic states
+  description: Claims that Russia is preparing or planning military attack on Estonia, Latvia, or Lithuania. Designed to create panic and test Western reaction.
   keywords:
-    en: ["attack Estonia", "attack Latvia", "attack Lithuania", "invade Baltic", "Baltic invasion", "attack Tallinn", "attack Riga", "attack Vilnius", "strike Baltic", "war with NATO"]
-    ru: ["удар по Эстонии", "удар по Латвии", "удар по Литве", "атака на Прибалтику", "вторжение в Прибалтику", "война с НАТО", "ударить по Таллину", "удар по Риге"]
-    uk: ["удар по Естонії", "атака на Балтію", "напад на Прибалтику", "вторгнення в Прибалтику"]
-  first_seen: "2016"
+    en:
+    - attack Estonia
+    - attack Latvia
+    - attack Lithuania
+    - invade Baltic
+    - Baltic invasion
+    - attack Tallinn
+    - attack Riga
+    - attack Vilnius
+    - strike Baltic
+    - war with NATO
+    ru:
+    - удар по Эстонии
+    - удар по Латвии
+    - удар по Литве
+    - атака на Прибалтику
+    - вторжение в Прибалтику
+    - война с НАТО
+    - ударить по Таллину
+    - удар по Риге
+    uk:
+    - удар по Естонії
+    - атака на Балтію
+    - напад на Прибалтику
+    - вторгнення в Прибалтику
+  first_seen: '2016'
   frequency: high
-
+  target_regions:
+  - baltic
+  - estonia
+  - latvia
+  - lithuania
 - id: article5_failure
-  theme: "NATO Article 5 will not be triggered"
-  description: "Claims that NATO allies will not defend Baltic states, Article 5 is fiction, Western nations will abandon Estonia/Latvia/Lithuania."
+  theme: NATO Article 5 will not be triggered
+  description: Claims that NATO allies will not defend Baltic states, Article 5 is fiction, Western nations will abandon Estonia/Latvia/Lithuania.
   keywords:
-    en: ["Article 5 won't work", "NATO won't defend", "abandon Baltic", "NATO bluff", "Article 5 fiction", "NATO paper tiger", "won't fight for Estonia", "won't fight for Latvia"]
-    ru: ["статья 5 не сработает", "НАТО не защитит", "бросят Прибалтику", "НАТО блеф", "бумажный тигр", "не будут воевать за Эстонию"]
-    uk: ["стаття 5 не спрацює", "НАТО не захистить", "кинуть Прибалтику"]
-  first_seen: "2014"
+    en:
+    - Article 5 won't work
+    - NATO won't defend
+    - abandon Baltic
+    - NATO bluff
+    - Article 5 fiction
+    - NATO paper tiger
+    - won't fight for Estonia
+    - won't fight for Latvia
+    ru:
+    - статья 5 не сработает
+    - НАТО не защитит
+    - бросят Прибалтику
+    - НАТО блеф
+    - бумажный тигр
+    - не будут воевать за Эстонию
+    uk:
+    - стаття 5 не спрацює
+    - НАТО не захистить
+    - кинуть Прибалтику
+  first_seen: '2014'
   frequency: high
-
+  target_regions:
+  - global
 - id: nato_provocation
-  theme: "NATO/Baltic states are provoking Russia"
-  description: "Frames NATO exercises, troop deployments, and defense spending as aggressive provocation against Russia."
+  theme: NATO/Baltic states are provoking Russia
+  description: Frames NATO exercises, troop deployments, and defense spending as aggressive provocation against Russia.
   keywords:
-    en: ["NATO provocation", "Baltic provocation", "aggressive NATO", "NATO expansion threat", "threatening Russia", "encircling Russia", "NATO aggression"]
-    ru: ["провокация НАТО", "провокация Прибалтики", "агрессия НАТО", "угроза НАТО", "окружение России", "расширение НАТО"]
-    uk: ["провокація НАТО", "агресія НАТО", "оточення Росії"]
-  first_seen: "2004"
+    en:
+    - NATO provocation
+    - Baltic provocation
+    - aggressive NATO
+    - NATO expansion threat
+    - threatening Russia
+    - encircling Russia
+    - NATO aggression
+    ru:
+    - провокация НАТО
+    - провокация Прибалтики
+    - агрессия НАТО
+    - угроза НАТО
+    - окружение России
+    - расширение НАТО
+    uk:
+    - провокація НАТО
+    - агресія НАТО
+    - оточення Росії
+  first_seen: '2004'
   frequency: high
-
+  target_regions:
+  - global
 - id: suwalki_gap
-  theme: "Suwalki Gap makes Baltic states indefensible"
-  description: "Claims that the narrow land corridor between Kaliningrad and Belarus makes Baltic defense impossible."
+  theme: Suwalki Gap makes Baltic states indefensible
+  description: Claims that the narrow land corridor between Kaliningrad and Belarus makes Baltic defense impossible.
   keywords:
-    en: ["Suwalki gap", "Suwalki corridor", "cut off Baltic", "Baltic indefensible", "isolated Baltic", "Kaliningrad corridor"]
-    ru: ["Сувалкский коридор", "отрезать Прибалтику", "Прибалтика неприкрыта", "изолировать Прибалтику"]
-    uk: ["Сувалкський коридор", "відрізати Прибалтику"]
-  first_seen: "2016"
+    en:
+    - Suwalki gap
+    - Suwalki corridor
+    - cut off Baltic
+    - Baltic indefensible
+    - isolated Baltic
+    - Kaliningrad corridor
+    ru:
+    - Сувалкский коридор
+    - отрезать Прибалтику
+    - Прибалтика неприкрыта
+    - изолировать Прибалтику
+    uk:
+    - Сувалкський коридор
+    - відрізати Прибалтику
+  first_seen: '2016'
   frequency: medium
-
-# ── Nuclear escalation ──
-
+  target_regions:
+  - baltic
+  - poland
+  - lithuania
 - id: nuclear_threat
-  theme: "Nuclear escalation is imminent"
-  description: "Claims that nuclear war is imminent, Russia will use nuclear weapons, Baltic states will be nuked. Panic-generating narrative."
+  theme: Nuclear escalation is imminent
+  description: Claims that nuclear war is imminent, Russia will use nuclear weapons, Baltic states will be nuked. Panic-generating narrative.
   keywords:
-    en: ["nuclear war", "nuclear strike", "nuclear attack", "tactical nuclear", "nuke Estonia", "nuke Baltic", "nuclear escalation", "World War 3", "WW3"]
-    ru: ["ядерная война", "ядерный удар", "тактическое ядерное", "третья мировая", "ядерная эскалация"]
-    uk: ["ядерна війна", "ядерний удар", "третя світова", "ядерна ескалація"]
-  first_seen: "2022"
+    en:
+    - nuclear war
+    - nuclear strike
+    - nuclear attack
+    - tactical nuclear
+    - nuke Estonia
+    - nuke Baltic
+    - nuclear escalation
+    - World War 3
+    - WW3
+    ru:
+    - ядерная война
+    - ядерный удар
+    - тактическое ядерное
+    - третья мировая
+    - ядерная эскалация
+    uk:
+    - ядерна війна
+    - ядерний удар
+    - третя світова
+    - ядерна ескалація
+  first_seen: '2022'
   frequency: high
-
-# ── Internal division ──
-
+  target_regions:
+  - global
 - id: russian_speakers_oppressed
-  theme: "Russian speakers in Baltic states are oppressed"
-  description: "Claims ethnic Russians in Estonia/Latvia face discrimination, language bans, cultural genocide. Pretext narrative similar to Donbas 2014."
+  theme: Russian speakers in Baltic states are oppressed
+  description: Claims ethnic Russians in Estonia/Latvia face discrimination, language bans, cultural genocide. Pretext narrative similar to Donbas 2014.
   keywords:
-    en: ["oppressed Russians", "Russian minority", "language ban", "discriminate Russian speakers", "apartheid Baltic", "Russian rights Baltic"]
-    ru: ["притеснение русских", "русское меньшинство", "запрет русского языка", "дискриминация русскоязычных", "апартеид в Прибалтике", "права русских"]
-    uk: ["утиск росіян", "російська меншина", "заборона російської мови"]
-  first_seen: "2007"
+    en:
+    - oppressed Russians
+    - Russian minority
+    - language ban
+    - discriminate Russian speakers
+    - apartheid Baltic
+    - Russian rights Baltic
+    ru:
+    - притеснение русских
+    - русское меньшинство
+    - запрет русского языка
+    - дискриминация русскоязычных
+    - апартеид в Прибалтике
+    - права русских
+    uk:
+    - утиск росіян
+    - російська меншина
+    - заборона російської мови
+  first_seen: '2007'
   frequency: high
-
+  target_regions:
+  - estonia
+  - latvia
+  - baltic
 - id: baltic_failed_states
-  theme: "Baltic states are failed/failing states"
-  description: "Claims Baltic economies are collapsing, populations fleeing, states are unsustainable without Russian trade/energy."
+  theme: Baltic states are failed/failing states
+  description: Claims Baltic economies are collapsing, populations fleeing, states are unsustainable without Russian trade/energy.
   keywords:
-    en: ["Baltic failed state", "Estonia collapsing", "Latvia economy collapse", "population decline Baltic", "Baltic exodus", "Baltic poverty"]
-    ru: ["Прибалтика разваливается", "экономика Эстонии рухнула", "Латвия вымирает", "нищая Прибалтика", "бегство из Прибалтики"]
-    uk: ["Прибалтика розвалюється", "економіка Естонії"]
-  first_seen: "2010"
+    en:
+    - Baltic failed state
+    - Estonia collapsing
+    - Latvia economy collapse
+    - population decline Baltic
+    - Baltic exodus
+    - Baltic poverty
+    ru:
+    - Прибалтика разваливается
+    - экономика Эстонии рухнула
+    - Латвия вымирает
+    - нищая Прибалтика
+    - бегство из Прибалтики
+    uk:
+    - Прибалтика розвалюється
+    - економіка Естонії
+  first_seen: '2010'
   frequency: medium
-
-# ── Western support collapse ──
-
+  target_regions:
+  - baltic
+  - estonia
+  - latvia
+  - lithuania
 - id: western_fatigue
-  theme: "Western support for Ukraine is collapsing"
-  description: "Claims that NATO/EU/US are tired of supporting Ukraine, aid will stop, Ukraine should negotiate. Demoralization narrative."
+  theme: Western support for Ukraine is collapsing
+  description: Claims that NATO/EU/US are tired of supporting Ukraine, aid will stop, Ukraine should negotiate. Demoralization narrative.
   keywords:
-    en: ["Ukraine fatigue", "aid fatigue", "stop supporting Ukraine", "abandon Ukraine", "Ukraine can't win", "war is lost", "negotiate now", "peace deal"]
-    ru: ["усталость от Украины", "прекратить помощь", "бросить Украину", "Украина проиграла", "переговоры сейчас"]
-    uk: ["втома від України", "припинити допомогу", "Україна програла", "переговори зараз"]
-  first_seen: "2022"
+    en:
+    - Ukraine fatigue
+    - aid fatigue
+    - stop supporting Ukraine
+    - abandon Ukraine
+    - Ukraine can't win
+    - war is lost
+    - negotiate now
+    - peace deal
+    ru:
+    - усталость от Украины
+    - прекратить помощь
+    - бросить Украину
+    - Украина проиграла
+    - переговоры сейчас
+    uk:
+    - втома від України
+    - припинити допомогу
+    - Україна програла
+    - переговори зараз
+  first_seen: '2022'
   frequency: high
-
+  target_regions:
+  - global
 - id: sanctions_backfire
-  theme: "Sanctions hurt Europe more than Russia"
-  description: "Claims that Western sanctions are destroying European economies while Russia thrives."
+  theme: Sanctions hurt Europe more than Russia
+  description: Claims that Western sanctions are destroying European economies while Russia thrives.
   keywords:
-    en: ["sanctions backfire", "sanctions hurt Europe", "Europe suffering", "sanctions failed", "Russia stronger", "Russian economy growing"]
-    ru: ["санкции бьют по Европе", "Европа страдает", "санкции провалились", "Россия сильнее", "экономика России растет"]
-    uk: ["санкції б'ють по Європі", "санкції провалилися"]
-  first_seen: "2022"
+    en:
+    - sanctions backfire
+    - sanctions hurt Europe
+    - Europe suffering
+    - sanctions failed
+    - Russia stronger
+    - Russian economy growing
+    ru:
+    - санкции бьют по Европе
+    - Европа страдает
+    - санкции провалились
+    - Россия сильнее
+    - экономика России растет
+    uk:
+    - санкції б'ють по Європі
+    - санкції провалилися
+  first_seen: '2022'
   frequency: high
-
-# ── Specific operations ──
-
+  target_regions:
+  - global
 - id: nazi_baltic
-  theme: "Baltic states harbor Nazi sympathizers"
-  description: "Equates Baltic independence movements with Nazism, references Waffen-SS legions, claims governments are neo-Nazi."
+  theme: Baltic states harbor Nazi sympathizers
+  description: Equates Baltic independence movements with Nazism, references Waffen-SS legions, claims governments are neo-Nazi.
   keywords:
-    en: ["Baltic Nazi", "Estonian SS", "Latvian SS", "Nazi march", "Nazi Baltic", "fascist Baltic", "neo-Nazi Estonia"]
-    ru: ["прибалтийские нацисты", "эстонский СС", "латышский СС", "марш нацистов", "фашистская Прибалтика"]
-    uk: ["прибалтійські нацисти", "естонські СС"]
-  first_seen: "2005"
+    en:
+    - Baltic Nazi
+    - Estonian SS
+    - Latvian SS
+    - Nazi march
+    - Nazi Baltic
+    - fascist Baltic
+    - neo-Nazi Estonia
+    ru:
+    - прибалтийские нацисты
+    - эстонский СС
+    - латышский СС
+    - марш нацистов
+    - фашистская Прибалтика
+    uk:
+    - прибалтійські нацисти
+    - естонські СС
+  first_seen: '2005'
   frequency: medium
-
+  target_regions:
+  - baltic
+  - estonia
+  - latvia
+  - lithuania
 - id: gps_jamming_false_flag
-  theme: "GPS jamming is a Western false flag"
-  description: "Claims that GPS interference near Baltic states is caused by NATO, not Russia, or is exaggerated."
+  theme: GPS jamming is a Western false flag
+  description: Claims that GPS interference near Baltic states is caused by NATO, not Russia, or is exaggerated.
   keywords:
-    en: ["GPS false flag", "NATO jamming", "fake GPS interference", "jamming exaggerated", "GPS hoax"]
-    ru: ["GPS провокация", "НАТО глушит", "преувеличение помех GPS"]
-    uk: ["GPS провокація", "НАТО глушить"]
-  first_seen: "2023"
+    en:
+    - GPS false flag
+    - NATO jamming
+    - fake GPS interference
+    - jamming exaggerated
+    - GPS hoax
+    ru:
+    - GPS провокация
+    - НАТО глушит
+    - преувеличение помех GPS
+    uk:
+    - GPS провокація
+    - НАТО глушить
+  first_seen: '2023'
   frequency: low
-
+  target_regions:
+  - baltic
+  - finland
 - id: hybrid_attacks_staged
-  theme: "Hybrid attacks on Baltic states are staged"
-  description: "Claims that cyber attacks, undersea cable cuts, border incidents are fabricated by Baltic/Western governments."
+  theme: Hybrid attacks on Baltic states are staged
+  description: Claims that cyber attacks, undersea cable cuts, border incidents are fabricated by Baltic/Western governments.
   keywords:
-    en: ["staged attack", "false flag", "fabricated incident", "Baltic hoax", "cable cut hoax", "cyber attack staged"]
-    ru: ["постановка", "ложный флаг", "сфабрикованный инцидент", "провокация Прибалтики"]
-    uk: ["постановка", "хибний прапор", "сфабрикований інцидент"]
-  first_seen: "2024"
+    en:
+    - staged attack
+    - false flag
+    - fabricated incident
+    - Baltic hoax
+    - cable cut hoax
+    - cyber attack staged
+    ru:
+    - постановка
+    - ложный флаг
+    - сфабрикованный инцидент
+    - провокация Прибалтики
+    uk:
+    - постановка
+    - хибний прапор
+    - сфабрикований інцидент
+  first_seen: '2024'
   frequency: medium
-
+  target_regions:
+  - baltic
+  - finland
 - id: migration_weapon
-  theme: "Migrants are weaponized against Baltic states"
-  description: "Amplifies migration fears, claims Baltic states are being flooded by migrants, instrumentalizes Belarus border crisis."
+  theme: Migrants are weaponized against Baltic states
+  description: Amplifies migration fears, claims Baltic states are being flooded by migrants, instrumentalizes Belarus border crisis.
   keywords:
-    en: ["migrant invasion Baltic", "border crisis Baltic", "migrant weapon", "Belarus border", "flood with migrants"]
-    ru: ["миграционное оружие", "нашествие мигрантов", "кризис на границе", "оружие Беларуси"]
-    uk: ["міграційна зброя", "навала мігрантів"]
-  first_seen: "2021"
+    en:
+    - migrant invasion Baltic
+    - border crisis Baltic
+    - migrant weapon
+    - Belarus border
+    - flood with migrants
+    ru:
+    - миграционное оружие
+    - нашествие мигрантов
+    - кризис на границе
+    - оружие Беларуси
+    uk:
+    - міграційна зброя
+    - навала мігрантів
+  first_seen: '2021'
   frequency: medium
+  target_regions:
+  - baltic
+  - finland
+  - poland
+  - lithuania

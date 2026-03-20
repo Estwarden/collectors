@@ -1,10 +1,11 @@
 name: detect-campaigns
-description: Detect coordinated influence campaigns from narrative spikes
+description: Detect coordinated influence campaigns from narrative spikes, per region
 schedule: "50 */3 * * *"
 
 env:
   - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+  - DATABASE_URL: "${DATABASE_URL}"
 
 steps:
   - id: detect
@@ -12,34 +13,119 @@ steps:
     script: |
       cd /dags
       python3 -c "
-      import sys, os, json
+      import sys, os, json, yaml
+      from collections import defaultdict
       sys.path.insert(0, 'scripts/lib')
       from estwarden_client import EstWardenClient
-      client = EstWardenClient()
+      import psycopg2
 
-      # Get baselines to detect narrative spikes
-      baselines = client.query_baselines()
+      client = EstWardenClient()
+      db_url = os.environ.get('DATABASE_URL', '')
+
+      # Load narrative taxonomy for target_regions
+      narr_regions = {}
+      try:
+          with open('/dags/config/narrative_taxonomy.yaml') as f:
+              tax = yaml.safe_load(f)
+          for n in tax.get('narratives', []):
+              narr_regions[n['id']] = n.get('target_regions', ['global'])
+      except Exception as e:
+          print(f'Warning: could not load taxonomy: {e}', file=sys.stderr)
+
+      if not db_url:
+          print('DATABASE_URL not set, skipping'); sys.exit(0)
+
+      conn = psycopg2.connect(db_url)
+      cur = conn.cursor()
+
+      # Find narrative tag spikes in last 24h vs 7-day baseline, grouped by code
+      cur.execute('''
+          WITH today_tags AS (
+              SELECT nt.code, COUNT(*) as cnt,
+                     COUNT(DISTINCT s.metadata->>\'feed_handle\') as actor_count,
+                     array_agg(DISTINCT COALESCE(s.metadata->>\'feed_handle\', s.metadata->>\'channel_handle\', \'\')) as actors,
+                     array_agg(DISTINCT s.source_type) as source_types,
+                     array_agg(s.region) as signal_regions
+              FROM narrative_tags nt
+              JOIN signals s ON s.id = nt.signal_id
+              WHERE s.published_at >= now() - interval \'24 hours\'
+              GROUP BY nt.code
+          ),
+          baseline AS (
+              SELECT nt.code,
+                     COUNT(*)::float / GREATEST(7, 1) as daily_avg,
+                     COALESCE(STDDEV(daily_cnt), 1) as daily_stddev
+              FROM narrative_tags nt
+              JOIN signals s ON s.id = nt.signal_id
+              JOIN LATERAL (
+                  SELECT COUNT(*) as daily_cnt
+                  FROM narrative_tags nt2
+                  JOIN signals s2 ON s2.id = nt2.signal_id
+                  WHERE nt2.code = nt.code
+                    AND s2.published_at::date = s.published_at::date
+              ) d ON true
+              WHERE s.published_at >= now() - interval \'8 days\'
+                AND s.published_at < now() - interval \'24 hours\'
+              GROUP BY nt.code
+          )
+          SELECT t.code, t.cnt, t.actor_count, t.actors, t.source_types, t.signal_regions,
+                 COALESCE(b.daily_avg, 1) as avg, COALESCE(b.daily_stddev, 1) as stddev
+          FROM today_tags t
+          LEFT JOIN baseline b ON b.code = t.code
+          WHERE t.cnt >= 5
+      ''')
+
       campaigns = []
-      for b in baselines:
-          st = b.get('source_type', '')
-          if st not in ('rss', 'telegram', 'youtube'): continue
-          mean = b.get('mean_7d', 0)
-          stddev = b.get('stddev_7d', 1)
-          current = b.get('current_24h', 0)
-          if stddev == 0: stddev = 1
-          z = (current - mean) / stddev
-          if z >= 3.0 and current > 10:
-              campaigns.append({
-                  'name': f'{st} volume spike ({current} vs avg {mean:.0f})',
-                  'confidence': min(z / 5.0, 1.0),
-                  'severity': 'HIGH' if z >= 4.0 else 'WARNING',
-                  'summary': f'{st}: {current} signals in 24h vs 7-day avg {mean:.0f} (z={z:.1f})',
-                  'signal_ids': [],
-              })
+      code_names = {'N1': 'Russophobia', 'N2': 'War Panic', 'N3': 'Aid=Theft',
+                    'N4': 'Delegitimization', 'N5': 'Isolation'}
+
+      for row in cur.fetchall():
+          code, cnt, actor_count, actors, source_types, signal_regions, avg, stddev = row
+          z = (cnt - avg) / max(stddev, 1)
+          if z < 2.0:
+              continue
+
+          name = code_names.get(code, code)
+          actors_clean = [a for a in (actors or []) if a][:5]
+
+          # Determine target regions from signal regions
+          region_counts = defaultdict(int)
+          for sr in (signal_regions or []):
+              if sr:
+                  for r in sr.split(','):
+                      r = r.strip()
+                      if r and r != 'global':
+                          region_counts[r] += 1
+
+          # Use narrative taxonomy regions as fallback
+          target_regions = list(region_counts.keys()) if region_counts else narr_regions.get(code, ['global'])
+          if not target_regions:
+              target_regions = ['global']
+
+          severity = 'CRITICAL' if z >= 5.0 else 'HIGH' if z >= 3.0 else 'MEDIUM'
+          summary = (f'Detected {name} across {\", \".join(source_types or [])}. '
+                     f'{cnt} signals from {actor_count} actors'
+                     f'{\" including \" + \", \".join(actors_clean) if actors_clean else \"\"}. '
+                     f'Evidence: Cross-outlet amplification: {actor_count} outlets; '
+                     f'baseline: {avg:.0f}±{stddev:.0f} actors/day, today: {actor_count} (>{z:.0f}σ).')
+
+          campaigns.append({
+              'name': f'{name} ({cnt} signals)',
+              'confidence': min(z / 5.0, 1.0),
+              'severity': severity,
+              'summary': summary,
+              'signal_ids': [],
+              'target_regions': target_regions,
+          })
+
+      cur.close()
+      conn.close()
 
       if campaigns:
           result = client.ingest_campaigns(campaigns)
-          print(f'Campaigns: {result.get(\"created\", 0)} detected')
+          for c in campaigns:
+              print(f'  {c[\"name\"]:40s} regions={c[\"target_regions\"]} severity={c[\"severity\"]}')
+          print(f'Campaigns: {result.get(\"created\", 0)} created')
       else:
-          print('No campaign spikes detected')
+          print('No narrative spikes detected')
       "
