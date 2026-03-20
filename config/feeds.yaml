@@ -1,5 +1,4 @@
 feeds:
-# ── Counter-disinfo / OSINT (EXCLUDED from narrative classifier) ──
 - handle: propastop
   name: Propastop
   source_type: rss
@@ -30,7 +29,6 @@ feeds:
   tier: T1
   category: counter_disinfo
   url: https://www.disinfo.eu/feed/
-# ── Government / institutional ──
 - handle: cert_ee
   name: CERT-EE / RIA
   source_type: rss
@@ -43,7 +41,6 @@ feeds:
   tier: T2
   category: government
   url: https://www.kaitseministeerium.ee/en/rss.xml
-# ── Estonian / Baltic media ──
 - handle: err_rus
   name: ERR RUS
   source_type: rss
@@ -104,7 +101,6 @@ feeds:
   tier: T1
   category: estonian_media
   url: https://narvaleht.ee/feed
-# ── Russian-language Estonian outlets (potential disinfo vectors) ──
 - handle: mke_ee
   name: МК-Эстония
   source_type: rss
@@ -129,7 +125,6 @@ feeds:
   tier: T2
   category: russian_language_ee
   url: https://gazeta.ee/feed
-# ── Pro-Kremlin / state-adjacent ──
 - handle: baltnews_ee
   name: Baltnews Estonia
   source_type: rss
@@ -154,7 +149,6 @@ feeds:
   tier: RU_STATE
   category: pro_kremlin
   url: https://rubaltic.ru/rss/
-# ── Russian state media ──
 - handle: tass_ru
   name: TASS
   source_type: rss
@@ -179,14 +173,12 @@ feeds:
   tier: RU_STATE
   category: russian_state
   url: https://www.interfax.ru/rss.asp
-# ── Russian independent (exile) ──
 - handle: meduza
   name: Meduza
   source_type: rss
   tier: T2
   category: russian_independent
   url: https://meduza.io/rss/all
-# ── Defense / OSINT think tanks ──
 - handle: csis
   name: CSIS
   source_type: rss
@@ -217,7 +209,6 @@ feeds:
   tier: T2
   category: estonian_media
   url: https://www.err.ee/rss/majandus
-# ── Baltic English-language ──
 - handle: err_en
   name: ERR News (EN)
   source_type: rss
@@ -230,7 +221,6 @@ feeds:
   tier: T1
   category: counter_disinfo
   url: https://icds.ee/en/feed/
-# ── Ukraine (frontline context) ──
 - handle: ukrinform
   name: Ukrinform
   source_type: rss
@@ -243,7 +233,6 @@ feeds:
   tier: T2
   category: ukraine_media
   url: https://www.pravda.com.ua/eng/rss/
-# ── Russian independent media (exile) ──
 - handle: moscowtimes
   name: Moscow Times
   source_type: rss
@@ -256,7 +245,6 @@ feeds:
   tier: T2
   category: russian_independent
   url: https://verstka.media/feed
-# ── Defense & security think tanks ──
 - handle: warontherocks
   name: War on the Rocks
   source_type: rss_security
@@ -317,4 +305,120 @@ feeds:
   tier: T2
   category: baltic_media
   url: https://www.15min.lt/rss
+- handle: yle_en
+  name: YLE News (EN)
+  source_type: rss
+  tier: T1
+  category: finnish_media
+  region:
+  - finland
+  url: https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET&language=en
+- handle: yle_fi
+  name: YLE Uutiset
+  source_type: rss
+  tier: T1
+  category: finnish_media
+  region:
+  - finland
+  url: https://feeds.yle.fi/uutiset/v1/recent.rss?publisherIds=YLE_UUTISET
+- handle: hs_en
+  name: Helsingin Sanomat (EN)
+  source_type: rss
+  tier: T1
+  category: finnish_media
+  region:
+  - finland
+  url: https://www.hs.fi/rss/english.xml
+- handle: fin_mod
+  name: Finnish MOD
+  source_type: rss
+  tier: T1
+  category: government
+  region:
+  - finland
+  url: https://www.defmin.fi/en/rss
+- handle: fin_border
+  name: Finnish Border Guard
+  source_type: rss
+  tier: T1
+  category: government
+  region:
+  - finland
+  url: https://raja.fi/en/rss
+- handle: tvn24_en
+  name: TVN24 (EN)
+  source_type: rss
+  tier: T1
+  category: polish_media
+  region:
+  - poland
+  url: https://tvn24.pl/najnowsze.xml
+- handle: notesfrompoland
+  name: Notes from Poland
+  source_type: rss
+  tier: T1
+  category: polish_media
+  region:
+  - poland
+  url: https://notesfrompoland.com/feed/
+- handle: pol_mod
+  name: Polish MOD
+  source_type: rss
+  tier: T1
+  category: government
+  region:
+  - poland
+  url: https://www.gov.pl/web/obrona-narodowa/rss
+- handle: pism
+  name: PISM (Polish Institute)
+  source_type: rss_security
+  tier: T1
+  category: defense_osint
+  region:
+  - poland
+  url: https://www.pism.pl/feed
+- handle: osw
+  name: OSW (Centre for Eastern Studies)
+  source_type: rss_security
+  tier: T1
+  category: defense_osint
+  region:
+  - poland
+  url: https://www.osw.waw.pl/en/rss.xml
+- handle: delfi_lv
+  name: Delfi Latvia
+  source_type: rss
+  tier: T2
+  category: baltic_media
+  region:
+  - latvia
+  - baltic
+  url: https://www.delfi.lv/rss/
+- handle: lv_mod
+  name: Latvian MOD
+  source_type: rss
+  tier: T1
+  category: government
+  region:
+  - latvia
+  - baltic
+  url: https://www.mod.gov.lv/en/rss.xml
+- handle: lrt_en
+  name: LRT (EN)
+  source_type: rss
+  tier: T1
+  category: baltic_media
+  region:
+  - lithuania
+  - baltic
+  url: https://www.lrt.lt/en/rss
+- handle: lt_mod
+  name: Lithuanian MOD
+  source_type: rss
+  tier: T1
+  category: government
+  region:
+  - lithuania
+  - baltic
+  url: https://kam.lt/en/rss
 schedule: 2h
