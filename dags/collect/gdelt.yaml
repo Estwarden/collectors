@@ -7,11 +7,11 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
-  - name: collect
+  - id: collect
     shell: /bin/bash
     script: |
       cd /dags
       python3 scripts/collectors/gdelt_collector.py
-    retry:
+    retry_policy:
       limit: 2
-      interval: 300
+      interval_sec: 300

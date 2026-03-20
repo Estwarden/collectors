@@ -7,11 +7,11 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
-  - name: fetch-all-feeds
+  - id: fetch-all-feeds
     shell: /bin/bash
     script: |
       cd /dags
       python3 scripts/collectors/rss_collector.py --feeds config/feeds.yaml
-    retry:
+    retry_policy:
       limit: 2
-      interval: 300
+      interval_sec: 300

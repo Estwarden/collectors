@@ -7,7 +7,7 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
-  - name: check-freshness
+  - id: check-freshness
     shell: /bin/bash
     script: |
       cd /dags

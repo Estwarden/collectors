@@ -7,7 +7,7 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
-  - name: fetch-sondehub
+  - id: fetch-sondehub
     shell: /bin/bash
     script: |
       cd /dags
@@ -56,6 +56,6 @@ steps:
       else:
           print('No balloon data')
       "
-    retry:
+    retry_policy:
       limit: 2
-      interval: 300
+      interval_sec: 300
