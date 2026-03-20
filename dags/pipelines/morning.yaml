@@ -4,33 +4,33 @@ schedule: "0 8 * * *"
 type: graph
 
 steps:
-  - id: collect-rss
+  - id: collect_rss
     type: dag
     call: collect/rss
 
-  - id: collect-energy
+  - id: collect_energy
     type: dag
     call: collect/energy
 
-  - id: collect-deepstate
+  - id: collect_deepstate
     type: dag
     call: collect/deepstate
 
-  - id: translate-extract
+  - id: translate_extract
     type: dag
     call: process/translate-and-extract
-    depends: [collect-rss]
+    depends: [collect_rss]
 
   - id: classify
     type: dag
     call: process/classify
-    depends: [translate-extract]
+    depends: [translate_extract]
 
   - id: healthcheck
     type: dag
     call: maintain/healthcheck
-    depends: [collect-rss, collect-energy, collect-deepstate]
+    depends: [collect_rss, collect_energy, collect_deepstate]
 
-  - id: log-complete
+  - id: log_complete
     command: echo "Morning pipeline complete at $(date)"
     depends: [classify, healthcheck]

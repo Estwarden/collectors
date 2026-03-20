@@ -7,7 +7,7 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
-  - id: fetch-all-feeds
+  - id: fetch_all-feeds
     shell: /bin/bash
     script: |
       cd /dags

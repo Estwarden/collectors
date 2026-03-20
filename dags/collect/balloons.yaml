@@ -7,7 +7,7 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
-  - id: fetch-sondehub
+  - id: fetch_sondehub
     shell: /bin/bash
     script: |
       cd /dags
