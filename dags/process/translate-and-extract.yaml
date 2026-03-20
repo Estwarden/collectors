@@ -1,0 +1,19 @@
+name: translate-and-extract
+description: Translate Russian/Estonian signals to English, extract named entities via Google Cloud NLP
+schedule: "15 */3 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+  - GOOGLE_APPLICATION_CREDENTIALS: "/dags/config/google-tts-key.json"
+
+steps:
+  - name: translate-extract
+    shell: /bin/bash
+    script: |
+      pip install cryptography -q 2>/dev/null
+      cd /dags
+      python3 scripts/processors/translate_and_extract.py
+    retry:
+      limit: 1
+      interval: 300

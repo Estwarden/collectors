@@ -1,0 +1,34 @@
+name: healthcheck
+description: Check signal freshness and alert on stale sources
+schedule: "45 */2 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - name: check-freshness
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, os
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+      client = EstWardenClient()
+      baselines = client.query_baselines()
+      stale = []
+      for b in baselines:
+          # If current 24h count is less than 10% of mean, it's stale
+          mean = b.get('mean_7d', 0)
+          current = b.get('current_24h', 0)
+          if mean > 5 and current < mean * 0.1:
+              stale.append(f\"{b['source_type']}: {current} signals (avg {mean:.0f})\")
+      if stale:
+          print('STALE SOURCES:')
+          for s in stale:
+              print(f'  ⚠ {s}')
+          sys.exit(1)
+      else:
+          print('All sources healthy')
+      "

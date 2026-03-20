@@ -1,0 +1,50 @@
+name: compute-baselines
+description: Detect anomalies by comparing current signals against 7-day rolling baselines
+schedule: "15 9,15,21 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - name: detect-anomalies
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, os
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+      client = EstWardenClient()
+
+      baselines = client.query_baselines()
+      anomalies = []
+      for b in baselines:
+          st = b.get('source_type', '')
+          mean = b.get('mean_7d', 0)
+          stddev = max(b.get('stddev_7d', 1), 1)
+          current = b.get('current_24h', 0)
+          z = (current - mean) / stddev if stddev else 0
+
+          if abs(z) < 2.0: continue
+          severity = 'ALERT' if abs(z) >= 4 else 'WARNING' if abs(z) >= 3 else 'INFO'
+          direction = 'spike' if z > 0 else 'drop'
+          anomalies.append({
+              'event_type': f'volume_{direction}',
+              'entity_type': st,
+              'entity_id': 'all',
+              'severity': severity,
+              'description': f'{st}: {current} today vs {mean:.0f} avg (z={z:.1f})',
+              'metric_value': current,
+              'baseline_value': mean,
+              'z_score': z,
+          })
+
+      if anomalies:
+          result = client.ingest_anomalies(anomalies)
+          print(f'Anomalies: {result.get(\"created\", 0)} detected')
+          for a in anomalies:
+              print(f'  {a[\"severity\"]}: {a[\"description\"]}')
+      else:
+          print('No anomalies detected')
+      "

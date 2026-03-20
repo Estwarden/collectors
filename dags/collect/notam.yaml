@@ -1,0 +1,17 @@
+name: collect-notams
+description: Collect EASA conflict zone bulletins
+schedule: "10 */6 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - name: collect
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 scripts/collectors/notam_collector.py
+    retry:
+      limit: 2
+      interval: 300

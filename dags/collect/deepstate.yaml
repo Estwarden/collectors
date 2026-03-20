@@ -1,0 +1,57 @@
+name: collect-deepstate
+description: Collect frontline data from deepstate.live
+schedule: "5 2,8,14,20 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - name: fetch-frontline
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, json, os, urllib.request, hashlib
+      from datetime import datetime, timezone
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+
+      client = EstWardenClient()
+      url = 'https://deepstatemap.live/api/history/last'
+      req = urllib.request.Request(url, headers={'User-Agent': 'EstWarden/1.0'})
+
+      try:
+          with urllib.request.urlopen(req, timeout=30) as r:
+              data = json.loads(r.read())
+      except Exception as e:
+          print(f'Fetch error: {e}', file=sys.stderr)
+          sys.exit(1)
+
+      signals = []
+      items = data if isinstance(data, list) else data.get('data', data.get('items', []))
+      if isinstance(items, dict):
+          items = [items]
+
+      for item in items[:50]:
+          content = json.dumps(item, ensure_ascii=False)
+          sid = hashlib.sha256(content.encode()).hexdigest()[:16]
+          signals.append({
+              'source_type': 'deepstate',
+              'source_id': f'deepstate:{sid}',
+              'title': item.get('title', item.get('name', 'Frontline update')),
+              'content': content[:5000],
+              'url': 'https://deepstatemap.live',
+              'published_at': datetime.now(timezone.utc).isoformat(),
+              'metadata': {'source': 'deepstate'},
+          })
+
+      if signals:
+          result = client.ingest_signals(signals)
+          print(f'Deepstate: {result[\"inserted\"]} new, {result[\"duplicates\"]} dups')
+      else:
+          print('No frontline data')
+      "
+    retry:
+      limit: 2
+      interval: 300

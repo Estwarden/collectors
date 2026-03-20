@@ -1,0 +1,17 @@
+name: collect-ais
+description: Collect AIS vessel positions (Baltic Sea)
+schedule: "*/5 * * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - name: collect
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 scripts/collectors/ais_collector.py
+    retry:
+      limit: 2
+      interval: 300

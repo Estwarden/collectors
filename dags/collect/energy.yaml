@@ -1,0 +1,51 @@
+name: collect-energy
+description: Collect Nord Pool electricity prices from Elering API
+schedule: "0 * * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - name: fetch-prices
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, json, os, urllib.request
+      from datetime import datetime, timedelta, timezone
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+
+      client = EstWardenClient()
+      now = datetime.now(timezone.utc)
+      start = (now - timedelta(hours=2)).strftime('%Y-%m-%dT%H:%M:%SZ')
+      end = now.strftime('%Y-%m-%dT%H:%M:%SZ')
+      url = f'https://dashboard.elering.ee/api/nps/price?start={start}&end={end}'
+
+      with urllib.request.urlopen(url, timeout=15) as r:
+          data = json.loads(r.read())
+
+      signals = []
+      for entry in data.get('data', {}).get('ee', []):
+          ts = datetime.fromtimestamp(entry['timestamp'], tz=timezone.utc)
+          price = entry['price']
+          signals.append({
+              'source_type': 'energy',
+              'source_id': f'elering:ee:{ts.strftime(\"%Y-%m-%dT%H\")}',
+              'title': f'EE electricity price: {price:.2f} EUR/MWh',
+              'content': f'Estonian electricity price at {ts.strftime(\"%H:%M\")} UTC: {price:.2f} EUR/MWh',
+              'published_at': ts.isoformat(),
+              'metric_value': price,
+              'metadata': {'country': 'EE', 'unit': 'EUR/MWh', 'source': 'elering'},
+          })
+
+      if signals:
+          result = client.ingest_signals(signals)
+          print(f'Energy: {result[\"inserted\"]} new, {result[\"duplicates\"]} dups')
+      else:
+          print('No price data')
+      "
+    retry:
+      limit: 2
+      interval: 120
