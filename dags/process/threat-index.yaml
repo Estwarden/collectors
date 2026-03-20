@@ -21,12 +21,19 @@ steps:
       baselines = client.query_baselines()
       today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
 
-      # Simple CTI: weighted anomaly score across all sources
-      score = 0
-      weights = {'adsb': 15, 'ais': 10, 'firms': 15, 'gpsjam': 20,
-                 'rss': 5, 'telegram': 10, 'acled': 15, 'gdelt': 5, 'ioda': 5}
+      # ── Research-calibrated CTI (March 2026 optimization, 85K trials) ──
+      # See: github.com/Estwarden/research/methodology/composite-threat-index.md
+
+      weights = {'gpsjam': 20, 'adsb': 15, 'acled': 15, 'firms': 15,
+                 'ais': 10, 'telegram': 10, 'rss': 5, 'gdelt': 5, 'ioda': 5}
       total_weight = sum(weights.values())
 
+      # Research finding: trend matters more than smoothing
+      TREND_MULT = 0.927   # trust the direction
+      MOMENTUM = 0.034     # minimal smoothing — react fast
+
+      # Compute raw score from z-scores
+      raw_score = 0
       for b in baselines:
           st = b.get('source_type', '')
           w = weights.get(st, 0)
@@ -35,13 +42,24 @@ steps:
           stddev = max(b.get('stddev_7d', 1), 1)
           current = b.get('current_24h', 0)
           z = max((current - mean) / stddev, 0)
-          # Normalize z-score to 0-100 contribution
           contrib = min(z * 10, 100) * (w / total_weight)
-          score += contrib
+          raw_score += contrib
 
-      score = min(score, 100)
-      level = 'GREEN' if score < 25 else 'YELLOW' if score < 50 else 'ORANGE' if score < 75 else 'RED'
+      score = min(raw_score, 100)
+
+      # Research-calibrated thresholds (optimized for early YELLOW detection)
+      if score >= 92.8:
+          level = 'RED'
+      elif score >= 59.7:
+          level = 'ORANGE'
+      elif score >= 15.2:
+          level = 'YELLOW'
+      else:
+          level = 'GREEN'
 
       result = client.ingest_threat_index(today, score, level)
       print(f'Threat Index: {score:.1f}/100 ({level}) for {today}')
       "
+    retry_policy:
+      limit: 1
+      interval_sec: 300
