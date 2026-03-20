@@ -32,6 +32,13 @@ non-European countries, or unrelated global issues → return empty narratives [
   N3 — Aid = Theft (Ukraine support wastes money)
   N4 — Delegitimization (EU/NATO leaders corrupt/incompetent)
   N5 — Isolation / Victimhood (minority communities ignored/oppressed)
+  FI1 — Finland NATO Aggressor (Finland joined NATO for offensive purposes)
+  FI2 — Finland Border Brutality (border closure is inhumane/Russophobic)
+  FI3 — Finland Historical Guilt (WWII Nazi ally, owes territory to Russia)
+  PL1 — Anti-Ukrainian Refugees (Ukrainians exploit/abuse Poland)
+  PL2 — Poland US Puppet (Poland is American colony/Trojan horse)
+  PL3 — Poland Russophobia Hysteria (security concerns are paranoid)
+  PL4 — Poland-Belarus Border (border response is inhumane)
 
 ## Output JSON schema
 {"classifications": [{"signal_id": 123, "narratives": [{"code": "N1", "confidence": 0.85, "target_countries": ["EE","LV"]}]}]}
@@ -42,11 +49,13 @@ non-European countries, or unrelated global issues → return empty narratives [
 - Only tag if confidence >= 0.7
 - Analyze FRAMING, not topic
 - Include target_countries: which specific countries are targeted (ISO 2-letter codes: EE, LV, LT, FI, PL)
+- Use FI1-FI3 codes ONLY for Finland-specific narratives
+- Use PL1-PL4 codes ONLY for Poland-specific narratives
 - If narrative targets all NATO/EU → use ["EU"]
 - When in doubt → empty narratives []
 """
 
-VALID_CODES = {"N1", "N2", "N3", "N4", "N5"}
+VALID_CODES = {"N1", "N2", "N3", "N4", "N5", "FI1", "FI2", "FI3", "PL1", "PL2", "PL3", "PL4"}
 MIN_CONFIDENCE = 0.70
 
 

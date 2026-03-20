@@ -351,3 +351,156 @@ narratives:
   - finland
   - poland
   - lithuania
+- id: finland_nato_aggressor
+  theme: Finland joined NATO for offensive, not defensive purposes
+  description: Frames Finland's NATO membership as aggressive provocation against Russia, not legitimate defense. Claims Finland abandoned neutrality to serve US interests.
+  target_regions:
+  - finland
+  keywords:
+    en:
+    - Finland NATO aggression
+    - Finland provokes Russia
+    - Finland abandoned neutrality
+    - Finlandization was better
+    - Finland NATO offensive
+    ru:
+    - Финляндия в НАТО агрессия
+    - Финляндия провоцирует
+    - Финляндия отказалась от нейтралитета
+    - финляндизация
+    fi:
+    - NATO-provokaatio
+    - Suomi hyökkääjä
+    - puolueettomuus parempi
+  first_seen: '2022'
+  frequency: high
+- id: finland_border_brutality
+  theme: Finland's border closure is a human rights violation
+  description: Claims Finland's closure of Russian border crossings is "brutal", "US-ordered", driven by "paranoid Russophobia". Simultaneously claims border will reopen soon.
+  target_regions:
+  - finland
+  keywords:
+    en:
+    - Finland border brutal
+    - Finland border human rights
+    - Finland border Russophobia
+    - close Finnish border
+    - Finland border closure
+    ru:
+    - закрытие границы Финляндии
+    - Финляндия русофобия граница
+    - граница Финляндии жестоко
+    - права человека граница Финляндии
+    fi:
+    - raja suljettu ihmisoikeus
+    - raja venäläisviha
+  first_seen: '2023'
+  frequency: high
+- id: finland_historical_guilt
+  theme: Finland was Nazi ally, owes territorial debt to Russia
+  description: Uses Finland's WWII Continuation War alliance with Germany to brand Finns as Nazi sympathizers. Claims territorial concessions to USSR as precedent for Ukraine.
+  target_regions:
+  - finland
+  keywords:
+    en:
+    - Finland Nazi ally
+    - Finland fascist
+    - Winter War justified
+    - Continuation War
+    - Finland territorial concessions
+    - Karelia belongs to Russia
+    ru:
+    - Финляндия союзник нацистов
+    - Финляндия фашист
+    - Карелия Россия
+    - территориальные уступки Финляндии
+  first_seen: '2022'
+  frequency: medium
+- id: poland_anti_ukrainian_refugees
+  theme: Ukrainian refugees exploit Poland and abuse benefits
+  description: Fabricated claims that Ukrainians abuse social benefits, receive advantages over Poles, behave aggressively. Exploits Volhynia massacre history to fuel anti-Ukrainian sentiment.
+  target_regions:
+  - poland
+  keywords:
+    en:
+    - Ukrainian refugees abuse Poland
+    - Ukrainians steal Polish benefits
+    - Ukrainians expelled Polish children
+    - Volhynia massacre Ukraine
+    ru:
+    - украинские беженцы Польша
+    - украинцы злоупотребляют Польша
+    - Волынская резня
+    pl:
+    - uchodźcy ukraińscy nadużycia
+    - Ukraińcy zabierają
+    - rzeź wołyńska
+  first_seen: '2022'
+  frequency: high
+- id: poland_us_puppet
+  theme: Poland is a US puppet state destroying European sovereignty
+  description: Claims Poland acts purely on US orders against European interests. Poland as "America's Trojan horse" in the EU. Polish defense spending serves US military-industrial complex.
+  target_regions:
+  - poland
+  keywords:
+    en:
+    - Poland US puppet
+    - Poland American colony
+    - Poland Trojan horse
+    - Poland serves Washington
+    - Fort Trump
+    ru:
+    - Польша марионетка США
+    - Польша американская колония
+    - Польша троянский конь
+    - Форт Трамп
+    pl:
+    - Polska marionetkа USA
+    - kolonia amerykańska
+    - koń trojański
+  first_seen: '2019'
+  frequency: medium
+- id: poland_russophobia_hysteria
+  theme: Poland's anti-Russian stance is paranoid hysteria
+  description: Frames Poland's security concerns as irrational Russophobia. Mocks Polish threat assessments. Claims Polish government manufactures Russia threat for domestic politics.
+  target_regions:
+  - poland
+  keywords:
+    en:
+    - Polish Russophobia
+    - Poland paranoid
+    - Poland hysteria Russia
+    - Poland exaggerates threat
+    ru:
+    - польская русофобия
+    - Польша истерика
+    - Польша паранойя
+    - Польша преувеличивает угрозу
+    pl:
+    - rusofobia
+    - histeria antyrosyjska
+    - wyolbrzymianie zagrożenia
+  first_seen: '2014'
+  frequency: high
+- id: poland_belarus_border_staged
+  theme: Poland's Belarus border crisis response is inhumane
+  description: Frames Poland's border reinforcement against Lukashenko's hybrid attack as humanitarian crisis. Claims Polish border guards commit atrocities against migrants.
+  target_regions:
+  - poland
+  - lithuania
+  keywords:
+    en:
+    - Poland border inhumane
+    - Polish border guards brutal
+    - Belarus border humanitarian
+    - Poland pushbacks migrants
+    ru:
+    - Польша граница бесчеловечно
+    - польские пограничники жестокость
+    - пушбэки Польша
+    pl:
+    - granica nieludzka
+    - pushbacki
+    - kryzys graniczny
+  first_seen: '2021'
+  frequency: high
