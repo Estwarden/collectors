@@ -1,0 +1,18 @@
+name: media-score-fast
+description: Score media sources on evidence quality and uncertainty expression (keyword-based, no LLM)
+schedule: "45 */4 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+  - DATABASE_URL: "${DATABASE_URL}"
+
+steps:
+  - name: score-recent-posts
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 scripts/processors/media_score_fast.py --hours 6
+    retry:
+      limit: 1
+      interval: 120

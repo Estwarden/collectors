@@ -1,0 +1,20 @@
+name: collect-youtube-transcripts
+description: Fetch recent YouTube videos and auto-generated transcripts for narrative monitoring
+schedule: "0 */6 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+  - YOUTUBE_API_KEY: "${YOUTUBE_API_KEY}"
+
+steps:
+  - name: fetch-transcripts
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 scripts/collectors/youtube_collector.py \
+        --config config/watchlists/youtube_channels.yaml \
+        --hours 12
+    retry:
+      limit: 2
+      interval: 600
