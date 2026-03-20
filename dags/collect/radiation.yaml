@@ -1,0 +1,14 @@
+name: collect-radiation
+description: STUK external radiation monitoring via FMI Open Data
+schedule: "0 */6 * * *"
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+steps:
+  - id: collect
+    shell: /bin/bash
+    script: |
+      cd /dags && python3 scripts/collectors/radiation_collector.py
+    retry_policy:
+      limit: 2
+      interval_sec: 300
