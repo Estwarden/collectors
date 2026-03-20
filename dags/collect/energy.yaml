@@ -7,7 +7,7 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
-  - id: fetch-prices
+  - id: fetch_prices
     shell: /bin/bash
     script: |
       cd /dags

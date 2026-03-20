@@ -7,7 +7,7 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
-  - id: fetch-frontline
+  - id: fetch_frontline
     shell: /bin/bash
     script: |
       cd /dags

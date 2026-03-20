@@ -8,7 +8,7 @@ env:
   - GOOGLE_APPLICATION_CREDENTIALS: "/dags/config/google-tts-key.json"
 
 steps:
-  - id: translate-extract
+  - id: translate_extract
     shell: /bin/bash
     script: |
       pip install cryptography -q 2>/dev/null
