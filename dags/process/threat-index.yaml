@@ -1,10 +1,11 @@
 name: compute-threat-index
-description: Compute daily Composite Threat Index from signals and indicators
+description: Compute per-region Composite Threat Index from signals
 schedule: "15 */3 * * *"
 
 env:
   - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+  - REGIONS_CONFIG: "/dags/config/regions.yaml"
 
 steps:
   - id: compute
@@ -17,48 +18,44 @@ steps:
       sys.path.insert(0, 'scripts/lib')
       from estwarden_client import EstWardenClient
       client = EstWardenClient()
-
-      baselines = client.query_baselines()
       today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
 
-      # ── Research-calibrated CTI (March 2026 optimization, 85K trials) ──
-      # See: github.com/Estwarden/research/methodology/composite-threat-index.md
+      # Source weights (research-validated, March 2026)
+      WEIGHTS = {
+          'gpsjam': 20, 'adsb': 15, 'acled': 15, 'firms': 15,
+          'ais': 10, 'telegram': 10, 'rss': 5, 'gdelt': 5, 'ioda': 5,
+      }
+      TOTAL_W = sum(WEIGHTS.values())
+      THRESHOLDS = {'yellow': 15.2, 'orange': 59.7, 'red': 92.8}
 
-      weights = {'gpsjam': 20, 'adsb': 15, 'acled': 15, 'firms': 15,
-                 'ais': 10, 'telegram': 10, 'rss': 5, 'gdelt': 5, 'ioda': 5}
-      total_weight = sum(weights.values())
+      # Per-region CTI — each brand group gets its own score
+      REGIONS = {
+          'baltic':  'global,baltic,estonia,latvia,lithuania,kaliningrad,pskov,stpetersburg,belarus_north',
+          'finland': 'global,finland,stpetersburg,murmansk',
+          'poland':  'global,poland,kaliningrad,belarus_north',
+      }
 
-      # Research finding: trend matters more than smoothing
-      TREND_MULT = 0.927   # trust the direction
-      MOMENTUM = 0.034     # minimal smoothing — react fast
+      for region, filter_str in REGIONS.items():
+          baselines = client.query_baselines(region=filter_str)
+          score = 0.0
+          for b in baselines:
+              st = b.get('source_type', '')
+              w = WEIGHTS.get(st, 0)
+              if w == 0: continue
+              mean = b.get('mean_7d', 0)
+              stddev = max(b.get('stddev_7d', 1), 1)
+              current = b.get('current_24h', 0)
+              z = max((current - mean) / stddev, 0)
+              score += min(z * 10, 100) * (w / TOTAL_W)
+          score = min(score, 100)
 
-      # Compute raw score from z-scores
-      raw_score = 0
-      for b in baselines:
-          st = b.get('source_type', '')
-          w = weights.get(st, 0)
-          if w == 0: continue
-          mean = b.get('mean_7d', 0)
-          stddev = max(b.get('stddev_7d', 1), 1)
-          current = b.get('current_24h', 0)
-          z = max((current - mean) / stddev, 0)
-          contrib = min(z * 10, 100) * (w / total_weight)
-          raw_score += contrib
+          if score >= THRESHOLDS['red']: level = 'RED'
+          elif score >= THRESHOLDS['orange']: level = 'ORANGE'
+          elif score >= THRESHOLDS['yellow']: level = 'YELLOW'
+          else: level = 'GREEN'
 
-      score = min(raw_score, 100)
-
-      # Research-calibrated thresholds (optimized for early YELLOW detection)
-      if score >= 92.8:
-          level = 'RED'
-      elif score >= 59.7:
-          level = 'ORANGE'
-      elif score >= 15.2:
-          level = 'YELLOW'
-      else:
-          level = 'GREEN'
-
-      result = client.ingest_threat_index(today, score, level)
-      print(f'Threat Index: {score:.1f}/100 ({level}) for {today}')
+          client.ingest_threat_index(today, score, level, region=region)
+          print(f'{region}: {score:.1f}/100 ({level})')
       "
     retry_policy:
       limit: 1
