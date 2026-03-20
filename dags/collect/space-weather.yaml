@@ -7,7 +7,7 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
-  - name: fetch-noaa
+  - id: fetch-noaa
     shell: /bin/bash
     script: |
       cd /dags
@@ -46,6 +46,6 @@ steps:
           result = client.ingest_signals(signals)
           print(f'Space weather: {result[\"inserted\"]} new')
       "
-    retry:
+    retry_policy:
       limit: 2
-      interval: 300
+      interval_sec: 300

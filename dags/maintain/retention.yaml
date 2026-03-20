@@ -7,7 +7,7 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
-  - name: retention-cleanup
+  - id: retention-cleanup
     type: http
     command: "POST ${ESTWARDEN_API_URL}/api/v1/maintenance/retention"
     config:

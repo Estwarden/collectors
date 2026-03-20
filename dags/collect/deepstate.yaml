@@ -7,7 +7,7 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
-  - name: fetch-frontline
+  - id: fetch-frontline
     shell: /bin/bash
     script: |
       cd /dags
@@ -52,6 +52,6 @@ steps:
       else:
           print('No frontline data')
       "
-    retry:
+    retry_policy:
       limit: 2
-      interval: 300
+      interval_sec: 300

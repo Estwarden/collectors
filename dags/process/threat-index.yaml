@@ -7,7 +7,7 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
-  - name: compute
+  - id: compute
     shell: /bin/bash
     script: |
       cd /dags

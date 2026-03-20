@@ -8,12 +8,12 @@ env:
   - GOOGLE_APPLICATION_CREDENTIALS: "/dags/config/google-tts-key.json"
 
 steps:
-  - name: translate-extract
+  - id: translate-extract
     shell: /bin/bash
     script: |
       pip install cryptography -q 2>/dev/null
       cd /dags
       python3 scripts/processors/translate_and_extract.py
-    retry:
+    retry_policy:
       limit: 1
-      interval: 300
+      interval_sec: 300
