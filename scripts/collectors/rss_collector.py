@@ -194,7 +194,7 @@ def main():
                     result = client.ingest_signals(batch)
                     total_inserted += result.get("inserted", 0)
                     total_dupes += result.get("duplicates", 0)
-                    total_errors += len(result.get("errors", []))
+                    errs = result.get("errors") or []; total_errors += len(errs)
 
                 print(f"  {handle}: {len(signals)} parsed")
             else:
