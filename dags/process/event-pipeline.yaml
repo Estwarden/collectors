@@ -10,6 +10,7 @@ description: |
   Cost: ~$0.01/day (embeddings + 1-2 LLM calls for framing analysis).
 
 schedule: "30 */4 * * *"
+type: graph
 
 env:
   - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
@@ -125,4 +126,21 @@ steps:
       print('Narrative campaigns: %d events embedded, %d new campaigns, %d joined, %d named' % (
           r.get('events_embedded', 0), r.get('new_campaigns', 0),
           r.get('joined_existing', 0), r.get('campaigns_named', 0)))
+      "
+
+  - id: narrative-velocity
+    depends:
+      - cluster
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, json
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+      client = EstWardenClient()
+      r = client._post('/api/v1/detect/narrative-velocity', {})
+      print('Narrative velocity: %d alerts' % r.get('count', 0))
+      for a in r.get('alerts', []):
+          print('  %s: %s velocity=%s' % (a.get('topic','?')[:50], a.get('state_ratio',''), a.get('velocity','')))
       "

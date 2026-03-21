@@ -30,7 +30,7 @@ def count_acquisitions(lat, lon, days=7):
     bbox = [lon-0.1, lat-0.1, lon+0.1, lat+0.1]
     url = "https://catalogue.dataspace.copernicus.eu/stac/search"
     body = json.dumps({
-        "collections": ["SENTINEL-2"],
+        "collections": ["sentinel-2-l2a"],
         "bbox": bbox,
         "datetime": f"{start}/{end}",
         "limit": 10,
