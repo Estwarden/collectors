@@ -1,17 +1,19 @@
 name: daily-briefing
-description: Generate and send daily intelligence briefing to Telegram
+description: Generate and send daily intelligence briefing with infographic to Telegram
 schedule: "30 8 * * *"
 
 env:
   - ESTWARDEN_URL: "http://web:8080"
-  - OPENAI_API_KEY: "${OPENAI_API_KEY}"
+  - LLM_API_KEY: "${LLM_API_KEY}"
+  - LLM_API_URL: "${LLM_API_URL}"
+  - BRIEFING_MODEL: "anthropic/claude-sonnet-4"
   - TELEGRAM_BOT_TOKEN: "${TELEGRAM_BOT_TOKEN}"
   - TELEGRAM_CHAT_ID: "${TELEGRAM_CHAT_ID}"
   - TELEGRAM_ADMIN_ID: "${TELEGRAM_ADMIN_ID}"
-  - BRIEFING_MODEL: "gpt-4o-mini"
 
 steps:
-  - name: generate-preview
+  - name: generate-and-preview
+    dir: /dags/scripts/briefing
     command: python3 /dags/scripts/briefing/generate_briefing.py preview
     retryPolicy:
       limit: 2
