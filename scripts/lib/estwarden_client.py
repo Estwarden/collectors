@@ -40,10 +40,10 @@ class EstWardenClient:
         """Submit anomaly events. Returns {"created": N}"""
         return self._post("/api/v1/ingest/anomalies", {"anomalies": anomalies})
 
-    def ingest_threat_index(self, date: str, score: float, level: str) -> dict:
-        """Update threat index for a date."""
+    def ingest_threat_index(self, date: str, score: float, level: str, region: str = "baltic") -> dict:
+        """Update threat index for a date. Region defaults to 'baltic'."""
         return self._post("/api/v1/ingest/threat-index", {
-            "date": date, "score": score, "level": level,
+            "date": date, "score": score, "level": level, "region": region,
         })
 
     # ── Query ──
@@ -68,9 +68,12 @@ class EstWardenClient:
         """Get daily report data for briefing."""
         return self._get(f"/api/v1/query/report/{date}")
 
-    def query_baselines(self) -> list:
-        """Get 7-day rolling baselines per source type."""
-        resp = self._get("/api/v1/query/baselines")
+    def query_baselines(self, region: str = None) -> list:
+        """Get 7-day rolling baselines per source type. Optional region filter (comma-separated)."""
+        params = ""
+        if region:
+            params = f"?region={region}"
+        resp = self._get(f"/api/v1/query/baselines{params}")
         return resp.get("baselines", [])
 
     # ── Internal ──
