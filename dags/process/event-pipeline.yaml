@@ -1,0 +1,79 @@
+name: event-detection-pipeline
+description: |
+  Full event-based campaign detection pipeline:
+  1. Embed: relevance gate → Google embedding → pgvector
+  2. Cluster: group signals about the same event (cosine > 0.82)
+  3. Framing: LLM compares state vs trusted media framing per cluster
+  4. Assemble: hostile framings → campaigns
+
+  Runs every 4 hours. Each stage is idempotent — safe to re-run.
+  Cost: ~$0.01/day (embeddings + 1-2 LLM calls for framing analysis).
+
+schedule: "30 */4 * * *"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+
+steps:
+  - id: embed
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, json
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+      client = EstWardenClient()
+      r = client._post('/api/v1/process/embed', {})
+      print('Embed: %d embedded, %d rejected, %d passed gate' % (
+          r.get('embedded', 0), r.get('rejected', 0), r.get('passed', 0)))
+      "
+
+  - id: cluster
+    depends:
+      - embed
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, json
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+      client = EstWardenClient()
+      r = client._post('/api/v1/process/cluster', {})
+      print('Cluster: %d signals → %d new clusters' % (
+          r.get('signals', 0), r.get('new_clusters', 0)))
+      "
+
+  - id: framing
+    depends:
+      - cluster
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, json
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+      client = EstWardenClient()
+      r = client._post('/api/v1/process/framing', {})
+      print('Framing: %d analyzed, %d hostile' % (
+          r.get('analyzed', 0), r.get('hostile', 0)))
+      "
+
+  - id: assemble
+    depends:
+      - framing
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, json
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+      client = EstWardenClient()
+      r = client._post('/api/v1/process/assemble-campaigns', {})
+      print('Assemble: %d hostile events → %d campaigns' % (
+          r.get('hostile_events', 0), r.get('campaigns', 0)))
+      "
