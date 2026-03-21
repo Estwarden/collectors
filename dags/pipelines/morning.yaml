@@ -26,11 +26,21 @@ steps:
     call: process/classify
     depends: [translate_extract]
 
+  - id: compute_cti
+    type: dag
+    call: process/threat-index
+    depends: [collect_rss, collect_energy, collect_deepstate, classify]
+
   - id: healthcheck
     type: dag
     call: maintain/healthcheck
     depends: [collect_rss, collect_energy, collect_deepstate]
 
+  - id: generate_report
+    type: dag
+    call: process/daily-report
+    depends: [compute_cti, healthcheck]
+
   - id: log_complete
     command: echo "Morning pipeline complete at $(date)"
-    depends: [classify, healthcheck]
+    depends: [generate_report]

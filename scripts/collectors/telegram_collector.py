@@ -189,7 +189,7 @@ def main():
                 "content": post["text"],
                 "url": post_url,
                 "published_at": post.get("published_at") or datetime.now(timezone.utc).isoformat(),
-                "metadata": json.dumps(metadata),
+                "metadata": metadata,  # pass as dict, not json.dumps (ingest API handles JSONB)
             }
             # Pass region from channel config (geographic relevance)
             ch_region = ch.get("region", [])

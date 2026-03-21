@@ -7,12 +7,12 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
-  - name: scrape-channels
+  - id: scrape_channels
     shell: /bin/bash
     script: |
       cd /dags
       python3 scripts/collectors/telegram_collector.py \
         --config config/watchlists/telegram_channels.yaml
-    retry:
+    retry_policy:
       limit: 2
-      interval: 300
+      interval_sec: 300
