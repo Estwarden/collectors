@@ -95,18 +95,32 @@ for region, cfg in REGIONS.items():
         components[CAT_MAP.get(st, "security")] += contrib
 
     # --- Campaign score (per-region) ---
+    # Count active + recently resolved campaigns (last 7 days).
+    # Resolved campaigns decay: active=100%, 1d=80%, 3d=50%, 7d=20%.
+    # This prevents CTI from crashing when we clean up detection.
     campaign_score = 0.0
     if conn:
         cur = conn.cursor()
         cur.execute("""
-            SELECT severity, COUNT(*) FROM campaigns
-            WHERE COALESCE(status, 'ACTIVE') = 'ACTIVE'
-            AND (target_regions && %s)
-            GROUP BY severity
+            SELECT severity, COALESCE(status, 'ACTIVE'),
+                   EXTRACT(EPOCH FROM now() - detected_at) / 86400.0 as age_days
+            FROM campaigns
+            WHERE detected_at >= now() - interval '7 days'
+              AND (target_regions IS NULL OR target_regions && %s)
+              AND (SELECT COUNT(*) FROM campaign_signals cs WHERE cs.campaign_id = campaigns.id) > 0
         """, (cfg["campaign_regions"],))
         sev_scores = {"CRITICAL": 25, "HIGH": 15, "MEDIUM": 8, "LOW": 3}
-        for sev, cnt in cur.fetchall():
-            campaign_score += sev_scores.get(sev, 5) * min(cnt, 5)
+        for sev, status, age_days in cur.fetchall():
+            base = sev_scores.get(sev, 5)
+            if status == 'ACTIVE':
+                decay = 1.0
+            elif age_days <= 1:
+                decay = 0.8
+            elif age_days <= 3:
+                decay = 0.5
+            else:
+                decay = 0.2
+            campaign_score += base * decay
         campaign_score = min(campaign_score, 100) * (CAMPAIGN_WEIGHT / TOTAL_WEIGHT)
         components["fimi"] += campaign_score
 
