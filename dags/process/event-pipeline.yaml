@@ -92,10 +92,27 @@ steps:
           r.get('hostile_events', 0), r.get('campaigns', 0)))
       "
 
+  - id: injection-cascades
+    depends:
+      - cluster
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, json
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+      client = EstWardenClient()
+      r = client._post('/api/v1/detect/injection-cascades', {})
+      print('Injection cascades: %d candidates → %d injections, %d watch' % (
+          r.get('candidates', 0), r.get('injections', 0), r.get('watch', 0)))
+      "
+
   - id: narrative-campaigns
     depends:
       - assemble
       - outrage-chains
+      - injection-cascades
     shell: /bin/bash
     script: |
       cd /dags
