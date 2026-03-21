@@ -785,7 +785,7 @@ sites:
       city: Warsaw
       km: 1240
   relevant_regions:
-  - global
+  - baltic
 - id: Pogonovo-training
   lat: 51.6
   lon: 39.2
@@ -815,7 +815,7 @@ sites:
       city: Warsaw
       km: 1250
   relevant_regions:
-  - global
+  - baltic
 - id: Kursk-Khalino
   lat: 51.7536
   lon: 36.2906
@@ -875,7 +875,7 @@ sites:
       city: Warsaw
       km: 1410
   relevant_regions:
-  - global
+  - baltic
 - id: Morozovsk-airbase
   lat: 48.2231
   lon: 41.8153
@@ -905,7 +905,7 @@ sites:
       city: Warsaw
       km: 1540
   relevant_regions:
-  - global
+  - baltic
 - id: Shaykovka-airbase
   lat: 54.0167
   lon: 34.3333
@@ -967,7 +967,7 @@ sites:
       city: Warsaw
       km: 1720
   relevant_regions:
-  - global
+  - baltic
 - id: Alabino-training
   lat: 55.5417
   lon: 36.8528
@@ -1028,7 +1028,7 @@ sites:
       city: Warsaw
       km: 1510
   relevant_regions:
-  - global
+  - baltic
 - id: Rostov-Southern-HQ
   lat: 47.2356
   lon: 39.7128
@@ -1058,7 +1058,7 @@ sites:
       city: Warsaw
       km: 1450
   relevant_regions:
-  - global
+  - baltic
 - id: Sevastopol-naval
   lat: 44.6178
   lon: 33.5253
@@ -1088,7 +1088,7 @@ sites:
       city: Warsaw
       km: 1250
   relevant_regions:
-  - global
+  - baltic
 - id: Saki-Novofedorovka
   lat: 45.0931
   lon: 33.5942
@@ -1118,7 +1118,7 @@ sites:
       city: Warsaw
       km: 1220
   relevant_regions:
-  - global
+  - baltic
 - id: Nizhny-Tagil-UVZ
   lat: 57.9167
   lon: 59.9667
@@ -1148,7 +1148,7 @@ sites:
       city: Warsaw
       km: 2520
   relevant_regions:
-  - global
+  - baltic
 - id: Kapustin-Yar-range
   lat: 48.57
   lon: 46.3
@@ -1178,4 +1178,4 @@ sites:
       city: Warsaw
       km: 1830
   relevant_regions:
-  - global
+  - baltic
