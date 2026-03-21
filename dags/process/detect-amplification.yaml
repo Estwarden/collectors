@@ -12,7 +12,7 @@ steps:
     shell: /bin/bash
     script: |
       cd /dags
-      python3 scripts/processors/detect_amplification.py \
+      python3 processors/detect_amplification.py \
         --hours 24 --window 72 \
         --taxonomy config/narrative_taxonomy.yaml
     retry:

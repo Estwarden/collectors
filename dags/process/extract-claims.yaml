@@ -15,7 +15,7 @@ steps:
     shell: /bin/bash
     script: |
       cd /dags
-      python3 scripts/processors/extract_claims.py --hours 12 --limit 100
+      python3 processors/extract_claims.py --hours 12 --limit 100
     retry:
       limit: 1
       interval: 300

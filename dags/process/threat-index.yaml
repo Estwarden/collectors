@@ -12,7 +12,7 @@ steps:
     shell: /bin/bash
     script: |
       cd /dags
-      python3 scripts/processors/compute_threat_index.py
+      python3 processors/compute_threat_index.py
     retry_policy:
       limit: 1
       interval_sec: 300

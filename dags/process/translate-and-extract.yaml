@@ -13,7 +13,7 @@ steps:
     script: |
       pip install cryptography -q 2>/dev/null
       cd /dags
-      python3 scripts/processors/translate_and_extract.py
+      python3 processors/translate_and_extract.py
     retry_policy:
       limit: 1
       interval_sec: 300

@@ -12,7 +12,7 @@ steps:
     shell: /bin/bash
     script: |
       cd /dags
-      python3 scripts/processors/media_score_fast.py --hours 6
+      python3 processors/media_score_fast.py --hours 6
     retry:
       limit: 1
       interval: 120
