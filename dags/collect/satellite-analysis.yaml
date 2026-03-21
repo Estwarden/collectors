@@ -2,9 +2,9 @@ name: collect-satellite-analysis
 description: Sentinel-2 imagery coverage monitoring for military sites
 schedule: "0 10 * * *"
 env:
-  - ESTWARDEN_API_URL: ""
-  - ESTWARDEN_API_KEY: ""
-  - GOOGLE_APPLICATION_CREDENTIALS: ""
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+  - GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
 steps:
   - id: collect
     shell: /bin/bash

@@ -8,11 +8,11 @@ env:
   - DATABASE_URL: "${DATABASE_URL}"
 
 steps:
-  - name: score-recent-posts
+  - id: score_recent_posts
     shell: /bin/bash
     script: |
       cd /dags
       python3 processors/media_score_fast.py --hours 6
-    retry:
+    retry_policy:
       limit: 1
-      interval: 120
+      interval_sec: 120

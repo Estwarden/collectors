@@ -8,13 +8,13 @@ env:
   - YOUTUBE_API_KEY: "${YOUTUBE_API_KEY}"
 
 steps:
-  - name: fetch-transcripts
+  - id: fetch_transcripts
     shell: /bin/bash
     script: |
       cd /dags
       python3 scripts/collectors/youtube_collector.py \
         --config config/watchlists/youtube_channels.yaml \
         --hours 12
-    retry:
+    retry_policy:
       limit: 2
-      interval: 600
+      interval_sec: 600
