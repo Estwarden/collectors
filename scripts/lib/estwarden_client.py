@@ -80,6 +80,12 @@ class EstWardenClient:
         resp = self._get(f"/api/v1/query/baselines{params}")
         return resp.get("baselines", [])
 
+    # ── Detection ──
+
+    def detect_campaigns(self) -> dict:
+        """Trigger server-side campaign detection. Returns {"resolved": N, "created": N, "campaigns": [...]}"""
+        return self._post("/api/v1/detect/campaigns", {})
+
     # ── Internal ──
 
     def _post(self, path, body):
