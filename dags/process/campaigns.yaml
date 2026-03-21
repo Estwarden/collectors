@@ -110,7 +110,7 @@ steps:
                      f'baseline: {avg:.0f}±{stddev:.0f} actors/day, today: {actor_count} (>{z:.0f}σ).')
 
           campaigns.append({
-              'name': f'{name} ({cnt} signals)',
+              'name': name,
               'confidence': min(z / 5.0, 1.0),
               'severity': severity,
               'summary': summary,

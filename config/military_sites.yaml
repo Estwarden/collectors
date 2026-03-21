@@ -10,7 +10,8 @@ sites:
   unit: Naval aviation — Su-24M/MR, Su-30SM
   branch: Baltic Fleet Naval Aviation
   district: Western Military District
-  threat: Strike aircraft within 15-min flight time of Estonian airspace. Su-24 carries Kh-31 anti-ship missiles.
+  threat: Strike aircraft within 15-min flight time of Estonian airspace. Su-24 carries
+    Kh-31 anti-ship missiles.
   distances:
     estonia:
       city: Tallinn
@@ -28,6 +29,7 @@ sites:
       city: Warsaw
       km: 280
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -44,7 +46,8 @@ sites:
   unit: Baltic Fleet HQ — corvettes, landing ships, submarines
   branch: Baltic Fleet, Russian Navy
   district: Western Military District
-  threat: Primary naval threat to Baltic states. Hosts Steregushchiy-class corvettes with Kalibr cruise missiles (2500km range).
+  threat: Primary naval threat to Baltic states. Hosts Steregushchiy-class corvettes
+    with Kalibr cruise missiles (2500km range).
   distances:
     estonia:
       city: Tallinn
@@ -62,6 +65,7 @@ sites:
       city: Warsaw
       km: 280
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -78,7 +82,8 @@ sites:
   unit: 152nd Guards Missile Brigade — Iskander-M SRBM
   branch: Missile Troops
   district: Western Military District
-  threat: Iskander-M range 500km — covers all Baltic capitals. Nuclear-capable. 12 launchers in brigade.
+  threat: Iskander-M range 500km — covers all Baltic capitals. Nuclear-capable. 12
+    launchers in brigade.
   distances:
     estonia:
       city: Tallinn
@@ -96,6 +101,7 @@ sites:
       city: Warsaw
       km: 270
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -126,6 +132,7 @@ sites:
       city: Warsaw
       km: 270
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -156,6 +163,7 @@ sites:
       city: Warsaw
       km: 300
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -186,6 +194,7 @@ sites:
       city: Warsaw
       km: 780
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -216,6 +225,7 @@ sites:
       city: Warsaw
       km: 740
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -232,7 +242,8 @@ sites:
   unit: VDV combined arms training range and staging area
   branch: Airborne Forces (VDV)
   district: Western Military District → Leningrad MD
-  threat: Training ground for 76th VDV. Staging area for potential rapid deployment toward Baltics via Pskov corridor.
+  threat: Training ground for 76th VDV. Staging area for potential rapid deployment
+    toward Baltics via Pskov corridor.
   distances:
     estonia:
       city: Tallinn
@@ -250,6 +261,7 @@ sites:
       city: Warsaw
       km: 790
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -280,6 +292,7 @@ sites:
       city: Warsaw
       km: 910
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -295,7 +308,8 @@ sites:
   unit: 138th Guards Motor Rifle Brigade
   branch: Ground Forces
   district: Western Military District
-  threat: Mechanized infantry with BMP-3 IFVs. Part of 6th CAA. Rapid deployment capability along M11 highway.
+  threat: Mechanized infantry with BMP-3 IFVs. Part of 6th CAA. Rapid deployment capability
+    along M11 highway.
   distances:
     estonia:
       city: Tallinn
@@ -313,6 +327,7 @@ sites:
       city: Warsaw
       km: 1040
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -328,7 +343,8 @@ sites:
   unit: Air defense, military transport aviation
   branch: Air Force / Air Defense (VKS/PVO)
   district: Western Military District
-  threat: S-300/S-400 air defense umbrella covering St. Petersburg approaches. Transport aviation for VDV deployment.
+  threat: S-300/S-400 air defense umbrella covering St. Petersburg approaches. Transport
+    aviation for VDV deployment.
   distances:
     estonia:
       city: Tallinn
@@ -346,6 +362,7 @@ sites:
       city: Warsaw
       km: 1050
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -379,6 +396,7 @@ sites:
       city: Warsaw
       km: 1020
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -394,7 +412,8 @@ sites:
   unit: Air base — Tu-22M3 long-range bombers (rotational)
   branch: Long-Range Aviation (DA) / Belarus AF
   district: Joint Regional Grouping
-  threat: Tu-22M3 Backfire can carry Kh-22/Kh-32 anti-ship missiles (600km range). Nuclear-capable. Russian aircraft deployed here since 2022.
+  threat: Tu-22M3 Backfire can carry Kh-22/Kh-32 anti-ship missiles (600km range).
+    Nuclear-capable. Russian aircraft deployed here since 2022.
   distances:
     estonia:
       city: Tallinn
@@ -412,6 +431,7 @@ sites:
       city: Warsaw
       km: 470
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -428,7 +448,8 @@ sites:
   unit: 61st Fighter Air Base — MiG-29, Su-30SM
   branch: Belarus Air Force
   district: Joint Regional Grouping
-  threat: Fighter interceptors. Belarus integrated into Russian air defense network. Joint patrols of Union State airspace.
+  threat: Fighter interceptors. Belarus integrated into Russian air defense network.
+    Joint patrols of Union State airspace.
   distances:
     estonia:
       city: Tallinn
@@ -446,6 +467,7 @@ sites:
       city: Warsaw
       km: 350
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -462,7 +484,8 @@ sites:
   unit: Mechanized forces — near Suwałki Gap
   branch: Belarus Ground Forces
   district: Joint Regional Grouping
-  threat: Critical location. Forces here could cut the Suwałki corridor — the only land link between Poland and the Baltic states.
+  threat: Critical location. Forces here could cut the Suwałki corridor — the only
+    land link between Poland and the Baltic states.
   distances:
     estonia:
       city: Tallinn
@@ -480,6 +503,7 @@ sites:
       city: Warsaw
       km: 250
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -496,7 +520,8 @@ sites:
   unit: Mechanized forces — near Polish border
   branch: Belarus Ground Forces
   district: Joint Regional Grouping
-  threat: Positioned to threaten NATO's eastern flank from the south. Migration crisis staging area 2021.
+  threat: Positioned to threaten NATO's eastern flank from the south. Migration crisis
+    staging area 2021.
   distances:
     estonia:
       city: Tallinn
@@ -514,6 +539,7 @@ sites:
       city: Warsaw
       km: 190
   relevant_regions:
+  - baltic
   - latvia
   - lithuania
   - poland
@@ -542,6 +568,7 @@ sites:
       city: Warsaw
       km: 530
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -572,6 +599,7 @@ sites:
       city: Warsaw
       km: 760
   relevant_regions:
+  - baltic
   - latvia
   - lithuania
   - poland
@@ -600,6 +628,7 @@ sites:
       city: Warsaw
       km: 780
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -630,6 +659,7 @@ sites:
       city: Warsaw
       km: 900
   relevant_regions:
+  - baltic
   - latvia
   - lithuania
 - id: Tver-Migalovo
@@ -657,6 +687,7 @@ sites:
       city: Warsaw
       km: 1080
   relevant_regions:
+  - baltic
   - estonia
   - finland
   - latvia
@@ -672,7 +703,8 @@ sites:
   unit: Northern Fleet HQ — SSBNs, aircraft carrier, submarines
   branch: Northern Fleet
   district: Northern Fleet Joint Strategic Command
-  threat: Russia's most powerful fleet. Hosts nuclear submarines, Kuznetsov carrier. Northern Fleet submarines transit Baltic approaches.
+  threat: Russia's most powerful fleet. Hosts nuclear submarines, Kuznetsov carrier.
+    Northern Fleet submarines transit Baltic approaches.
   distances:
     estonia:
       city: Tallinn
@@ -690,9 +722,7 @@ sites:
       city: Warsaw
       km: 1980
   relevant_regions:
-  - finland
-  - estonia
-  - latvia
+  - global
 - id: Olenya-airbase
   lat: 68.1517
   lon: 33.4644
@@ -704,7 +734,8 @@ sites:
   unit: Tu-22M3 long-range bombers, MiG-31K (Kinzhal carriers)
   branch: Long-Range Aviation (DA)
   district: Northern Fleet Joint Strategic Command
-  threat: MiG-31K carries Kinzhal hypersonic missile (2000km range). Tu-22M3 with Kh-22 anti-ship. Both nuclear-capable.
+  threat: MiG-31K carries Kinzhal hypersonic missile (2000km range). Tu-22M3 with
+    Kh-22 anti-ship. Both nuclear-capable.
   distances:
     estonia:
       city: Tallinn
@@ -722,7 +753,7 @@ sites:
       city: Warsaw
       km: 1890
   relevant_regions:
-  - finland
+  - global
 - id: Yelnya-garrison
   lat: 54.3167
   lon: 33.1833
@@ -734,8 +765,9 @@ sites:
   unit: 144th Guards Motor Rifle Division
   branch: Ground Forces
   district: Western Military District
-  threat: Key indicator site. In 2021, satellite imagery revealed a massive buildup of tanks and artillery here — the first public evidence of Russia's preparations for the Ukraine invasion. Equipment drawdown
-    here preceded the Feb 2022 attack.
+  threat: Key indicator site. In 2021, satellite imagery revealed a massive buildup
+    of tanks and artillery here — the first public evidence of Russia's preparations
+    for the Ukraine invasion. Equipment drawdown here preceded the Feb 2022 attack.
   distances:
     estonia:
       city: Tallinn
@@ -753,6 +785,7 @@ sites:
       city: Warsaw
       km: 840
   relevant_regions:
+  - baltic
   - estonia
   - latvia
   - lithuania
@@ -767,7 +800,9 @@ sites:
   unit: 20th Combined Arms Army HQ area
   branch: Ground Forces / VKS
   district: Western Military District
-  threat: 20th CAA is the primary conventional force for the western direction. Multiple BTGs deployed to Ukraine from here. Aircraft redeployment from this base to forward positions is an escalation indicator.
+  threat: 20th CAA is the primary conventional force for the western direction. Multiple
+    BTGs deployed to Ukraine from here. Aircraft redeployment from this base to forward
+    positions is an escalation indicator.
   distances:
     estonia:
       city: Tallinn
@@ -785,7 +820,7 @@ sites:
       city: Warsaw
       km: 1240
   relevant_regions:
-  - baltic
+  - global
 - id: Pogonovo-training
   lat: 51.6
   lon: 39.2
@@ -797,7 +832,8 @@ sites:
   unit: Combined arms training ground — 20th CAA
   branch: Ground Forces
   district: Western Military District
-  threat: Major training ground. Activity spikes here precede large exercises and deployments. Watch for formation-level (brigade+) exercises.
+  threat: Major training ground. Activity spikes here precede large exercises and
+    deployments. Watch for formation-level (brigade+) exercises.
   distances:
     estonia:
       city: Tallinn
@@ -815,7 +851,7 @@ sites:
       city: Warsaw
       km: 1250
   relevant_regions:
-  - baltic
+  - global
 - id: Kursk-Khalino
   lat: 51.7536
   lon: 36.2906
@@ -827,7 +863,8 @@ sites:
   unit: 14th Guards Fighter Aviation Regiment — Su-30SM
   branch: Air Force (VKS)
   district: Western Military District
-  threat: Su-30SM multirole fighters. Redeployment of fighters from here to Kaliningrad/Pskov area bases would indicate air force posture change.
+  threat: Su-30SM multirole fighters. Redeployment of fighters from here to Kaliningrad/Pskov
+    area bases would indicate air force posture change.
   distances:
     estonia:
       city: Tallinn
@@ -845,7 +882,7 @@ sites:
       city: Warsaw
       km: 1050
   relevant_regions:
-  - lithuania
+  - global
 - id: Millerovo-airbase
   lat: 48.9269
   lon: 40.3547
@@ -857,7 +894,8 @@ sites:
   unit: 31st Fighter Aviation Regiment — Su-30SM
   branch: Air Force (VKS)
   district: Southern Military District
-  threat: Forward fighter base near Ukrainian border. Aircraft movements between here and western bases indicate theater shift. Struck by Ukrainian attack March 2022.
+  threat: Forward fighter base near Ukrainian border. Aircraft movements between here
+    and western bases indicate theater shift. Struck by Ukrainian attack March 2022.
   distances:
     estonia:
       city: Tallinn
@@ -875,7 +913,7 @@ sites:
       city: Warsaw
       km: 1410
   relevant_regions:
-  - baltic
+  - global
 - id: Morozovsk-airbase
   lat: 48.2231
   lon: 41.8153
@@ -887,7 +925,9 @@ sites:
   unit: 559th Bomber Aviation Regiment — Su-34 Fullback
   branch: Air Force (VKS)
   district: Southern Military District
-  threat: Primary Su-34 base — Russia's most capable tactical bomber. Su-34 carries Kh-59 cruise missiles (285km range). Any redeployment of Su-34s toward Baltic region is a major indicator.
+  threat: Primary Su-34 base — Russia's most capable tactical bomber. Su-34 carries
+    Kh-59 cruise missiles (285km range). Any redeployment of Su-34s toward Baltic
+    region is a major indicator.
   distances:
     estonia:
       city: Tallinn
@@ -905,7 +945,7 @@ sites:
       city: Warsaw
       km: 1540
   relevant_regions:
-  - baltic
+  - global
 - id: Shaykovka-airbase
   lat: 54.0167
   lon: 34.3333
@@ -917,7 +957,9 @@ sites:
   unit: 52nd Guards Heavy Bomber Aviation Regiment — Tu-22M3
   branch: Long-Range Aviation (DA)
   district: Western Military District
-  threat: Tu-22M3 Backfire bombers. Same type rotated through Machulishchy (Belarus). Movement of aircraft from here to forward bases (Machulishchy, Olenya) is a nuclear posture indicator.
+  threat: Tu-22M3 Backfire bombers. Same type rotated through Machulishchy (Belarus).
+    Movement of aircraft from here to forward bases (Machulishchy, Olenya) is a nuclear
+    posture indicator.
   distances:
     estonia:
       city: Tallinn
@@ -935,6 +977,7 @@ sites:
       city: Warsaw
       km: 910
   relevant_regions:
+  - baltic
   - latvia
   - lithuania
 - id: Engels-2-strategic
@@ -948,8 +991,9 @@ sites:
   unit: 121st Guards Heavy Bomber Aviation Regiment — Tu-160, Tu-95MS
   branch: Long-Range Aviation (DA)
   district: Strategic Aerospace Forces
-  threat: Russia's primary strategic bomber base. Tu-160 carries Kh-101 cruise missiles (5500km range). These aircraft launch standoff cruise missile strikes against Ukraine. Surge activity = cruise missile
-    campaign imminent.
+  threat: Russia's primary strategic bomber base. Tu-160 carries Kh-101 cruise missiles
+    (5500km range). These aircraft launch standoff cruise missile strikes against
+    Ukraine. Surge activity = cruise missile campaign imminent.
   distances:
     estonia:
       city: Tallinn
@@ -967,7 +1011,7 @@ sites:
       city: Warsaw
       km: 1720
   relevant_regions:
-  - baltic
+  - global
 - id: Alabino-training
   lat: 55.5417
   lon: 36.8528
@@ -979,7 +1023,9 @@ sites:
   unit: Kantemirovskaya Tank Division training ground
   branch: Ground Forces
   district: Western Military District (Moscow)
-  threat: Moscow garrison. Drawdown of tanks here indicates deployment elsewhere. Also used for Victory Day parade staging — can distinguish ceremonial from operational moves.
+  threat: Moscow garrison. Drawdown of tanks here indicates deployment elsewhere.
+    Also used for Victory Day parade staging — can distinguish ceremonial from operational
+    moves.
   distances:
     estonia:
       city: Tallinn
@@ -997,7 +1043,7 @@ sites:
       city: Warsaw
       km: 1100
   relevant_regions:
-  - latvia
+  - baltic
   - lithuania
 - id: Mulino-training
   lat: 56.1833
@@ -1010,7 +1056,9 @@ sites:
   unit: Combined arms training ground — Zapad exercise venue
   branch: Ground Forces
   district: Western Military District
-  threat: Major training center. Zapad-2021, Zapad-2017 exercises held here. Large-scale buildup at Mulino historically precedes NATO-directed exercises. Key indicator for Western MD readiness.
+  threat: Major training center. Zapad-2021, Zapad-2017 exercises held here. Large-scale
+    buildup at Mulino historically precedes NATO-directed exercises. Key indicator
+    for Western MD readiness.
   distances:
     estonia:
       city: Tallinn
@@ -1028,7 +1076,7 @@ sites:
       city: Warsaw
       km: 1510
   relevant_regions:
-  - baltic
+  - global
 - id: Rostov-Southern-HQ
   lat: 47.2356
   lon: 39.7128
@@ -1040,7 +1088,8 @@ sites:
   unit: Southern Military District Headquarters
   branch: Ground Forces
   district: Southern Military District
-  threat: SMD HQ coordinates all operations in the southern direction including Ukraine. Command facility activity is an indicator of operational tempo.
+  threat: SMD HQ coordinates all operations in the southern direction including Ukraine.
+    Command facility activity is an indicator of operational tempo.
   distances:
     estonia:
       city: Tallinn
@@ -1058,7 +1107,7 @@ sites:
       city: Warsaw
       km: 1450
   relevant_regions:
-  - baltic
+  - global
 - id: Sevastopol-naval
   lat: 44.6178
   lon: 33.5253
@@ -1070,7 +1119,8 @@ sites:
   unit: Black Sea Fleet HQ — frigates, submarines, landing ships
   branch: Black Sea Fleet, Russian Navy
   district: Southern Military District
-  threat: Black Sea Fleet hub. Vessel movements between BSF and Baltic Fleet are tracked. Landing ship transfers from here to Baltiysk would indicate amphibious buildup.
+  threat: Black Sea Fleet hub. Vessel movements between BSF and Baltic Fleet are tracked.
+    Landing ship transfers from here to Baltiysk would indicate amphibious buildup.
   distances:
     estonia:
       city: Tallinn
@@ -1088,7 +1138,7 @@ sites:
       city: Warsaw
       km: 1250
   relevant_regions:
-  - baltic
+  - global
 - id: Saki-Novofedorovka
   lat: 45.0931
   lon: 33.5942
@@ -1100,7 +1150,9 @@ sites:
   unit: 43rd Naval Aviation Regiment — Su-24, Su-30SM
   branch: Black Sea Fleet Naval Aviation
   district: Southern Military District
-  threat: Naval aviation base in Crimea. Struck by Ukrainian attack Aug 2022 (multiple aircraft destroyed). Aircraft redeployment from here to Baltic region indicates theater shift.
+  threat: Naval aviation base in Crimea. Struck by Ukrainian attack Aug 2022 (multiple
+    aircraft destroyed). Aircraft redeployment from here to Baltic region indicates
+    theater shift.
   distances:
     estonia:
       city: Tallinn
@@ -1118,7 +1170,7 @@ sites:
       city: Warsaw
       km: 1220
   relevant_regions:
-  - baltic
+  - global
 - id: Nizhny-Tagil-UVZ
   lat: 57.9167
   lon: 59.9667
@@ -1130,7 +1182,9 @@ sites:
   unit: Uralvagonzavod — Russia's sole tank manufacturer
   branch: Defense Industry
   district: Central Military District
-  threat: Monitors tank production capacity. Satellite imagery shows production rate (tanks in outdoor holding areas). Surge production visible as increased vehicle count in marshalling yards.
+  threat: Monitors tank production capacity. Satellite imagery shows production rate
+    (tanks in outdoor holding areas). Surge production visible as increased vehicle
+    count in marshalling yards.
   distances:
     estonia:
       city: Tallinn
@@ -1148,7 +1202,7 @@ sites:
       city: Warsaw
       km: 2520
   relevant_regions:
-  - baltic
+  - global
 - id: Kapustin-Yar-range
   lat: 48.57
   lon: 46.3
@@ -1160,7 +1214,9 @@ sites:
   unit: 4th State Central Test Range — missile testing
   branch: Strategic Missile Troops / Aerospace Forces
   district: Southern Military District
-  threat: Ballistic and cruise missile test launches. Activity here indicates new missile testing or qualification of modified weapons. Launch activity detectable via FIRMS thermal signatures.
+  threat: Ballistic and cruise missile test launches. Activity here indicates new
+    missile testing or qualification of modified weapons. Launch activity detectable
+    via FIRMS thermal signatures.
   distances:
     estonia:
       city: Tallinn
@@ -1178,4 +1234,4 @@ sites:
       city: Warsaw
       km: 1830
   relevant_regions:
-  - baltic
+  - global

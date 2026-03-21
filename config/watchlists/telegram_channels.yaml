@@ -5,13 +5,16 @@ channels:
   lang: uk
   category: unverified_anonymous
   tier: T1
-  notes: '~3M subs. Anonymous. IMI: ''anonymous trash bin posting hidden ads and fake news''. Detector Media top-1 UA channel. Hype hunter.'
+  notes: '~3M subs. Anonymous. IMI: ''anonymous trash bin posting hidden ads and fake
+    news''. Detector Media top-1 UA channel. Hype hunter.'
   rationality:
     calibration: low
     updating: low
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: ukraina_online_24
   name: Україна Online
   url: https://t.me/s/ukraina_online_24
@@ -25,6 +28,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: ukraine_now_channel
   name: Україна Зараз
   url: https://t.me/s/ukraine_now_channel
@@ -38,6 +43,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: operativnoZSU
   name: Оперативний ЗСУ
   url: https://t.me/s/operativnoZSU
@@ -51,19 +58,24 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: rezident_ua
   name: Резидент UA
   url: https://t.me/s/rezident_ua
   lang: uk
   category: unverified_anonymous
   tier: T1
-  notes: 'Anonymous ''insider''. Detector Media: anonymous insider channels are common disinfo vectors.'
+  notes: 'Anonymous ''insider''. Detector Media: anonymous insider channels are common
+    disinfo vectors.'
   rationality:
     calibration: low
     updating: low
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: ds_zrada
   name: ДС | Зрада
   url: https://t.me/s/ds_zrada
@@ -77,19 +89,24 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: lachentyt
   name: Лачен пише
   url: https://t.me/s/lachentyt
   lang: uk
   category: unverified_anonymous
   tier: T1
-  notes: 855K subs. Anonymous. Top-10 UA telegram (TGStat). RFE/RL flagged for mixing info with sensationalism.
+  notes: 855K subs. Anonymous. Top-10 UA telegram (TGStat). RFE/RL flagged for mixing
+    info with sensationalism.
   rationality:
     calibration: low
     updating: low
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: insider_ua
   name: Інсайдер UA
   url: https://t.me/s/insiderUKR
@@ -103,6 +120,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: bankova_off
   name: Банкова
   url: https://t.me/s/bankova_off
@@ -116,6 +135,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: real_war_ua
   name: Real War
   url: https://t.me/s/realwarinua
@@ -129,6 +150,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: uniannet
   name: УНІАН
   url: https://t.me/s/uniannet
@@ -142,6 +165,8 @@ channels:
     evidence: medium
     uncertainty: low
     independence: medium
+  region:
+  - global
 - handle: bez_filtriv
   name: БЕЗ ФІЛЬТРІВ
   url: https://t.me/s/bez_filtriv
@@ -155,6 +180,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: nevidomy
   name: НЕВІДОМИЙ
   url: https://t.me/s/nevidomy_ua
@@ -168,19 +195,24 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: nach_shtabu
   name: Начальник Штабу
   url: https://t.me/s/nach_shtabu
   lang: uk
   category: ru_proxy
   tier: T1
-  notes: 'Spravdi: ''connection with Russian military intelligence established''. Collects military secrets under guise of UA military channel.'
+  notes: 'Spravdi: ''connection with Russian military intelligence established''.
+    Collects military secrets under guise of UA military channel.'
   rationality:
     calibration: low
     updating: low
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: ukr_noviny_war
   name: Україна⚡️Новини⚡️Війна
   url: https://t.me/s/ukr_noviny_war
@@ -194,6 +226,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: xua_war
   name: XUA-фотовойны
   url: https://t.me/s/xua_war
@@ -207,19 +241,24 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: sternenko
   name: Сергій Стерненко
   url: https://t.me/s/ssternenko
   lang: uk
   category: unverified_commentator
   tier: T1
-  notes: 240K subs. Activist-blogger, effective communicator but not a journalist. Claims should be verified independently. Detector Media top-100.
+  notes: 240K subs. Activist-blogger, effective communicator but not a journalist.
+    Claims should be verified independently. Detector Media top-100.
   rationality:
     calibration: medium
     updating: low
     evidence: low
     uncertainty: low
     independence: medium
+  region:
+  - global
 - handle: karas_ua
   name: Євген Карась
   url: https://t.me/s/yaborona
@@ -233,6 +272,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: butusov_plus
   name: Бутусов Плюс
   url: https://t.me/s/butusov_plus
@@ -246,6 +287,8 @@ channels:
     evidence: medium
     uncertainty: low
     independence: medium
+  region:
+  - global
 - handle: shevtsov
   name: Олексій Шевцов
   url: https://t.me/s/alexshevtsov
@@ -259,32 +302,40 @@ channels:
     evidence: low
     uncertainty: low
     independence: unknown
+  region:
+  - global
 - handle: gordon_channel
   name: Дмитро Гордон
   url: https://t.me/s/dmitrygordon
   lang: ru
   category: unverified_commentator
   tier: T1
-  notes: '221K subs. Journalist-interviewer, clickbait titles. Detector Media: among most popular UA channels.'
+  notes: '221K subs. Journalist-interviewer, clickbait titles. Detector Media: among
+    most popular UA channels.'
   rationality:
     calibration: low
     updating: low
     evidence: medium
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: gerashchenko
   name: Правда Геращенко
   url: https://t.me/s/Pravda_Gerashchenko
   lang: uk
   category: unverified_commentator
   tier: T1
-  notes: Advisor to Interior Minister. Kyiv Post lists as key channel. Mixes official info with emotional framing.
+  notes: Advisor to Interior Minister. Kyiv Post lists as key channel. Mixes official
+    info with emotional framing.
   rationality:
     calibration: medium
     updating: low
     evidence: medium
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: TCH_channel
   name: ТСН
   url: https://t.me/s/TCH_channel
@@ -298,6 +349,8 @@ channels:
     evidence: medium
     uncertainty: medium
     independence: low
+  region:
+  - global
 - handle: ukrainska_pravda
   name: Українська правда
   url: https://t.me/s/ukrainskaya_pravda
@@ -311,6 +364,8 @@ channels:
     evidence: high
     uncertainty: medium
     independence: medium
+  region:
+  - global
 - handle: suspilne_news
   name: Суспільне Новини
   url: https://t.me/s/suspilnenews
@@ -324,19 +379,24 @@ channels:
     evidence: high
     uncertainty: high
     independence: medium
+  region:
+  - global
 - handle: deepstatemap
   name: DeepState
   url: https://t.me/s/DeepStateUA
   lang: uk
   category: trusted
   tier: T1
-  notes: Frontline mapping, data-driven, verified methodology, cited by ISW and Western analysts
+  notes: Frontline mapping, data-driven, verified methodology, cited by ISW and Western
+    analysts
   rationality:
     calibration: high
     updating: high
     evidence: high
     uncertainty: medium
     independence: high
+  region:
+  - global
 - handle: wartranslated
   name: WarTranslated
   url: https://t.me/s/wartranslated
@@ -350,6 +410,8 @@ channels:
     evidence: high
     uncertainty: high
     independence: high
+  region:
+  - global
 - handle: milloua
   name: Мілітарний
   url: https://t.me/s/milloua
@@ -363,6 +425,8 @@ channels:
     evidence: high
     uncertainty: medium
     independence: medium
+  region:
+  - global
 - handle: spravdi
   name: Справді
   url: https://t.me/s/Spravdi
@@ -376,6 +440,8 @@ channels:
     evidence: high
     uncertainty: medium
     independence: low
+  region:
+  - global
 - handle: kyivindependent
   name: Kyiv Independent
   url: https://t.me/s/kyivindependent
@@ -389,6 +455,8 @@ channels:
     evidence: high
     uncertainty: high
     independence: high
+  region:
+  - global
 - handle: hromadske
   name: Громадське
   url: https://t.me/s/haborona
@@ -402,19 +470,24 @@ channels:
     evidence: high
     uncertainty: medium
     independence: high
+  region:
+  - global
 - handle: bihus_info
   name: Bihus.Info
   url: https://t.me/s/baborona
   lang: uk
   category: trusted
   tier: T2
-  notes: Investigative journalism, editorial standards, known for anti-corruption work
+  notes: Investigative journalism, editorial standards, known for anti-corruption
+    work
   rationality:
     calibration: high
     updating: high
     evidence: high
     uncertainty: medium
     independence: high
+  region:
+  - global
 - handle: rian_ru
   name: РИА Новости
   url: https://t.me/s/rian_ru
@@ -428,6 +501,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: rt_russian
   name: RT на русском
   url: https://t.me/s/rt_russian
@@ -441,6 +516,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: taborsky
   name: Таборский
   url: https://t.me/s/taborsky
@@ -454,6 +531,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: pul_1
   name: Пул Первого
   url: https://t.me/s/pul_1
@@ -467,6 +546,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: soloviev_live
   name: Соловьёв LIVE
   url: https://t.me/s/SosijkaPervitina
@@ -480,6 +561,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: tass_channel
   name: ТАСС
   url: https://t.me/s/taborona
@@ -493,6 +576,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: readovkanews
   name: Readovka
   url: https://t.me/s/readovkanews
@@ -506,6 +591,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: rybar
   name: Рыбарь
   url: https://t.me/s/rybar
@@ -519,6 +606,8 @@ channels:
     evidence: medium
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: dva_majors
   name: Два майора
   url: https://t.me/s/dva_majors
@@ -532,6 +621,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: voenacher
   name: Военачальник / Turned on Z War
   url: https://t.me/s/voenacher
@@ -545,6 +636,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: wargonzo
   name: WarGonzo
   url: https://t.me/s/wargonzo
@@ -558,6 +651,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: colonel_cassad
   name: Полковник Кассад (Boris Rozhin)
   url: https://t.me/s/boris_rozhin
@@ -571,19 +666,24 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: yurasumy
   name: Юрий Подоляка
   url: https://t.me/s/yurasumy
   lang: ru
   category: ru_proxy
   tier: T1
-  notes: 'Alliance for Securing Democracy list, massive audience. BBC: linked to InfoDefense network in 30+ languages.'
+  notes: 'Alliance for Securing Democracy list, massive audience. BBC: linked to InfoDefense
+    network in 30+ languages.'
   rationality:
     calibration: low
     updating: low
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: starshe_eddy
   name: Старше Эдди
   url: https://t.me/s/starshe_eddy
@@ -597,6 +697,8 @@ channels:
     evidence: medium
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: rusich_army
   name: Archangel of Special Forces Z
   url: https://t.me/s/rusich_army
@@ -610,6 +712,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: RVvoenkor
   name: Operation Z / Военкоры
   url: https://t.me/s/RVvoenkor
@@ -623,6 +727,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: warfakes
   name: Война с фейками / War on Fakes
   url: https://t.me/s/warfakes
@@ -636,6 +742,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: shot_shot
   name: SHOT
   url: https://t.me/s/shot_shot
@@ -649,6 +757,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: kotsnews
   name: Котснюз (Alexander Kots)
   url: https://t.me/s/kotsnews
@@ -662,6 +772,8 @@ channels:
     evidence: medium
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: legitimny
   name: Легітимний
   url: https://t.me/s/legitimny
@@ -675,32 +787,40 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: shariy_channel
   name: Анатолій Шарій
   url: https://t.me/s/ASuprun
   lang: ru
   category: ru_proxy
   tier: T1
-  notes: 'EU-sanctioned. Detector Media: ''pro-Russian blogger, unreliable''. 706K subs. 46% audience from Russia.'
+  notes: 'EU-sanctioned. Detector Media: ''pro-Russian blogger, unreliable''. 706K
+    subs. 46% audience from Russia.'
   rationality:
     calibration: low
     updating: low
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: montyan
   name: '#МОНТЯН!'
   url: https://t.me/s/montyan2
   lang: ru
   category: ru_proxy
   tier: T1
-  notes: 'Detector Media: 511K subs, ''promotes slogans consistent with Russian propaganda, uses derogatory terms for Ukraine'''
+  notes: 'Detector Media: 511K subs, ''promotes slogans consistent with Russian propaganda,
+    uses derogatory terms for Ukraine'''
   rationality:
     calibration: low
     updating: low
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: sheikh_tamir
   name: Шейх Тамір
   url: https://t.me/s/sheikhtamir
@@ -714,6 +834,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: vasilets
   name: Дмитрій Васілець
   url: https://t.me/s/vasilets
@@ -727,6 +849,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: baltika_nasha
   name: Балтика — наша
   url: https://t.me/s/baltika_nasha
@@ -740,6 +864,11 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - baltic
+  - estonia
+  - latvia
+  - lithuania
 - handle: estmilnews
   name: Estonian Military News
   url: https://t.me/s/estmilnews
@@ -753,19 +882,25 @@ channels:
     evidence: unknown
     uncertainty: unknown
     independence: unknown
+  region:
+  - estonia
+  - baltic
 - handle: razvedchik
   name: Розвідник
   url: https://t.me/s/razvedchik
   lang: uk
   category: ru_proxy
   tier: T1
-  notes: 'Liga.net: ''pseudo-Ukrainian channel, regularly reposts Legitimny''. Linked to RU intelligence ops.'
+  notes: 'Liga.net: ''pseudo-Ukrainian channel, regularly reposts Legitimny''. Linked
+    to RU intelligence ops.'
   rationality:
     calibration: low
     updating: low
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: povitryani_syly
   name: Повітряні Сили ЗС України
   url: https://t.me/s/kaborona
@@ -779,19 +914,25 @@ channels:
     evidence: high
     uncertainty: medium
     independence: low
+  region:
+  - global
 - handle: nexta_live
   name: NEXTA Live
   url: https://t.me/s/nexta_live
   lang: ru
   category: unverified_media
   tier: T1
-  notes: '3.1M subs. Belarusian opposition, became major UA war news source. Wikipedia: primary Telegram news during 2020 Belarus protests.'
+  notes: '3.1M subs. Belarusian opposition, became major UA war news source. Wikipedia:
+    primary Telegram news during 2020 Belarus protests.'
   rationality:
     calibration: medium
     updating: low
     evidence: low
     uncertainty: low
     independence: medium
+  region:
+  - baltic
+  - belarus_north
 - handle: ukraina_novyny
   name: 'Україна Online: Новини | Політика'
   url: https://t.me/s/ukraina_novyny
@@ -805,6 +946,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: znaborona
   name: Знай.юа
   url: https://t.me/s/znaborona
@@ -818,6 +961,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: politeka
   name: Politeka Online
   url: https://t.me/s/politekaonline
@@ -831,6 +976,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: censor_net
   name: Цензор.НЕТ
   url: https://t.me/s/caborona
@@ -844,6 +991,8 @@ channels:
     evidence: medium
     uncertainty: low
     independence: medium
+  region:
+  - global
 - handle: espreso_tv
   name: Еспресо
   url: https://t.me/s/espresotv
@@ -857,6 +1006,8 @@ channels:
     evidence: medium
     uncertainty: medium
     independence: medium
+  region:
+  - global
 - handle: pryamiy
   name: Телеканал Прямий
   url: https://t.me/s/pryamiy
@@ -870,6 +1021,8 @@ channels:
     evidence: medium
     uncertainty: medium
     independence: medium
+  region:
+  - global
 - handle: ukrinform
   name: Укрінформ
   url: https://t.me/s/ukrinform
@@ -883,6 +1036,8 @@ channels:
     evidence: medium
     uncertainty: medium
     independence: low
+  region:
+  - global
 - handle: kanal24
   name: 24 Канал
   url: https://t.me/s/kanal24ua
@@ -896,19 +1051,24 @@ channels:
     evidence: medium
     uncertainty: medium
     independence: medium
+  region:
+  - global
 - handle: infodefense_eng
   name: InfoDefense ENG
   url: https://t.me/s/infoaborona
   lang: en
   category: ru_proxy
   tier: T2
-  notes: 'DFRLab/BBC: Part of Podolyaka''s InfoDefense network, 30+ languages. Translates RU propaganda.'
+  notes: 'DFRLab/BBC: Part of Podolyaka''s InfoDefense network, 30+ languages. Translates
+    RU propaganda.'
   rationality:
     calibration: low
     updating: low
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: infodefense_pol
   name: InfoDefense POLAND
   url: https://t.me/s/InfoDefensePOLAND
@@ -922,6 +1082,8 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - poland
 - handle: infodefense_serb
   name: InfoDefense SERBIA
   url: https://t.me/s/InfoDefenseSerbia
@@ -935,16 +1097,21 @@ channels:
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global
 - handle: infodefense_de
   name: InfoDefense DEUTSCH
   url: https://t.me/s/InfoDefenseDEUTSCH
   lang: de
   category: ru_proxy
   tier: T2
-  notes: 'DFRLab: Part of Info Defense network, cross-amplification with Surf Noise and Node of Time.'
+  notes: 'DFRLab: Part of Info Defense network, cross-amplification with Surf Noise
+    and Node of Time.'
   rationality:
     calibration: low
     updating: low
     evidence: low
     uncertainty: low
     independence: low
+  region:
+  - global

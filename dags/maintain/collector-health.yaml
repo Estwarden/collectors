@@ -1,0 +1,68 @@
+name: collector-health
+description: Check all collectors reported recently, alert if any source is dead
+schedule: "0 */2 * * *"
+
+env:
+  - DATABASE_URL: "${DATABASE_URL}"
+  - TELEGRAM_BOT_TOKEN: "${TELEGRAM_BOT_TOKEN}"
+  - TELEGRAM_ADMIN_ID: "${TELEGRAM_ADMIN_ID}"
+
+steps:
+  - id: check
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import os, sys, json, urllib.request
+      import psycopg2
+
+      db_url = os.environ.get('DATABASE_URL', '')
+      bot_token = os.environ.get('TELEGRAM_BOT_TOKEN', '')
+      admin_id = os.environ.get('TELEGRAM_ADMIN_ID', '')
+
+      # Expected sources and max hours between signals
+      EXPECTED = {
+          'rss': 4, 'adsb': 1, 'ais': 1, 'firms': 12, 'gpsjam': 24,
+          'radiation': 12, 'energy': 2, 'balloon': 8, 'deepstate': 12,
+          'telegram_channel': 8, 'rss_security': 4,
+      }
+
+      if not db_url:
+          print('DATABASE_URL not set'); sys.exit(0)
+
+      conn = psycopg2.connect(db_url)
+      cur = conn.cursor()
+
+      dead = []
+      for source, max_hours in EXPECTED.items():
+          cur.execute('''
+              SELECT COUNT(*) FROM signals
+              WHERE source_type = %s AND published_at >= now() - interval '%s hours'
+          ''', (source, max_hours))
+          count = cur.fetchone()[0]
+          if count == 0:
+              dead.append(f'❌ {source} (0 signals in {max_hours}h)')
+
+      cur.close(); conn.close()
+
+      if dead:
+          msg = '⚠️ <b>EstWarden Collector Alert</b>\n\n'
+          msg += f'{len(dead)}/{len(EXPECTED)} sources offline:\n\n'
+          msg += '\n'.join(dead)
+          msg += '\n\nCheck: estwarden.sh freshness'
+          print(msg)
+
+          if bot_token and admin_id:
+              data = urllib.parse.urlencode({
+                  'chat_id': admin_id, 'text': msg, 'parse_mode': 'HTML'
+              }).encode()
+              try:
+                  urllib.request.urlopen(
+                      f'https://api.telegram.org/bot{bot_token}/sendMessage',
+                      data=data, timeout=10)
+                  print('Alert sent to admin')
+              except Exception as e:
+                  print(f'Alert send failed: {e}', file=sys.stderr)
+      else:
+          print(f'All {len(EXPECTED)} collectors healthy')
+      "
