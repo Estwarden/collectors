@@ -579,4 +579,94 @@ feeds:
   region:
   - lithuania
   - baltic
-schedule: 2h
+
+# ── Added 2026-03-21: fill undersampling gaps ──
+
+# Russian state media (new)
+- handle: ria_ru
+  name: RIA Novosti
+  source_type: rss
+  tier: T1
+  category: russian_state
+  url: https://ria.ru/export/rss2/index.xml
+  region:
+  - global
+
+- handle: lenta_ru
+  name: Lenta.ru
+  source_type: rss
+  tier: T1
+  category: russian_state
+  url: https://lenta.ru/rss
+  region:
+  - global
+
+- handle: regnum
+  name: Regnum
+  source_type: rss
+  tier: T2
+  category: russian_state
+  url: https://regnum.ru/rss
+  region:
+  - global
+
+# Russian independent (new)
+- handle: zona_media
+  name: Mediazona
+  source_type: rss
+  tier: T1
+  category: russian_independent
+  url: https://zona.media/rss
+  region:
+  - global
+
+- handle: currenttime
+  name: Nastoyashchee Vremya (RFE/RL)
+  source_type: rss
+  tier: T1
+  category: russian_independent
+  url: https://www.currenttime.tv/api/zrqiteuuir
+  region:
+  - global
+
+# Baltic media — Latvia (new)
+- handle: diena_lv
+  name: Diena.lv
+  source_type: rss
+  tier: T1
+  category: baltic_media
+  url: https://www.diena.lv/rss.xml
+  region:
+  - latvia
+  - baltic
+
+- handle: apollo_lv
+  name: Apollo.lv
+  source_type: rss
+  tier: T2
+  category: baltic_media
+  url: https://apollo.lv/rss
+  region:
+  - latvia
+  - baltic
+
+- handle: delfi_lv_rus
+  name: Delfi Latvia RUS
+  source_type: rss
+  tier: T1
+  category: russian_language_ee
+  url: https://rus.delfi.lv/rss
+  region:
+  - latvia
+  - baltic
+
+# Baltic media — Lithuania (new)
+- handle: vz_lt
+  name: Verslo Zinios
+  source_type: rss
+  tier: T2
+  category: baltic_media
+  url: https://vz.lt/rss
+  region:
+  - lithuania
+  - baltic
