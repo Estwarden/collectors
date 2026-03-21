@@ -182,7 +182,7 @@ def main():
                 "lang": ch.get("lang", ""),
             }
 
-            signals.append({
+            sig = {
                 "source_type": "telegram_channel",
                 "source_id": source_id,
                 "title": title,
@@ -190,7 +190,12 @@ def main():
                 "url": post_url,
                 "published_at": post.get("published_at") or datetime.now(timezone.utc).isoformat(),
                 "metadata": json.dumps(metadata),
-            })
+            }
+            # Pass region from channel config (geographic relevance)
+            ch_region = ch.get("region", [])
+            if ch_region:
+                sig["region"] = ",".join(ch_region) if isinstance(ch_region, list) else ch_region
+            signals.append(sig)
 
         if signals:
             try:

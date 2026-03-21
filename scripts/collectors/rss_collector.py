@@ -65,7 +65,7 @@ def fetch_feed(url, timeout=15):
         return resp.read()
 
 
-def parse_feed(xml_bytes, handle, source_type, category, tier):
+def parse_feed(xml_bytes, handle, source_type, category, tier, region=""):
     """Parse RSS/Atom XML into signal dicts."""
     signals = []
     try:
@@ -118,7 +118,7 @@ def parse_feed(xml_bytes, handle, source_type, category, tier):
 
         source_id = f"{handle}:{hashlib.sha256(guid.encode()).hexdigest()[:16]}"
 
-        signals.append({
+        sig = {
             "source_type": source_type,
             "source_id": source_id,
             "title": strip_html(title)[:500],
@@ -131,7 +131,10 @@ def parse_feed(xml_bytes, handle, source_type, category, tier):
                 "tier": tier,
                 "guid": guid[:500],
             },
-        })
+        }
+        if region:
+            sig["region"] = region
+        signals.append(sig)
 
     return signals
 
@@ -177,10 +180,12 @@ def main():
         source_type = feed.get("source_type", "rss")
         category = feed.get("category", "")
         tier = feed.get("tier", "T2")
+        region = feed.get("region", [])
+        region_str = ",".join(region) if isinstance(region, list) else (region or "")
 
         try:
             xml_bytes = fetch_feed(url)
-            signals = parse_feed(xml_bytes, handle, source_type, category, tier)
+            signals = parse_feed(xml_bytes, handle, source_type, category, tier, region_str)
 
             if signals:
                 # Submit in batches of 100
