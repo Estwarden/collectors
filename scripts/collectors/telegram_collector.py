@@ -212,3 +212,67 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# ── Telethon-based collection for restricted channels ──
+
+async def collect_via_api(channels, client_api):
+    """Collect from channels that block web preview, using Telegram API."""
+    from telethon import TelegramClient
+    from telethon.sessions import StringSession
+    import os
+
+    api_id = int(os.environ.get('TELEGRAM_API_ID', '0'))
+    api_hash = os.environ.get('TELEGRAM_API_HASH', '')
+    session_str = os.environ.get('TELEGRAM_SESSION', '')
+
+    if not api_id or not api_hash or not session_str:
+        print("Telegram API credentials not set, skipping restricted channels", file=sys.stderr)
+        return []
+
+    client = TelegramClient(StringSession(session_str), api_id, api_hash)
+    await client.start()
+
+    signals = []
+    for ch in channels:
+        handle = ch['handle']
+        try:
+            entity = await client.get_entity(handle)
+            messages = await client.get_messages(entity, limit=20)
+            for msg in messages:
+                if not msg.text or len(msg.text) < 20:
+                    continue
+
+                source_id = hashlib.sha256(f"tg:{handle}:{msg.id}".encode()).hexdigest()[:16]
+                title = msg.text[:120]
+                if len(msg.text) > 120:
+                    title = title.rsplit(" ", 1)[0] + "…"
+
+                metadata = {
+                    "channel": handle,
+                    "channel_name": ch.get("name", handle),
+                    "views": getattr(msg, 'views', 0) or 0,
+                    "category": ch.get("category", ""),
+                    "lang": ch.get("lang", ""),
+                }
+
+                sig = {
+                    "source_type": "telegram_channel",
+                    "source_id": source_id,
+                    "title": title,
+                    "content": msg.text,
+                    "url": f"https://t.me/{handle}/{msg.id}",
+                    "published_at": msg.date.isoformat() if msg.date else None,
+                    "metadata": metadata,
+                }
+                ch_region = ch.get("region", [])
+                if ch_region:
+                    sig["region"] = ",".join(ch_region) if isinstance(ch_region, list) else ch_region
+                signals.append(sig)
+
+        except Exception as e:
+            print(f"  ✗ {handle}: API error: {e}", file=sys.stderr)
+            continue
+
+    await client.disconnect()
+    return signals
