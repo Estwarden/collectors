@@ -1,0 +1,72 @@
+name: link-campaign-signals
+description: Link new narrative-tagged signals to active campaigns
+schedule: "0 */4 * * *"
+
+env:
+  - DATABASE_URL: "${DATABASE_URL}"
+
+steps:
+  - id: link
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import os, psycopg2
+
+      db_url = os.environ.get('DATABASE_URL', '')
+      if not db_url:
+          print('DATABASE_URL not set'); exit(0)
+
+      conn = psycopg2.connect(db_url)
+      cur = conn.cursor()
+
+      # Map campaign names to narrative codes
+      NAME_TO_CODE = {
+          'Russophobia': 'N1', 'War Panic': 'N2', 'Aid': 'N3',
+          'Delegitimization': 'N4', 'Isolation': 'N5', 'Separatism': 'N5',
+      }
+
+      # Get active campaigns
+      cur.execute('''
+          SELECT id, name FROM campaigns WHERE COALESCE(status, 'ACTIVE') = 'ACTIVE'
+      ''')
+      campaigns = cur.fetchall()
+
+      total_linked = 0
+      for camp_id, camp_name in campaigns:
+          # Find matching narrative code
+          code = None
+          for keyword, c in NAME_TO_CODE.items():
+              if keyword.lower() in camp_name.lower():
+                  code = c
+                  break
+          if not code:
+              continue
+
+          # Find signals with this narrative tag not yet linked to campaign
+          cur.execute('''
+              INSERT INTO campaign_signals (campaign_id, signal_id)
+              SELECT %s, nt.signal_id
+              FROM narrative_tags nt
+              JOIN signals s ON s.id = nt.signal_id
+              WHERE nt.code = %s
+                AND s.published_at >= now() - interval '7 days'
+                AND nt.signal_id NOT IN (
+                    SELECT signal_id FROM campaign_signals WHERE campaign_id = %s
+                )
+              ON CONFLICT DO NOTHING
+          ''', (camp_id, code, camp_id))
+          linked = cur.rowcount
+          if linked > 0:
+              total_linked += linked
+              print(f'  {camp_name}: +{linked} signals (code={code})')
+
+      conn.commit()
+      cur.close()
+      conn.close()
+
+      if total_linked:
+          print(f'Linked {total_linked} new signals to active campaigns')
+      else:
+          print('No new signals to link')
+      "

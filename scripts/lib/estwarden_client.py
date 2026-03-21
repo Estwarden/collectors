@@ -40,11 +40,15 @@ class EstWardenClient:
         """Submit anomaly events. Returns {"created": N}"""
         return self._post("/api/v1/ingest/anomalies", {"anomalies": anomalies})
 
-    def ingest_threat_index(self, date: str, score: float, level: str, region: str = "baltic") -> dict:
+    def ingest_threat_index(self, date: str, score: float, level: str, region: str = "baltic",
+                            components: dict = None, details: dict = None) -> dict:
         """Update threat index for a date. Region defaults to 'baltic'."""
-        return self._post("/api/v1/ingest/threat-index", {
-            "date": date, "score": score, "level": level, "region": region,
-        })
+        payload = {"date": date, "score": score, "level": level, "region": region}
+        if components:
+            payload["components"] = components
+        if details:
+            payload["details"] = details
+        return self._post("/api/v1/ingest/threat-index", payload)
 
     # ── Query ──
 

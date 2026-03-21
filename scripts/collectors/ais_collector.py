@@ -13,10 +13,18 @@ def main():
     client = EstWardenClient()
     # Use AISHub or MarineTraffic free API — simplified version
     url = "https://meri.digitraffic.fi/api/ais/v1/locations"
-    req = urllib.request.Request(url, headers={"User-Agent": "EstWarden/1.0"})
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "EstWarden/1.0",
+        "Accept": "application/json",
+        "Accept-Encoding": "gzip, deflate",
+    })
     try:
+        import gzip
         with urllib.request.urlopen(req, timeout=30) as r:
-            data = json.loads(r.read())
+            raw = r.read()
+            if r.headers.get("Content-Encoding") == "gzip":
+                raw = gzip.decompress(raw)
+            data = json.loads(raw)
     except Exception as e:
         print(f"AIS fetch error: {e}", file=sys.stderr); return
 
