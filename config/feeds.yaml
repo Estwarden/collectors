@@ -579,10 +579,6 @@ feeds:
   region:
   - lithuania
   - baltic
-
-# ── Added 2026-03-21: fill undersampling gaps ──
-
-# Russian state media (new)
 - handle: ria_ru
   name: RIA Novosti
   source_type: rss
@@ -591,7 +587,6 @@ feeds:
   url: https://ria.ru/export/rss2/index.xml
   region:
   - global
-
 - handle: lenta_ru
   name: Lenta.ru
   source_type: rss
@@ -600,7 +595,6 @@ feeds:
   url: https://lenta.ru/rss
   region:
   - global
-
 - handle: regnum
   name: Regnum
   source_type: rss
@@ -609,8 +603,6 @@ feeds:
   url: https://regnum.ru/rss
   region:
   - global
-
-# Russian independent (new)
 - handle: zona_media
   name: Mediazona
   source_type: rss
@@ -619,7 +611,6 @@ feeds:
   url: https://zona.media/rss
   region:
   - global
-
 - handle: currenttime
   name: Nastoyashchee Vremya (RFE/RL)
   source_type: rss
@@ -628,8 +619,6 @@ feeds:
   url: https://www.currenttime.tv/api/zrqiteuuir
   region:
   - global
-
-# Baltic media — Latvia (new)
 - handle: diena_lv
   name: Diena.lv
   source_type: rss
@@ -639,7 +628,6 @@ feeds:
   region:
   - latvia
   - baltic
-
 - handle: apollo_lv
   name: Apollo.lv
   source_type: rss
@@ -649,7 +637,6 @@ feeds:
   region:
   - latvia
   - baltic
-
 - handle: delfi_lv_rus
   name: Delfi Latvia RUS
   source_type: rss
@@ -659,8 +646,6 @@ feeds:
   region:
   - latvia
   - baltic
-
-# Baltic media — Lithuania (new)
 - handle: vz_lt
   name: Verslo Zinios
   source_type: rss
@@ -670,3 +655,65 @@ feeds:
   region:
   - lithuania
   - baltic
+- handle: postimees_et
+  name: Postimees (ET)
+  source_type: rss
+  tier: T1
+  category: estonian_media
+  url: https://www.postimees.ee/rss
+  region:
+  - estonia
+  - baltic
+- handle: ohtuleht_et
+  name: Ohtuleht (ET)
+  source_type: rss
+  tier: T2
+  category: estonian_media
+  url: https://www.ohtuleht.ee/rss
+  region:
+  - estonia
+  - baltic
+- handle: lsm_lv
+  name: LSM (LV)
+  source_type: rss
+  tier: T1
+  category: baltic_media
+  url: https://www.lsm.lv/rss
+  region:
+  - latvia
+  - baltic
+- handle: lv_portals
+  name: LV Portals (gov)
+  source_type: rss
+  tier: T2
+  category: government
+  url: https://lvportals.lv/rss
+  region:
+  - latvia
+  - baltic
+- handle: 15min_lt_lt
+  name: 15min (LT)
+  source_type: rss
+  tier: T1
+  category: baltic_media
+  url: https://www.15min.lt/rss
+  region:
+  - lithuania
+  - baltic
+- handle: kauno_diena
+  name: Kauno Diena
+  source_type: rss
+  tier: T2
+  category: baltic_media
+  url: https://kauno.diena.lt/rss.xml
+  region:
+  - lithuania
+  - baltic
+- handle: holod_media
+  name: Holod Media
+  source_type: rss
+  tier: T2
+  category: russian_independent
+  url: https://holod.media/feed/
+  region:
+  - global
