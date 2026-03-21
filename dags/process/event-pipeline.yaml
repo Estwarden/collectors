@@ -16,6 +16,20 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
+  - id: outrage-chains
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, json
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+      client = EstWardenClient()
+      r = client._post('/api/v1/detect/outrage-chains', {})
+      print('Outrage chains: %d detected from %d Baltic state signals → %d campaigns' % (
+          r.get('chains_detected', 0), r.get('baltic_state_signals', 0), r.get('campaigns_created', 0)))
+      "
+
   - id: embed
     shell: /bin/bash
     script: |
@@ -76,4 +90,22 @@ steps:
       r = client._post('/api/v1/process/assemble-campaigns', {})
       print('Assemble: %d hostile events → %d campaigns' % (
           r.get('hostile_events', 0), r.get('campaigns', 0)))
+      "
+
+  - id: narrative-campaigns
+    depends:
+      - assemble
+      - outrage-chains
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 -c "
+      import sys, json
+      sys.path.insert(0, 'scripts/lib')
+      from estwarden_client import EstWardenClient
+      client = EstWardenClient()
+      r = client._post('/api/v1/process/narrative-campaigns', {})
+      print('Narrative campaigns: %d events embedded, %d new campaigns, %d joined, %d named' % (
+          r.get('events_embedded', 0), r.get('new_campaigns', 0),
+          r.get('joined_existing', 0), r.get('campaigns_named', 0)))
       "
