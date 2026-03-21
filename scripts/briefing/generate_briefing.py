@@ -18,11 +18,13 @@ import urllib.parse
 from datetime import datetime, timezone
 
 ESTWARDEN_URL = os.environ.get("ESTWARDEN_URL", "http://web:8080")
-OPENAI_KEY = os.environ.get("OPENAI_API_KEY", "")
+# Prefer OpenRouter (LLM_API_KEY) over OpenAI
+LLM_API_KEY = os.environ.get("LLM_API_KEY", os.environ.get("OPENAI_API_KEY", ""))
+LLM_API_URL = os.environ.get("LLM_API_URL", "https://api.openai.com/v1/chat/completions")
 BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 CHANNEL_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
 ADMIN_ID = os.environ.get("TELEGRAM_ADMIN_ID", "")
-LLM_MODEL = os.environ.get("BRIEFING_MODEL", "gpt-4o-mini")
+LLM_MODEL = os.environ.get("BRIEFING_MODEL", "anthropic/claude-sonnet-4")
 TODAY = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
@@ -110,11 +112,11 @@ DATA:
     }).encode()
 
     req = urllib.request.Request(
-        "https://api.openai.com/v1/chat/completions",
+        LLM_API_URL,
         data=body,
         headers={
             "Content-Type": "application/json",
-            "Authorization": f"Bearer {OPENAI_KEY}"
+            "Authorization": f"Bearer {LLM_API_KEY}"
         }
     )
 
@@ -167,13 +169,57 @@ def send_telegram(text, chat_id):
         with urllib.request.urlopen(req, timeout=15) as resp:
             result = json.loads(resp.read())
             if result.get("ok"):
-                print(f"✓ Sent to {chat_id}")
+                print(f"✓ Text sent to {chat_id}")
                 return True
             else:
                 print(f"✗ Telegram error: {result}", file=sys.stderr)
                 return False
     except Exception as e:
         print(f"✗ Telegram send failed: {e}", file=sys.stderr)
+        return False
+
+
+def send_telegram_photo(png_bytes, caption, chat_id):
+    """Send photo to Telegram using multipart form data."""
+    import email.generator
+    boundary = "----BriefingBoundary"
+    body = b""
+    # photo field
+    body += f"--{boundary}\r\n".encode()
+    body += b'Content-Disposition: form-data; name="photo"; filename="briefing.png"\r\n'
+    body += b"Content-Type: image/png\r\n\r\n"
+    body += png_bytes
+    body += b"\r\n"
+    # chat_id
+    body += f"--{boundary}\r\n".encode()
+    body += b'Content-Disposition: form-data; name="chat_id"\r\n\r\n'
+    body += str(chat_id).encode()
+    body += b"\r\n"
+    # caption
+    body += f"--{boundary}\r\n".encode()
+    body += b'Content-Disposition: form-data; name="caption"\r\n\r\n'
+    body += caption.encode("utf-8")[:1024]
+    body += b"\r\n"
+    # parse_mode
+    body += f"--{boundary}\r\n".encode()
+    body += b'Content-Disposition: form-data; name="parse_mode"\r\n\r\n'
+    body += b"HTML\r\n"
+    body += f"--{boundary}--\r\n".encode()
+
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendPhoto"
+    req = urllib.request.Request(url, data=body,
+        headers={"Content-Type": f"multipart/form-data; boundary={boundary}"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            result = json.loads(resp.read())
+            if result.get("ok"):
+                print(f"✓ Photo sent to {chat_id}")
+                return True
+            else:
+                print(f"✗ Photo error: {result}", file=sys.stderr)
+                return False
+    except Exception as e:
+        print(f"✗ Photo send failed: {e}", file=sys.stderr)
         return False
 
 
@@ -190,8 +236,8 @@ def main():
     cti = data.get("cti", {})
     print(f"  CTI: {cti.get('level', '?')} ({cti.get('score', 0):.1f}/100)")
 
-    if OPENAI_KEY:
-        print(f"▸ Generating briefing via {LLM_MODEL}...")
+    if LLM_API_KEY:
+        print(f"▸ Generating briefing via {LLM_MODEL} ({LLM_API_URL.split('/')[2]})...")
         text = generate_briefing_text(data)
     else:
         print("▸ No LLM key — using fallback template...")
@@ -201,15 +247,40 @@ def main():
     print(text)
     print(f"{'─'*60}\n")
 
+    # Generate infographic
+    png_bytes = None
+    try:
+        from infographic import generate_infographic
+        print("▸ Generating infographic...")
+        png_bytes = generate_infographic(TODAY)
+        if png_bytes:
+            print(f"  Infographic: {len(png_bytes):,} bytes")
+    except Exception as e:
+        print(f"  Infographic generation failed: {e}", file=sys.stderr)
+
     if mode == "publish":
         print("▸ Publishing to channel...")
-        send_telegram(text, CHANNEL_ID)
+        if png_bytes:
+            short_caption = text[:1024] if len(text) <= 1024 else text[:1020] + "..."
+            send_telegram_photo(png_bytes, short_caption, CHANNEL_ID)
+        else:
+            send_telegram(text, CHANNEL_ID)
     elif mode == "preview":
         target = ADMIN_ID or CHANNEL_ID
         print(f"▸ Sending preview to admin ({target})...")
-        send_telegram(text, target)
+        if png_bytes:
+            short_caption = text[:1024] if len(text) <= 1024 else text[:1020] + "..."
+            send_telegram_photo(png_bytes, short_caption, target)
+        else:
+            send_telegram(text, target)
     else:
-        print("▸ Dry run — not sending.")
+        if png_bytes:
+            outfile = f"/tmp/briefing-{TODAY}.png"
+            with open(outfile, "wb") as f:
+                f.write(png_bytes)
+            print(f"▸ Dry run — saved infographic to {outfile}")
+        else:
+            print("▸ Dry run — not sending.")
 
 
 if __name__ == "__main__":
