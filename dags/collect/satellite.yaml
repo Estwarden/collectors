@@ -1,0 +1,19 @@
+# Satellite imagery collection via Google Earth Engine
+# Sentinel-2 overpass ~07:00-09:00 UTC for Baltic/RU region
+# Data available ~13:00-17:00 UTC → run at 18:00 UTC daily
+#
+# 38 sites, ~7s each in batches of 5 = ~5 min total
+# Most days: no new scene for a given site (5-day revisit)
+
+schedule: "0 18 * * *"
+
+params: LOOKBACK_DAYS=10 CLOUD_MAX=25
+
+steps:
+  - name: collect-satellite
+    command: python3 /dags/scripts/collectors/satellite_collector.py
+    env:
+      - SAT_LOOKBACK_DAYS: "{{ .Params.LOOKBACK_DAYS }}"
+      - SAT_CLOUD_MAX: "{{ .Params.CLOUD_MAX }}"
+      - SAT_BATCH_SIZE: "5"
+    output: RESULT
