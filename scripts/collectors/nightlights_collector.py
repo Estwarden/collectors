@@ -31,9 +31,9 @@ Z_SCORE_THRESHOLD = 2.0  # Report if z-score > 2 (95th percentile)
 
 def init_gee():
     """Initialize Earth Engine with service account credentials."""
-    cred_file = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+    cred_file = os.environ.get("GOOGLE_EE_KEY")
     if not cred_file:
-        print("ERROR: GOOGLE_APPLICATION_CREDENTIALS not set", file=sys.stderr)
+        print("ERROR: GOOGLE_EE_KEY not set", file=sys.stderr)
         sys.exit(1)
     
     if not os.path.exists(cred_file):
