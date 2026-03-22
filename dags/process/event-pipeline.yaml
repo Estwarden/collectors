@@ -17,7 +17,7 @@ env:
   - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
-  - id: outrage-chains
+  - id: outrage_chains
     shell: /bin/bash
     script: |
       cd /dags
@@ -93,7 +93,7 @@ steps:
           r.get('hostile_events', 0), r.get('campaigns', 0)))
       "
 
-  - id: injection-cascades
+  - id: injection_cascades
     depends:
       - cluster
     shell: /bin/bash
@@ -109,11 +109,11 @@ steps:
           r.get('candidates', 0), r.get('injections', 0), r.get('watch', 0)))
       "
 
-  - id: narrative-campaigns
+  - id: narrative_campaigns
     depends:
       - assemble
-      - outrage-chains
-      - injection-cascades
+      - outrage_chains
+      - injection_cascades
     shell: /bin/bash
     script: |
       cd /dags
@@ -128,7 +128,7 @@ steps:
           r.get('joined_existing', 0), r.get('campaigns_named', 0)))
       "
 
-  - id: narrative-velocity
+  - id: narrative_velocity
     depends:
       - cluster
     shell: /bin/bash
@@ -144,3 +144,11 @@ steps:
       for a in r.get('alerts', []):
           print('  %s: %s velocity=%s' % (a.get('topic','?')[:50], a.get('state_ratio',''), a.get('velocity','')))
       "
+
+  - id: fabrication_check
+    depends:
+      - cluster
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 processors/detect_fabrication.py --days 3 --max-clusters 30 --min-score 4

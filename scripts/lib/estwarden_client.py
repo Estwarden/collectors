@@ -90,8 +90,9 @@ class EstWardenClient:
 
     def _post(self, path, body):
         data = json.dumps(body).encode()
+        url = f"{self.base}/{path.lstrip('/')}"
         req = urllib.request.Request(
-            f"{self.base}{path}",
+            url,
             data=data,
             headers={
                 "X-Pipeline-Key": self.key,
@@ -102,8 +103,9 @@ class EstWardenClient:
         return self._do(req)
 
     def _get(self, path):
+        url = f"{self.base}/{path.lstrip('/')}"
         req = urllib.request.Request(
-            f"{self.base}{path}",
+            url,
             headers={"X-Pipeline-Key": self.key},
         )
         return self._do(req)
