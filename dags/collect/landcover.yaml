@@ -1,0 +1,18 @@
+name: collect-landcover
+description: Collect Dynamic World land cover changes at military sites
+schedule: "0 8 * * 0"
+
+env:
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+  - GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
+
+steps:
+  - id: collect
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 scripts/collectors/landcover_collector.py
+    retry_policy:
+      limit: 2
+      interval_sec: 600
