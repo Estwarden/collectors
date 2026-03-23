@@ -156,7 +156,7 @@ channels:
   name: УНІАН
   url: https://t.me/s/uniannet
   lang: uk
-  category: unverified_media
+  category: unverified_commentator
   tier: T1
   notes: News agency but sensationalist framing, clickbait headlines
   rationality:
@@ -873,7 +873,7 @@ channels:
   name: Estonian Military News
   url: https://t.me/s/estmilnews
   lang: en
-  category: unverified_media
+  category: unverified_commentator
   tier: T2
   notes: Small Baltic defense community channel
   rationality:
@@ -920,7 +920,7 @@ channels:
   name: NEXTA Live
   url: https://t.me/s/nexta_live
   lang: ru
-  category: unverified_media
+  category: unverified_commentator
   tier: T1
   notes: '3.1M subs. Belarusian opposition, became major UA war news source. Wikipedia:
     primary Telegram news during 2020 Belarus protests.'
@@ -952,7 +952,7 @@ channels:
   name: Знай.юа
   url: https://t.me/s/znaborona
   lang: uk
-  category: unverified_media
+  category: unverified_commentator
   tier: T2
   notes: Facebook removed Znaj.ua pages for fake news (IMI, 2019). Telegram presence.
   rationality:
@@ -967,7 +967,7 @@ channels:
   name: Politeka Online
   url: https://t.me/s/politekaonline
   lang: uk
-  category: unverified_media
+  category: unverified_commentator
   tier: T2
   notes: Facebook removed Politeka pages for fake news alongside Znaj.ua (IMI, 2019).
   rationality:
@@ -982,7 +982,7 @@ channels:
   name: Цензор.НЕТ
   url: https://t.me/s/caborona
   lang: uk
-  category: unverified_media
+  category: unverified_commentator
   tier: T1
   notes: Butusov's outlet. Mix of journalism and sensationalism.
   rationality:
@@ -1165,7 +1165,7 @@ channels:
   name: 5 канал
   url: https://t.me/s/channel5UA
   lang: uk
-  category: unverified_media
+  category: unverified_commentator
   tier: T2
   notes: "~50K subs. FABRICATED 'laws passed for invasion' in Bild map case."
   rationality:
@@ -1191,13 +1191,13 @@ channels:
     independence: high
   region:
   - global
-- handle: gordonua
-  name: Гордон
-  url: https://t.me/s/gordonua_com
+- handle: babchenko77
+  name: Аркадій Бабченко
+  url: https://t.me/s/babchenko77
   lang: uk
-  category: unverified_media
+  category: unverified_commentator
   tier: T2
-  notes: "Web + TG. Babchenko blog host. Narrative seed for Baltic panic."
+  notes: "Tallinn-based. Hype hunter. Published fabricated Baltic invasion panic on gordonua.com. Emotionally charged commentary, engagement-driven."
   rationality:
     calibration: medium
     updating: low
