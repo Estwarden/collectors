@@ -1115,3 +1115,94 @@ channels:
     independence: low
   region:
   - global
+# === Added 2026-03-23: Bild map case study gap analysis ===
+- handle: smolii_ukraine
+  name: Андрій Смолій
+  url: https://t.me/s/smolii_ukraine
+  lang: uk
+  category: unverified_commentator
+  tier: T1
+  notes: "392K subs. FABRICATED timeline claims in Bild map case (March 2026). Adds urgency not in source material."
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: medium
+  region:
+  - global
+- handle: Tsaplienko
+  name: ЦАПЛІЄНКО_UKRAINE FIGHTS
+  url: https://t.me/s/Tsaplienko
+  lang: uk
+  category: unverified_commentator
+  tier: T1
+  notes: "336K subs. 1+1 journalist. Amplifies without fabrication but adds dramatic framing."
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: low
+    independence: medium
+  region:
+  - global
+- handle: BerezaJuice
+  name: Борислав Береза
+  url: https://t.me/s/BerezaJuice
+  lang: uk
+  category: unverified_commentator
+  tier: T2
+  notes: "~100K subs. Ex-MP. YouTube clickbait crossposter. Engagement farming."
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: medium
+  region:
+  - global
+- handle: channel5UA
+  name: 5 канал
+  url: https://t.me/s/channel5UA
+  lang: uk
+  category: unverified_media
+  tier: T2
+  notes: "~50K subs. FABRICATED 'laws passed for invasion' in Bild map case."
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: medium
+  region:
+  - global
+- handle: portnikov
+  name: Віталій Портників
+  url: https://t.me/s/portnikov
+  lang: uk
+  category: unverified_commentator
+  tier: T2
+  notes: "~200K subs. Opinion leader. Narrative seed — plants fear framework."
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: low
+    independence: high
+  region:
+  - global
+- handle: gordonua
+  name: Гордон
+  url: https://t.me/s/gordonua_com
+  lang: uk
+  category: unverified_media
+  tier: T2
+  notes: "Web + TG. Babchenko blog host. Narrative seed for Baltic panic."
+  rationality:
+    calibration: medium
+    updating: low
+    evidence: medium
+    uncertainty: low
+    independence: medium
+  region:
+  - global
