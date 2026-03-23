@@ -1,5 +1,5 @@
 name: refresh-russia-page
-description: Regenerate /russia page from live data and push to Redis cache
+description: Update /russia page numbers from live loss data API
 schedule: "30 */2 * * *"
 env:
   - DATABASE_URL: "${DATABASE_URL}"
@@ -8,15 +8,13 @@ steps:
     shell: /bin/bash
     script: |
       cd /dags
-      HTML=$(python3 processors/refresh_russia_page.py)
+      HTML=$(python3 processors/refresh_russia_page.py 2>/dev/null)
       if [ -z "$HTML" ]; then
-        echo "ERROR: empty output from generator"
+        echo "ERROR: empty output"
         exit 1
       fi
-      # Write to Redis — pipe via redis-cli SET
       printf '%s' "$HTML" | redis-cli -h redis -x SET go:page:/russia > /dev/null
-      # Clear brand-specific caches
       for key in $(redis-cli -h redis --scan --pattern 'go:page:/russia:*'); do
         redis-cli -h redis DEL "$key" > /dev/null
       done
-      echo "Russia page updated: $(echo "$HTML" | wc -c) bytes"
+      echo "Russia page updated: $(printf '%s' "$HTML" | wc -c) bytes"
