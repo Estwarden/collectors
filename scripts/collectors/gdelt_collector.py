@@ -57,9 +57,20 @@ def main():
             req = urllib.request.Request(url, headers={"User-Agent": "EstWarden/1.0"})
             with urllib.request.urlopen(req, timeout=20) as r:
                 data = json.loads(r.read())
-        except:
-            time.sleep(12)
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                print(f"  {site_id}: rate limited, backing off 60s")
+                time.sleep(60)
+            else:
+                print(f"  {site_id}: HTTP {e.code}")
+                time.sleep(5)
             continue
+        except Exception as e:
+            print(f"  {site_id}: {e}")
+            time.sleep(5)
+            continue
+
+        time.sleep(10)  # rate limit: ~6 queries/min max
 
         for art in data.get("articles", []):
             title = art.get("title", "")
