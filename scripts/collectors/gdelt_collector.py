@@ -30,15 +30,11 @@ def load_sites(path="/dags/config/military_sites.yaml"):
     except:
         return {}
 
+# Consolidated into 2 broad queries instead of 8 per-site queries
+# to stay under GDELT rate limits (~6 req/min).
 QUERIES = [
-    ("Kaliningrad-Chkalovsk", "Kaliningrad military deployment"),
-    ("Baltiysk-naval", "Baltiysk naval fleet exercises"),
-    ("Pskov-76th-VDV", "Pskov airborne division"),
-    ("Ostrov-air-base", "Ostrov air base Russia fighter"),
-    ("Luga-6th-CAA", "Luga Russian army brigade"),
-    ("Machulishchy-Belarus", "Machulishchy Belarus military"),
-    ("Kronstadt-naval", "Kronstadt naval base Russia"),
-    ("Grodno-garrison", "Grodno Belarus military"),
+    ("baltic-mil", "Baltic military OR Kaliningrad troops OR Belarus military exercises"),
+    ("russia-near", "Pskov airborne OR Kronstadt naval OR Murmansk fleet OR Leningrad military"),
 ]
 
 def main():

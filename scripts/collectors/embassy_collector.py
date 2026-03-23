@@ -12,9 +12,7 @@ ADVISORIES = [
     ("UK", "EE", "https://www.gov.uk/foreign-travel-advice/estonia"),
     ("UK", "LV", "https://www.gov.uk/foreign-travel-advice/latvia"),
     ("UK", "LT", "https://www.gov.uk/foreign-travel-advice/lithuania"),
-    ("FI", "EE", "https://um.fi/travel-advisory/-/c/EE"),
-    ("FI", "LV", "https://um.fi/travel-advisory/-/c/LV"),
-    ("FI", "LT", "https://um.fi/travel-advisory/-/c/LT"),
+    # FI um.fi blocks automated requests (Cloudflare), removed
 ]
 
 def main():
@@ -22,7 +20,7 @@ def main():
     signals = []
     for country, target, url in ADVISORIES:
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "EstWarden/1.0"})
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (compatible; EstWarden/1.0)"})
             with urllib.request.urlopen(req, timeout=15) as r:
                 html = r.read().decode("utf-8", errors="replace")
             text = re.sub(r'<[^>]+>', ' ', html)
@@ -41,6 +39,8 @@ def main():
             print(f"  {country}→{target}: {e}", file=sys.stderr)
     if signals:
         result = client.ingest_signals(signals)
-        print(f"Embassy: {result['inserted']} advisories")
+        print(f"Embassy: {result.get('inserted', 0)} advisories")
+    else:
+        print("Embassy: 0 advisories fetched")
 
 if __name__ == "__main__": main()
