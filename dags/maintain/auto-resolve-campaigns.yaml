@@ -1,0 +1,34 @@
+name: auto-resolve-campaigns
+description: Resolve stale/evidence-free ACTIVE campaigns
+schedule: "0 */6 * * *"
+env:
+  - DATABASE_URL: "${DATABASE_URL}"
+steps:
+  - id: resolve
+    shell: /bin/bash
+    script: |
+      psql "$DATABASE_URL" -c "
+        UPDATE campaigns
+        SET status = 'RESOLVED'
+        WHERE status = 'ACTIVE'
+          AND (
+            (SELECT COUNT(*) FROM campaign_signals cs WHERE cs.campaign_id = campaigns.id) = 0
+            OR detection_method IS NULL
+            OR detection_method = ''
+          )
+      "
+      echo "Resolved evidence-free campaigns"
+
+      psql "$DATABASE_URL" -c "
+        UPDATE campaigns
+        SET status = 'RESOLVED'
+        WHERE status = 'ACTIVE'
+          AND detected_at < now() - interval '5 days'
+          AND NOT EXISTS (
+            SELECT 1 FROM campaign_signals cs
+            JOIN signals s ON s.id = cs.signal_id
+            WHERE cs.campaign_id = campaigns.id
+              AND s.published_at > now() - interval '48 hours'
+          )
+      "
+      echo "Resolved campaigns with no recent signals"
