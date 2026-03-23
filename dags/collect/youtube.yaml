@@ -9,7 +9,7 @@ steps:
   - id: collect
     shell: /bin/bash
     script: |
-      cd /dags && python3 scripts/collectors/youtube_collector.py
+      cd /dags && python3 scripts/collectors/youtube_collector.py --config /dags/config/watchlists/youtube_channels.yaml --hours 24
     retry_policy:
       limit: 1
       interval_sec: 300
