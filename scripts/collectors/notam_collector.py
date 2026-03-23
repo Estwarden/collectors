@@ -13,12 +13,13 @@ def main():
         data = json.loads(r.read())
 
     signals = []
-    for zone in data.get("ConflictZones", data if isinstance(data, list) else []):
+    zones = data.get("conflict_zones") or data.get("ConflictZones") or (data if isinstance(data, list) else [])
+    for zone in zones:
         nid = zone.get("Nid", zone.get("nid", ""))
-        title = zone.get("Title", zone.get("title", "CZIB"))
+        title = zone.get("name", zone.get("Title", zone.get("title", "CZIB")))
         issued = zone.get("issued_date", zone.get("IssuedDate", ""))
         valid = zone.get("valid_until_date", zone.get("ValidUntil", ""))
-        body = zone.get("Body", zone.get("body", ""))
+        body = zone.get("Body", zone.get("body", zone.get("field_easa_valid_until_descr", "")))
 
         signals.append({
             "source_type": "notam", "source_id": f"easa:czib:{nid}",
@@ -29,6 +30,8 @@ def main():
         })
     if signals:
         result = client.ingest_signals(signals)
-        print(f"NOTAMs: {result['inserted']} CZIBs")
+        print(f"NOTAMs: {result.get('inserted', 0)} CZIBs ingested ({len(signals)} parsed)")
+    else:
+        print("NOTAMs: 0 zones parsed from EASA")
 
 if __name__ == "__main__": main()
