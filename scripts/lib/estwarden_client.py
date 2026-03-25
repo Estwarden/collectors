@@ -4,6 +4,11 @@ Usage:
     from estwarden_client import EstWardenClient
     client = EstWardenClient()  # reads ESTWARDEN_API_URL + ESTWARDEN_API_KEY from env
     result = client.ingest_signals([{...}, ...])
+
+Queue mode (optional):
+    Set ESTWARDEN_QUEUE_MODE=1 and REDIS_URL=redis://redis:6379
+    to LPUSH signal batches to Redis instead of HTTP POST.
+    The ingest service BRPOP-s and inserts at its own pace.
 """
 
 import json
@@ -12,12 +17,32 @@ import sys
 import urllib.request
 import urllib.error
 
+_redis_client = None
+
+
+def _get_redis():
+    """Lazy-init Redis connection for queue mode."""
+    global _redis_client
+    if _redis_client is not None:
+        return _redis_client
+    try:
+        import redis as _redis_mod
+        url = os.environ.get("REDIS_URL", "redis://redis:6379")
+        _redis_client = _redis_mod.from_url(url, socket_timeout=5)
+        _redis_client.ping()
+        return _redis_client
+    except Exception as e:
+        print(f"Queue mode Redis init failed: {e}", file=sys.stderr)
+        _redis_client = False  # sentinel: don't retry
+        return None
+
 
 class EstWardenClient:
     def __init__(self, base_url=None, api_key=None):
         self.base = (base_url or os.environ.get("ESTWARDEN_API_URL", "")).rstrip("/")
         self.key = api_key or os.environ.get("ESTWARDEN_API_KEY", "")
-        if not self.base:
+        self.queue_mode = os.environ.get("ESTWARDEN_QUEUE_MODE", "") in ("1", "true", "yes")
+        if not self.base and not self.queue_mode:
             raise ValueError("ESTWARDEN_API_URL not set")
         if not self.key:
             raise ValueError("ESTWARDEN_API_KEY not set")
@@ -25,7 +50,15 @@ class EstWardenClient:
     # ── Ingest ──
 
     def ingest_signals(self, signals: list) -> dict:
-        """Submit signals. Returns {"inserted": N, "duplicates": N, "errors": [...]}"""
+        """Submit signals. Uses Redis queue if ESTWARDEN_QUEUE_MODE=1, else HTTP POST."""
+        if self.queue_mode:
+            rdb = _get_redis()
+            if rdb:
+                batch = json.dumps({"pipeline_key": self.key, "signals": signals})
+                rdb.lpush("ingest:queue:signals", batch)
+                return {"queued": len(signals)}
+            # Fallback to HTTP if Redis unavailable
+            print("Queue mode fallback to HTTP", file=sys.stderr)
         return self._post("/api/v1/ingest/signals", {"signals": signals})
 
     def ingest_tags(self, tags: list) -> dict:
