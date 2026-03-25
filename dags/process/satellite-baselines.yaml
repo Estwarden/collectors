@@ -1,0 +1,17 @@
+name: satellite-baselines
+description: Build 3-year seasonal spectral profiles for military sites via Earth Engine
+# Weekly — heavy EE query, ~5-10 min
+schedule: "0 6 * * 0"
+
+env:
+  - DATABASE_URL: "${DATABASE_URL}"
+  - GCP_PROJECT: "${GCP_PROJECT}"
+  - GCP_SERVICE_ACCOUNT: "${GCP_SERVICE_ACCOUNT}"
+  - GOOGLE_EE_KEY: "${GOOGLE_EE_KEY}"
+
+steps:
+  - id: compute
+    command: python3 -u /dags/processors/satellite_baselines.py
+    retry_policy:
+      limit: 1
+      interval_sec: 600
