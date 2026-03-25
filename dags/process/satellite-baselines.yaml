@@ -8,6 +8,7 @@ env:
   - GCP_PROJECT: "${GCP_PROJECT}"
   - GCP_SERVICE_ACCOUNT: "${GCP_SERVICE_ACCOUNT}"
   - GOOGLE_EE_KEY: "${GOOGLE_EE_KEY}"
+  - SITES_CONFIG: "/dags/config/military_sites.yaml"
 
 steps:
   - id: compute
