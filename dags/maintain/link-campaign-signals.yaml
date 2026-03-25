@@ -15,3 +15,6 @@ steps:
       echo "DISABLED: link-campaign-signals is retired."
       echo "Campaigns link signals at detection time only."
       echo "The old linker caused 468 irrelevant signals in 3 campaigns."
+    retry_policy:
+      limit: 2
+      interval_sec: 60

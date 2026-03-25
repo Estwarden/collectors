@@ -41,3 +41,6 @@ steps:
       else:
           print('No campaigns detected')
       "
+    retry_policy:
+      limit: 2
+      interval_sec: 60

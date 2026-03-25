@@ -48,3 +48,6 @@ steps:
       else:
           print('No anomalies detected')
       "
+    retry_policy:
+      limit: 2
+      interval_sec: 60

@@ -66,3 +66,6 @@ steps:
       else:
           print(f'All {len(EXPECTED)} collectors healthy')
       "
+    retry_policy:
+      limit: 2
+      interval_sec: 60

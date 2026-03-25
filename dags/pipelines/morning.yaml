@@ -44,3 +44,6 @@ steps:
   - id: log_complete
     command: echo "Morning pipeline complete at $(date)"
     depends: [generate_report]
+    retry_policy:
+      limit: 2
+      interval_sec: 60
