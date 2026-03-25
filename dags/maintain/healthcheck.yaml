@@ -3,8 +3,7 @@ description: Check signal freshness and alert on stale sources
 schedule: "45 */2 * * *"
 
 env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+  - DATABASE_URL: "${DATABASE_URL}"
 
 steps:
   - id: check_freshness
@@ -13,24 +12,50 @@ steps:
       cd /dags
       python3 -c "
       import sys, os
-      sys.path.insert(0, 'scripts/lib')
-      from estwarden_client import EstWardenClient
-      client = EstWardenClient()
-      baselines = client.query_baselines()
+      import psycopg2
+
+      db_url = os.environ.get('DATABASE_URL', '')
+      if not db_url:
+          print('DATABASE_URL not set')
+          sys.exit(0)
+
+      # Keep this aligned with collector-health.
+      # Use collected_at-based freshness and only monitor actively scheduled operational sources.
+      EXPECTED = {
+          'rss': 4,
+          'adsb': 1,
+          'ais': 1,
+          'firms': 12,
+          'gpsjam': 24,
+          'radiation': 12,
+          'energy': 2,
+          'balloon': 8,
+          'deepstate': 12,
+          'telegram_channel': 8,
+          'rss_security': 4,
+      }
+
+      conn = psycopg2.connect(db_url)
+      cur = conn.cursor()
       stale = []
-      for b in baselines:
-          # If current 24h count is less than 10% of mean, it's stale
-          mean = b.get('mean_7d', 0)
-          current = b.get('current_24h', 0)
-          if mean > 5 and current < mean * 0.1:
-              stale.append(f\"{b['source_type']}: {current} signals (avg {mean:.0f})\")
+      for source, max_hours in EXPECTED.items():
+          cur.execute('''
+              SELECT COUNT(*) FROM signals
+              WHERE source_type = %s
+                AND COALESCE(collected_at, published_at) >= now() - (%s || ' hours')::interval
+          ''', (source, max_hours))
+          count = cur.fetchone()[0]
+          if count == 0:
+              stale.append(f\"{source}: 0 collected signals in {max_hours}h\")
+      cur.close(); conn.close()
+
       if stale:
           print('STALE SOURCES:')
           for s in stale:
               print(f'  ⚠ {s}')
           sys.exit(1)
       else:
-          print('All sources healthy')
+          print(f'All {len(EXPECTED)} sources healthy')
       "
     retry_policy:
       limit: 2
