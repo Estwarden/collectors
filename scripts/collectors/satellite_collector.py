@@ -17,6 +17,9 @@ Env:
     SAT_LOOKBACK_DAYS    — days to search for cloud-free imagery (default: 10)
     SAT_CLOUD_MAX        — max cloud cover percentage (default: 25)
     SAT_BATCH_SIZE       — sites per batch (default: 5)
+    SAT_THUMB_DIM        — thumbnail dimension in px (default: 1024)
+    SAT_HTTP_RETRIES     — HTTP retry attempts for EE/download/post (default: 3)
+    SAT_HTTP_TIMEOUT     — HTTP timeout seconds (default: 60)
 """
 
 import base64
@@ -55,10 +58,29 @@ _oauth.refresh(_gatr.Request())
 LOOKBACK = int(os.environ.get("SAT_LOOKBACK_DAYS", "10"))
 CLOUD_MAX = int(os.environ.get("SAT_CLOUD_MAX", "25"))
 BATCH_SIZE = int(os.environ.get("SAT_BATCH_SIZE", "5"))
+THUMB_DIM = int(os.environ.get("SAT_THUMB_DIM", "1024"))
+HTTP_RETRIES = int(os.environ.get("SAT_HTTP_RETRIES", "3"))
+HTTP_TIMEOUT = int(os.environ.get("SAT_HTTP_TIMEOUT", "60"))
 
 sites_path = os.environ.get("SITES_CONFIG", "/dags/config/military_sites.yaml")
 with open(sites_path) as f:
     SITES = yaml.safe_load(f)["sites"]
+
+
+def fetch_bytes(url: str, headers: dict | None = None, timeout: int = HTTP_TIMEOUT, label: str = "request") -> bytes:
+    """Fetch bytes with simple retry/backoff for flaky EE/network responses."""
+    last_err = None
+    for attempt in range(1, HTTP_RETRIES + 1):
+        try:
+            return urlopen(Request(url, headers=headers or {}), timeout=timeout).read()
+        except Exception as e:
+            last_err = e
+            if attempt >= HTTP_RETRIES:
+                break
+            wait = min(5 * attempt, 15)
+            print(f"    {label} retry {attempt}/{HTTP_RETRIES} after error: {e}", file=sys.stderr)
+            time.sleep(wait)
+    raise last_err
 
 
 def get_thumbnail(lat: float, lon: float) -> tuple:
@@ -89,16 +111,17 @@ def get_thumbnail(lat: float, lon: float) -> tuple:
         props["system:time_start"] / 1000
     ).strftime("%Y-%m-%d")
 
-    # True color with contrast enhancement — 2048px for max detail
+    # True color with contrast enhancement.
+    # Keep thumbnails modest for reliability; Sentinel-2 is still a 10m source.
     vis = img.select(["B4", "B3", "B2"]).visualize(min=300, max=4000, gamma=1.3)
-    url = vis.getThumbURL({"region": region, "dimensions": 2048, "format": "jpg"})
+    url = vis.getThumbURL({"region": region, "dimensions": THUMB_DIM, "format": "jpg"})
 
     # Refresh token if needed
     if not _oauth.valid:
         _oauth.refresh(_gatr.Request())
 
     headers = {"Authorization": "Bearer %s" % _oauth.token}
-    data = urlopen(Request(url, headers=headers), timeout=30).read()
+    data = fetch_bytes(url, headers=headers, label=f"thumbnail {scene_date}")
     return data, scene_date
 
 
@@ -152,7 +175,9 @@ def get_sar_change(lat: float, lon: float) -> dict:
 def compute_indices_ee(lat: float, lon: float) -> dict:
     """Compute spectral indices server-side in Earth Engine.
 
-    Returns dict with current values + year-over-year deltas.
+    Returns dict with current values, snow fraction, and seasonally-adjusted deltas.
+    Uses 3-year same-month median as baseline to reduce interannual weather noise.
+    Snow pixels (SCL=11) are masked before index computation.
     """
     try:
         point = ee.Geometry.Point(lon, lat)
@@ -170,16 +195,33 @@ def compute_indices_ee(lat: float, lon: float) -> dict:
             .first()
         )
 
-        # Same month last year (YoY baseline)
-        yoy_start = (now.replace(year=now.year - 1) - timedelta(days=15)).strftime("%Y-%m-%d")
-        yoy_end = (now.replace(year=now.year - 1) + timedelta(days=15)).strftime("%Y-%m-%d")
-        baseline = (
-            ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED")
-            .filterBounds(point)
-            .filterDate(yoy_start, yoy_end)
-            .filter(ee.Filter.lt("CLOUDY_PIXEL_PERCENTAGE", 30))
-            .median()
-        )
+        # Snow detection from SCL band (Scene Classification Layer)
+        # SCL=11 is snow/ice, SCL=6 is water
+        scl = img.select("SCL")
+        snow_mask = scl.eq(11)
+        cloud_mask = scl.gte(8).And(scl.lte(10))  # 8=cloud_medium, 9=cloud_high, 10=cirrus
+        snow_pct = snow_mask.reduceRegion(ee.Reducer.mean(), region, 20, maxPixels=MP).getInfo()
+        snow_frac = round((snow_pct.get("SCL", 0) or 0) * 100, 1)
+
+        # Mask snow + clouds for index computation
+        valid_mask = snow_mask.Not().And(cloud_mask.Not())
+        img_masked = img.updateMask(valid_mask)
+
+        # 3-year same-month median baseline (seasonally adjusted)
+        month = now.month
+        baselines = []
+        for yr_offset in [1, 2, 3]:
+            yr = now.year - yr_offset
+            start = "%d-%02d-01" % (yr, month)
+            end_m = month + 1 if month < 12 else 1
+            end_y = yr if month < 12 else yr + 1
+            end = "%d-%02d-01" % (end_y, end_m)
+            baselines.append(
+                ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED")
+                .filterBounds(point).filterDate(start, end)
+                .filter(ee.Filter.lt("CLOUDY_PIXEL_PERCENTAGE", 30))
+            )
+        baseline = ee.ImageCollection(baselines[0].merge(baselines[1]).merge(baselines[2])).median()
 
         def idx(im):
             B2, B3, B4, B8 = im.select("B2"), im.select("B3"), im.select("B4"), im.select("B8")
@@ -193,7 +235,7 @@ def compute_indices_ee(lat: float, lon: float) -> dict:
             active = ndbi.gt(0).And(bsi.gt(0)).rename("active")
             return ndvi.addBands([ndbi, bsi, fuel, metal, active])
 
-        cur = idx(img)
+        cur = idx(img_masked)
         bas = idx(baseline)
         delta = (cur.select(["ndvi", "ndbi", "bsi"])
                  .subtract(bas.select(["ndvi", "ndbi", "bsi"]))
@@ -210,9 +252,10 @@ def compute_indices_ee(lat: float, lon: float) -> dict:
             "fuel_pct": round((stats.get("fuel", 0) or 0) * 100, 2),
             "metal_pct": round((stats.get("metal", 0) or 0) * 100, 2),
             "active_pct": round((stats.get("active", 0) or 0) * 100, 2),
-            "yoy_ndvi": round(stats.get("d_ndvi", 0) or 0, 4),
-            "yoy_ndbi": round(stats.get("d_ndbi", 0) or 0, 4),
-            "yoy_bsi": round(stats.get("d_bsi", 0) or 0, 4),
+            "snow_pct": snow_frac,
+            "delta_ndvi": round(stats.get("d_ndvi", 0) or 0, 4),
+            "delta_ndbi": round(stats.get("d_ndbi", 0) or 0, 4),
+            "delta_bsi": round(stats.get("d_bsi", 0) or 0, 4),
         }
     except Exception as e:
         print("  Indices error: %s" % e, file=sys.stderr)
@@ -246,8 +289,20 @@ def post_to_ingest(site_id, lat, lon, thumb_b64, scene_date, sar, country, site_
             "X-Pipeline-Key": api_key,
         },
     )
-    resp = urllib.request.urlopen(req, timeout=60)
-    return json.loads(resp.read())
+
+    last_err = None
+    for attempt in range(1, HTTP_RETRIES + 1):
+        try:
+            resp = urllib.request.urlopen(req, timeout=HTTP_TIMEOUT)
+            return json.loads(resp.read())
+        except Exception as e:
+            last_err = e
+            if attempt >= HTTP_RETRIES:
+                break
+            wait = min(3 * attempt, 10)
+            print(f"    ingest retry {attempt}/{HTTP_RETRIES} after error: {e}", file=sys.stderr)
+            time.sleep(wait)
+    raise last_err
 
 
 def main():
