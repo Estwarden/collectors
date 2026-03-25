@@ -33,15 +33,18 @@ steps:
       conn = psycopg2.connect(db_url)
       cur = conn.cursor()
 
+      # Freshness should use collected_at, not published_at.
+      # Many collectors preserve upstream event/source timestamps (e.g. GPSJam daily snapshots,
+      # FIRMS hotspot event time, GDELT article seen date), which can make healthy collectors look stale.
       dead = []
       for source, max_hours in EXPECTED.items():
           cur.execute('''
               SELECT COUNT(*) FROM signals
-              WHERE source_type = %s AND published_at >= now() - interval '%s hours'
+              WHERE source_type = %s AND collected_at >= now() - (%s || ' hours')::interval
           ''', (source, max_hours))
           count = cur.fetchone()[0]
           if count == 0:
-              dead.append(f'❌ {source} (0 signals in {max_hours}h)')
+              dead.append(f'❌ {source} (0 collected signals in {max_hours}h)')
 
       cur.close(); conn.close()
 
