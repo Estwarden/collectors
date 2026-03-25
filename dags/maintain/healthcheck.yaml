@@ -32,3 +32,6 @@ steps:
       else:
           print('All sources healthy')
       "
+    retry_policy:
+      limit: 2
+      interval_sec: 60

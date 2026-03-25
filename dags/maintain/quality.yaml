@@ -14,3 +14,6 @@ steps:
       headers:
         X-Pipeline-Key: "${ESTWARDEN_API_KEY}"
       timeout: 120
+    retry_policy:
+      limit: 2
+      interval_sec: 60

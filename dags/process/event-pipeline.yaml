@@ -152,3 +152,6 @@ steps:
     script: |
       cd /dags
       python3 processors/detect_fabrication.py --days 3 --max-clusters 30 --min-score 4
+    retry_policy:
+      limit: 2
+      interval_sec: 60
