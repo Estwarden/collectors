@@ -12,7 +12,7 @@ steps:
       limit: 1
       interval_sec: 60
 
-  - id: flush-cache
+  - id: flush_cache
     shell: /bin/bash
     script: |
       # Clear cached pages so dashboard shows fresh data
