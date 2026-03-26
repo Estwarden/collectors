@@ -1,12 +1,6 @@
 name: compute-threat-index
 description: Compute per-region Composite Threat Index from signals + campaigns + narratives
 schedule: "15 */3 * * *"
-
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-  - DATABASE_URL: "${DATABASE_URL}"
-
 steps:
   - id: compute
     shell: /bin/bash

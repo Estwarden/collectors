@@ -1,12 +1,6 @@
 name: detect-narrative-amplification
 description: Detect when RU state narratives are amplified by untrusted/commentator channels
 schedule: "15 */4 * * *"
-
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-  - DATABASE_URL: "${DATABASE_URL}"
-
 steps:
   - id: detect
     shell: /bin/bash

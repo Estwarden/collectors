@@ -1,8 +1,6 @@
 name: refresh-russia-page
 description: Update /russia page numbers from live loss data API
 schedule: "30 */2 * * *"
-env:
-  - DATABASE_URL: "${DATABASE_URL}"
 steps:
   - id: regenerate
     shell: /bin/bash

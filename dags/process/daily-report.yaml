@@ -1,10 +1,6 @@
 name: generate-daily-report
 description: Generate minimal fail-closed daily report from current collector state + CTI
 schedule: "25 */3 * * *"
-
-env:
-  - DATABASE_URL: "${DATABASE_URL}"
-
 steps:
   - id: generate_report
     shell: /bin/bash
