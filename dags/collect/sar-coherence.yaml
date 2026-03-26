@@ -1,12 +1,6 @@
 name: collect-sar-coherence
 description: Collect Sentinel-1 SAR coherence anomalies at military sites
 schedule: "0 */12 * * *"
-
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-  - GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
-
 steps:
   - id: collect
     shell: /bin/bash

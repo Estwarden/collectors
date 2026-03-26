@@ -1,11 +1,6 @@
 name: collect-milwatch
 description: Ukrainian USF Grouping killboard (sbs-group.army) — unit-level combat stats
 schedule: "0 */6 * * *"
-
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-
 steps:
   - name: collect
     shell: /bin/bash

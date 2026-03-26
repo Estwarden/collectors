@@ -1,12 +1,6 @@
 name: collect-firms
 description: Collect NASA FIRMS thermal anomalies
 schedule: "0 */6 * * *"
-
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-  - FIRMS_MAP_KEY: "${FIRMS_MAP_KEY}"
-
 steps:
   - id: collect
     shell: /bin/bash

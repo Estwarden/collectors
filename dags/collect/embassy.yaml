@@ -1,9 +1,6 @@
 name: collect-embassy
 description: Collect travel advisories from US, UK, FI for Baltic states
 schedule: "0 6 * * *"
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 steps:
   - id: collect
     shell: /bin/bash

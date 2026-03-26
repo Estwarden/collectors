@@ -1,11 +1,6 @@
 name: collect-gdelt
 description: Collect GDELT military news near bases
 schedule: "0 */4 * * *"
-
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-
 steps:
   - id: collect
     shell: /bin/bash

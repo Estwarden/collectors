@@ -1,11 +1,6 @@
 name: collect-sanctions
 description: Sync OpenSanctions dataset
 schedule: "0 3 * * 1"
-
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-
 steps:
   - id: collect
     shell: /bin/bash
