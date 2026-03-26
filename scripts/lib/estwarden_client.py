@@ -56,7 +56,7 @@ class EstWardenClient:
             if rdb:
                 batch = json.dumps({"pipeline_key": self.key, "signals": signals})
                 rdb.lpush("ingest:queue:signals", batch)
-                return {"queued": len(signals)}
+                return {"inserted": len(signals), "queued": len(signals)}
             # Fallback to HTTP if Redis unavailable
             print("Queue mode fallback to HTTP", file=sys.stderr)
         return self._post("/api/v1/ingest/signals", {"signals": signals})
