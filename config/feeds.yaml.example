@@ -1,0 +1,20 @@
+# RSS/Atom feed configuration
+# Copy to feeds.yaml and populate with your feeds.
+#
+# Each entry:
+#   handle: unique identifier
+#   name: display name
+#   source_type: rss | rss_security
+#   tier: T1 | T2 | T3
+#   category: counter_disinfo | estonian_media | russian_state | etc.
+#   url: feed URL
+#   region: [list of target regions]
+feeds:
+  - handle: example_feed
+    name: Example Feed
+    source_type: rss
+    tier: T1
+    category: estonian_media
+    url: https://example.com/feed/
+    region:
+      - global

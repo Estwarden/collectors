@@ -3,3 +3,19 @@ __pycache__/
 .env
 *.key.json
 .venv/
+
+# ============================================================
+# OPSEC: This is a PUBLIC repo — never commit sensitive configs
+# ============================================================
+# Collection targets
+config/feeds.yaml
+config/military_sites.yaml
+config/watchlists/
+
+# Detection methodology
+config/narrative_taxonomy.yaml
+config/source-credibility.json
+
+# Enrichment processors (contain detection logic, CTI weights, DB queries)
+scripts/processors/*.py
+!scripts/processors/README.md
