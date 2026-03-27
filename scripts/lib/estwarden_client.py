@@ -113,6 +113,25 @@ class EstWardenClient:
         resp = self._get(f"/api/v1/query/baselines{params}")
         return resp.get("baselines", [])
 
+    # ── CTI + Report ──
+
+    def query_cti_input(self) -> dict:
+        """Get all data needed for CTI computation in one call."""
+        return self._get("/api/v1/query/cti-input")
+
+    def write_report(self, date: str, threat_level: str, raw_intel: str, summary: str,
+                     cti_score: float, cti_level: str, cti_trend: str,
+                     indicators: list = None) -> dict:
+        """Write or update a daily report with indicators."""
+        payload = {
+            "date": date, "threat_level": threat_level,
+            "raw_intel": raw_intel, "summary": summary,
+            "cti_score": cti_score, "cti_level": cti_level, "cti_trend": cti_trend,
+        }
+        if indicators:
+            payload["indicators"] = indicators
+        return self._post("/api/v1/process/write-report", payload)
+
     # ── Detection ──
 
     def detect_campaigns(self) -> dict:
