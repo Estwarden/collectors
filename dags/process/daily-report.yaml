@@ -4,6 +4,11 @@ schedule: "25 */3 * * *"
 steps:
   - id: generate_report
     shell: /bin/bash
+    env:
+      ESTWARDEN_API_URL: "http://ingest:8090"
+      ESTWARDEN_API_KEY: "pk_dagu_1774421283987144282"
+      ESTWARDEN_QUEUE_MODE: "1"
+      DATABASE_URL: "postgresql://estwarden:estwarden@postgres:5432/estwarden"
     script: |
       cd /dags
       python3 processors/report_generator.py

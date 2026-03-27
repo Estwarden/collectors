@@ -4,6 +4,11 @@ schedule: "15 */3 * * *"
 steps:
   - id: translate_extract
     shell: /bin/bash
+    env:
+      ESTWARDEN_API_URL: "http://ingest:8090"
+      ESTWARDEN_API_KEY: "pk_dagu_1774421283987144282"
+      ESTWARDEN_QUEUE_MODE: "1"
+      GOOGLE_APPLICATION_CREDENTIALS: "/dags/config/google-tts-key.json"
     script: |
       pip install cryptography -q 2>/dev/null
       cd /dags

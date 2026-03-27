@@ -4,6 +4,10 @@ schedule: "0 * * * *"
 steps:
   - id: fetch_prices
     command: python3 /dags/scripts/collectors/energy_collector.py
+    env:
+      ESTWARDEN_API_URL: "http://ingest:8090"
+      ESTWARDEN_API_KEY: "pk_dagu_1774421283987144282"
+      DATABASE_URL: "postgresql://estwarden:estwarden@postgres:5432/estwarden"
     retry_policy:
       limit: 2
       interval_sec: 120
