@@ -119,6 +119,10 @@ class EstWardenClient:
         """Get all data needed for CTI computation in one call."""
         return self._get("/api/v1/query/cti-input")
 
+    def query_report_data(self, region: str = "baltic") -> dict:
+        """Get all data needed for daily report generation."""
+        return self._get(f"/api/v1/query/report-data?region={region}")
+
     def write_report(self, date: str, threat_level: str, raw_intel: str, summary: str,
                      cti_score: float, cti_level: str, cti_trend: str,
                      indicators: list = None) -> dict:
