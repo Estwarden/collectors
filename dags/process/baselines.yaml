@@ -1,11 +1,6 @@
 name: compute-baselines
 description: Detect anomalies by comparing current signals against 7-day rolling baselines
 schedule: "15 9,15,21 * * *"
-
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-
 steps:
   - id: detect_anomalies
     shell: /bin/bash

@@ -12,10 +12,8 @@ steps:
       limit: 1
       interval_sec: 60
 
-  - id: flush-cache
+  - id: flush_cache
     shell: /bin/bash
     script: |
       # Clear cached pages so dashboard shows fresh data
       redis-cli -h redis DEL dashboard:page:cache intelligence:page:cache 2>/dev/null || true
-    depends:
-      - regenerate

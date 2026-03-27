@@ -1,11 +1,6 @@
 name: collect-balloons
 description: Collect weather balloon data from SondeHub API (Baltic region)
 schedule: "0 */4 * * *"
-
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-
 steps:
   - id: fetch_sondehub
     shell: /bin/bash

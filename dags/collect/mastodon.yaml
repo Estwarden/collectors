@@ -1,9 +1,6 @@
 name: collect-mastodon
 description: Fediverse defense and OSINT community posts
 schedule: "0 */3 * * *"
-env:
-  - ESTWARDEN_API_URL: ""
-  - ESTWARDEN_API_KEY: ""
 steps:
   - id: collect
     shell: /bin/bash

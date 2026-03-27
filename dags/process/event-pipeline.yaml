@@ -11,11 +11,6 @@ description: |
 
 schedule: "30 */2 * * *"
 type: graph
-
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-
 steps:
   - id: outrage_chains
     shell: /bin/bash

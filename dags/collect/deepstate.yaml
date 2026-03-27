@@ -1,11 +1,6 @@
 name: collect-deepstate
 description: Collect frontline data from deepstate.live
 schedule: "5 2,8,14,20 * * *"
-
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-
 steps:
   - id: fetch_frontline
     shell: /bin/bash

@@ -7,11 +7,6 @@ description: |
   Also records narrative origins (who posted first per cluster).
   Cost: ~$0.01/day (1 Gemini call per multi-cat cluster).
 schedule: "45 */4 * * *"
-
-env:
-  - DATABASE_URL: "${DATABASE_URL}"
-  - GOOGLE_API_KEY: "${GOOGLE_API_KEY}"
-
 steps:
   - id: detect
     shell: /bin/bash

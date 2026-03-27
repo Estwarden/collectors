@@ -1,11 +1,6 @@
 name: collect-rss
 description: Collect signals from 54+ RSS/Atom feeds
 schedule: "0 */2 * * *"
-
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-
 steps:
   - id: fetch_all_feeds
     shell: /bin/bash

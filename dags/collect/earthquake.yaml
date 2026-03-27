@@ -1,9 +1,6 @@
 name: collect-earthquake
 description: USGS seismic events in Baltic/Fennoscandia region
 schedule: "0 */12 * * *"
-env:
-  - ESTWARDEN_API_URL: ""
-  - ESTWARDEN_API_KEY: ""
 steps:
   - id: collect
     shell: /bin/bash
