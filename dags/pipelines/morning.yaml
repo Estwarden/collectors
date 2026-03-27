@@ -33,7 +33,7 @@ steps:
 
   - id: healthcheck
     type: dag
-    call: maintain/healthcheck
+    call: maintain/collector-health
     depends: [collect_rss, collect_energy, collect_deepstate]
 
   - id: generate_report
