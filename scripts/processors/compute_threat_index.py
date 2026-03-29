@@ -15,7 +15,7 @@ import math
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.join("/dags/scripts/lib"))
-from estwarden_client import ingest_signals
+from estwarden_client import query_cti_input, ingest_threat_index
 
 # Using flat API
 today = datetime.now(timezone.utc).strftime("%Y-%m-%d")

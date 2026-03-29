@@ -26,7 +26,7 @@ import urllib.request
 import yaml
 
 sys.path.insert(0, os.path.join("/dags/scripts/lib"))
-from estwarden_client import ingest_signals
+from estwarden_client import query_untagged, ingest_tags
 
 TAXONOMY_PATH = os.path.join(os.path.dirname(__file__), "..", "config", "narrative_taxonomy.yaml")
 
