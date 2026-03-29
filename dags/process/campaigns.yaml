@@ -22,10 +22,8 @@ steps:
       python3 -c "
       import sys, os, json
       sys.path.insert(0, 'scripts/lib')
-      from estwarden_client import EstWardenClient
-
-      client = EstWardenClient()
-      result = client.detect_campaigns()
+      from estwarden_client import detect_campaigns
+      result = detect_campaigns()
       
       resolved = result.get('resolved', 0)
       created = result.get('created', 0)

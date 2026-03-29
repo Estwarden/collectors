@@ -14,10 +14,9 @@ steps:
       python3 -c "
       import sys, os
       sys.path.insert(0, 'scripts/lib')
-      from estwarden_client import EstWardenClient
-      client = EstWardenClient()
+      from estwarden_client import query_baselines, ingest_anomalies
 
-      baselines = client.query_baselines()
+      baselines = query_baselines()
       anomalies = []
       for b in baselines:
           st = b.get('source_type', '')
@@ -41,7 +40,7 @@ steps:
           })
 
       if anomalies:
-          result = client.ingest_anomalies(anomalies)
+          result = ingest_anomalies(anomalies)
           print(f'Anomalies: {result.get(\"created\", 0)} detected')
           for a in anomalies:
               print(f'  {a[\"severity\"]}: {a[\"description\"]}')

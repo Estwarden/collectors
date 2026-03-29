@@ -15,9 +15,7 @@ steps:
       import sys, json, os, urllib.request
       from datetime import datetime, timezone
       sys.path.insert(0, 'scripts/lib')
-      from estwarden_client import EstWardenClient
-
-      client = EstWardenClient()
+      from estwarden_client import ingest_signals
       # Planetary K-index (geomagnetic storm indicator)
       url = 'https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json'
       with urllib.request.urlopen(url, timeout=15) as r:
@@ -43,7 +41,7 @@ steps:
           })
 
       if signals:
-          result = client.ingest_signals(signals)
+          result = ingest_signals(signals)
           print(f'Space weather: {result[\"inserted\"]} new')
       "
     retry_policy:
