@@ -1,0 +1,12 @@
+name: backfill-cluster-regions
+description: One-off job to recompute event_clusters.regions from cluster members
+
+env:
+  - DATABASE_URL: "${DATABASE_URL}"
+
+steps:
+  - id: backfill
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 scripts/maintenance/backfill_cluster_regions.py

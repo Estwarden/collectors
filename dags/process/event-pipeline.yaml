@@ -24,9 +24,9 @@ steps:
       python3 -c "
       import sys, json
       sys.path.insert(0, 'scripts/lib')
-      from estwarden_client import EstWardenClient
-      client = EstWardenClient()
-      r = client._post('/api/v1/detect/outrage-chains', {})
+      from estwarden_client import _api_post
+      # flat API
+      r = _api_post('/api/v1/detect/outrage-chains', {})
       print('Outrage chains: %d detected from %d Baltic state signals → %d campaigns' % (
           r.get('chains_detected', 0), r.get('baltic_state_signals', 0), r.get('campaigns_created', 0)))
       "
@@ -38,9 +38,9 @@ steps:
       python3 -c "
       import sys, json
       sys.path.insert(0, 'scripts/lib')
-      from estwarden_client import EstWardenClient
-      client = EstWardenClient()
-      r = client._post('/api/v1/process/embed', {}, timeout=300)
+      from estwarden_client import _api_post
+      # flat API
+      r = _api_post('/api/v1/process/embed', {}, timeout=300)
       print('Embed: %d embedded, %d rejected, %d passed gate' % (
           r.get('embedded', 0), r.get('rejected', 0), r.get('passed', 0)))
       "
@@ -54,9 +54,9 @@ steps:
       python3 -c "
       import sys, json
       sys.path.insert(0, 'scripts/lib')
-      from estwarden_client import EstWardenClient
-      client = EstWardenClient()
-      r = client._post('/api/v1/process/cluster', {}, timeout=300)
+      from estwarden_client import _api_post
+      # flat API
+      r = _api_post('/api/v1/process/cluster', {}, timeout=300)
       print('Cluster: %d signals → %d new clusters' % (
           r.get('signals', 0), r.get('new_clusters', 0)))
       "
@@ -67,7 +67,7 @@ steps:
     shell: /bin/bash
     script: |
       cd /dags
-      python3 processors/summarize_clusters.py
+      python3 scripts/processors/summarize_clusters.py
     retry_policy:
       limit: 1
       interval_sec: 30
@@ -81,9 +81,9 @@ steps:
       python3 -c "
       import sys, json
       sys.path.insert(0, 'scripts/lib')
-      from estwarden_client import EstWardenClient
-      client = EstWardenClient()
-      r = client._post('/api/v1/process/framing', {})
+      from estwarden_client import _api_post
+      # flat API
+      r = _api_post('/api/v1/process/framing', {})
       print('Framing: %d analyzed, %d hostile' % (
           r.get('analyzed', 0), r.get('hostile', 0)))
       "
@@ -97,9 +97,9 @@ steps:
       python3 -c "
       import sys, json
       sys.path.insert(0, 'scripts/lib')
-      from estwarden_client import EstWardenClient
-      client = EstWardenClient()
-      r = client._post('/api/v1/process/assemble-campaigns', {})
+      from estwarden_client import _api_post
+      # flat API
+      r = _api_post('/api/v1/process/assemble-campaigns', {})
       print('Assemble: %d hostile events → %d campaigns' % (
           r.get('hostile_events', 0), r.get('campaigns', 0)))
       "
@@ -113,9 +113,9 @@ steps:
       python3 -c "
       import sys, json
       sys.path.insert(0, 'scripts/lib')
-      from estwarden_client import EstWardenClient
-      client = EstWardenClient()
-      r = client._post('/api/v1/detect/injection-cascades', {})
+      from estwarden_client import _api_post
+      # flat API
+      r = _api_post('/api/v1/detect/injection-cascades', {})
       print('Injection cascades: %d candidates → %d injections, %d watch' % (
           r.get('candidates', 0), r.get('injections', 0), r.get('watch', 0)))
       "
@@ -131,9 +131,9 @@ steps:
       python3 -c "
       import sys, json
       sys.path.insert(0, 'scripts/lib')
-      from estwarden_client import EstWardenClient
-      client = EstWardenClient()
-      r = client._post('/api/v1/process/narrative-campaigns', {})
+      from estwarden_client import _api_post
+      # flat API
+      r = _api_post('/api/v1/process/narrative-campaigns', {})
       print('Narrative campaigns: %d events embedded, %d new campaigns, %d joined, %d named' % (
           r.get('events_embedded', 0), r.get('new_campaigns', 0),
           r.get('joined_existing', 0), r.get('campaigns_named', 0)))
@@ -148,9 +148,9 @@ steps:
       python3 -c "
       import sys, json
       sys.path.insert(0, 'scripts/lib')
-      from estwarden_client import EstWardenClient
-      client = EstWardenClient()
-      r = client._post('/api/v1/detect/narrative-velocity', {})
+      from estwarden_client import _api_post
+      # flat API
+      r = _api_post('/api/v1/detect/narrative-velocity', {})
       print('Narrative velocity: %d alerts' % r.get('count', 0))
       for a in r.get('alerts', []):
           print('  %s: %s velocity=%s' % (a.get('topic','?')[:50], a.get('state_ratio',''), a.get('velocity','')))

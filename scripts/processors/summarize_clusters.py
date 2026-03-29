@@ -14,6 +14,7 @@ Env:
 
 import json
 import os
+import re
 import sys
 import urllib.request
 
@@ -21,8 +22,9 @@ DB_URL = os.environ.get("DATABASE_URL", "postgresql://estwarden:estwarden@postgr
 LLM_URL = "https://openrouter.ai/api/v1/chat/completions"
 LLM_KEY = os.environ.get("OPENROUTER_API_KEY", "")
 LLM_MODEL = os.environ.get("LLM_MODEL", "qwen/qwen3-235b-a22b-2507")
-BATCH = 15
-MAX_CLUSTERS = 50
+BATCH = 20
+MAX_CLUSTERS = 80
+CYRILLIC_RE = re.compile(r"[а-яА-ЯёЁ]")
 
 
 def get_unsummarized(cur):
@@ -37,6 +39,7 @@ def get_unsummarized(cur):
           AND ec.signal_count >= 3
           AND (ec.event_summary IS NULL OR ec.event_summary = ''
                OR ec.event_summary ~ '[а-яА-ЯёЁ]')
+          AND NOT (COALESCE(array_length(ec.regions, 1), 0) = 1 AND ec.regions[1] = 'global')
         GROUP BY ec.id
         ORDER BY ec.signal_count DESC
         LIMIT %s
@@ -44,9 +47,33 @@ def get_unsummarized(cur):
     return cur.fetchall()
 
 
+def fallback_summary(titles):
+    for title in titles or []:
+        text = (title or "").strip()
+        if text and not CYRILLIC_RE.search(text):
+            if len(text) > 180:
+                text = text[:177] + "..."
+            return text
+    return "Cluster of related security reports in monitored channels."
+
+
+def normalize_summary(text, titles):
+    if not isinstance(text, str):
+        text = ""
+    summary = (text or "").strip().strip('"')
+    if not summary:
+        return fallback_summary(titles)
+    if len(summary) > 200:
+        summary = summary[:197] + "..."
+    if CYRILLIC_RE.search(summary):
+        return fallback_summary(titles)
+    return summary
+
+
 def summarize_batch(clusters):
+    fallback = {str(cid): fallback_summary(titles) for cid, _, titles in clusters}
     if not LLM_KEY:
-        return {}
+        return fallback
 
     parts = []
     for cid, count, titles in clusters:
@@ -54,8 +81,9 @@ def summarize_batch(clusters):
         parts.append(f"CLUSTER {cid} ({count} signals):\n{sample}")
 
     prompt = (
-        "Summarize each cluster in ONE English sentence (max 100 chars). "
-        "Always write in English regardless of input language. Be factual. "
+        "Summarize each cluster in ONE clear English sentence (max 140 chars). "
+        "Always write in English regardless of input language. Be factual and specific. "
+        "Do not write words like 'cluster' or 'signals' in summaries. "
         'Return ONLY JSON: {"cluster_id": "summary", ...}\n\n'
         + "\n\n".join(parts)
     )
@@ -81,10 +109,13 @@ def summarize_batch(clusters):
         start = text.find("{")
         end = text.rfind("}") + 1
         if start >= 0 and end > start:
-            return json.loads(text[start:end])
+            parsed = json.loads(text[start:end])
+            for key, value in parsed.items():
+                fallback[str(key)] = normalize_summary(value, None)
+            return fallback
     except Exception as e:
         print(f"LLM error: {e}", file=sys.stderr)
-    return {}
+    return fallback
 
 
 def main():
@@ -111,17 +142,19 @@ def main():
         batch = clusters[i:i + BATCH]
         summaries = summarize_batch(batch)
 
-        for cid_str, summary in summaries.items():
-            summary = summary.strip()[:200]
-            if summary:
-                cur.execute(
-                    "UPDATE event_clusters SET event_summary = %s WHERE id = %s",
-                    (summary, int(cid_str)),
-                )
-                total += 1
+        for cid, _, titles in batch:
+            key = str(cid)
+            summary = normalize_summary(summaries.get(key), titles)
+            if not summary:
+                continue
+            cur.execute(
+                "UPDATE event_clusters SET event_summary = %s WHERE id = %s",
+                (summary, cid),
+            )
+            total += 1
 
         conn.commit()
-        print(f"  Batch {i // BATCH + 1}: {len(summaries)} summarized")
+        print(f"  Batch {i // BATCH + 1}: {len(batch)} summarized")
 
     print(f"Done: {total}/{len(clusters)} clusters summarized")
     cur.close()
