@@ -5,7 +5,7 @@ import os
 import sys
 from datetime import datetime, timezone, timedelta
 
-# Add lib path for EstWardenClient
+# Add lib path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 from estwarden_client import ingest_signals
 

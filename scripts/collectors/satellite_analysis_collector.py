@@ -5,7 +5,7 @@ For now: Sentinel-2 cloud-free imagery counts as activity proxy."""
 import json, os, sys, urllib.request
 from datetime import datetime, timezone, timedelta
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 from google_client import GoogleClient
 
 # Military sites to monitor (public knowledge, from Wikipedia/OSM)
@@ -48,7 +48,6 @@ def count_acquisitions(lat, lon, days=7):
         return -1
 
 def main():
-    client = EstWardenClient()
     signals = []
 
     for site in SITES:
@@ -67,7 +66,7 @@ def main():
         })
 
     if signals:
-        result = client.ingest_signals(signals)
+        result = ingest_signals(signals)
         print(f"SatMon: {result['inserted']} sites monitored")
 
 if __name__ == "__main__": main()
