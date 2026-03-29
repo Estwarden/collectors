@@ -33,7 +33,7 @@ def main():
             continue
         try:
             val = float(value_str)
-        except:
+        except (ValueError, TypeError):
             continue
         if val <= 0:
             continue

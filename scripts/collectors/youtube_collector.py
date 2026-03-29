@@ -91,7 +91,7 @@ def get_transcript(video_id):
         try:
             from youtube_transcript_api.proxies import GenericProxyConfig
             api = YouTubeTranscriptApi(proxy_config=GenericProxyConfig(proxy_url))
-        except Exception:
+        except ImportError:
             pass
 
     try:

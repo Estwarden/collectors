@@ -103,7 +103,7 @@ def main():
         try:
             lon = float(lon)
             lat = float(lat)
-        except Exception:
+        except (ValueError, TypeError):
             continue
 
         label = normalize_label(props.get("name") or "")

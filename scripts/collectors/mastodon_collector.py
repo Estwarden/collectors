@@ -21,7 +21,8 @@ def main():
             req = urllib.request.Request(url, headers={"User-Agent": "EstWarden/1.0"})
             with urllib.request.urlopen(req, timeout=15) as r:
                 posts = json.loads(r.read())
-        except:
+        except Exception as e:
+            print(f"Mastodon fetch error: {e}", file=sys.stderr)
             posts = []
 
         for post in posts:

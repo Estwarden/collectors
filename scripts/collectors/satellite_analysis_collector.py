@@ -43,7 +43,8 @@ def count_acquisitions(lat, lon, days=7):
         with urllib.request.urlopen(req, timeout=15) as r:
             data = json.loads(r.read())
         return len(data.get("features", []))
-    except:
+    except Exception as e:
+        print(f"Satellite analysis fetch error: {e}", file=sys.stderr)
         return -1
 
 def main():

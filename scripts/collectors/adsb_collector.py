@@ -42,7 +42,7 @@ def main():
         if threat: mil_count += 1
         signals.append({
             "source_type": "adsb", "source_id": f"adsb:{icao24}:{int(now.timestamp())}",
-            "title": f"{'🔴 ' if threat else ''}{callsign or icao24} alt={alt}",
+            "title": f"{'[MIL] ' if threat else ''}{callsign or icao24} alt={alt}",
             "content": f"Aircraft {callsign or icao24} at {lat:.4f},{lon:.4f} alt={alt}m. {threat}".strip(),
             "published_at": now.isoformat(), "latitude": lat, "longitude": lon,
             "severity": "HIGH" if threat else None,

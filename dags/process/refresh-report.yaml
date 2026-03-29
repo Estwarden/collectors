@@ -2,6 +2,8 @@ name: refresh-daily-report
 description: Regenerate today's daily report with latest data (runs every 2 hours)
 schedule: "30 */2 * * *"
 
+type: graph
+
 steps:
   - id: regenerate
     shell: /bin/bash

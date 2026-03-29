@@ -34,7 +34,7 @@ def parse_date(text):
         return None
     try:
         return parsedate_to_datetime(text).astimezone(timezone.utc).isoformat()
-    except Exception:
+    except (ValueError, TypeError):
         pass
     for fmt in ("%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%SZ", "%Y-%m-%d"):
         try:

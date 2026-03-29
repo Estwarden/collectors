@@ -37,7 +37,7 @@ def parse_rss_date(date_str):
     # RFC 2822 (most RSS feeds)
     try:
         return parsedate_to_datetime(date_str).isoformat()
-    except Exception:
+    except (ValueError, TypeError):
         pass
     # ISO 8601 variants
     for fmt in ["%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%SZ", "%Y-%m-%d %H:%M:%S",

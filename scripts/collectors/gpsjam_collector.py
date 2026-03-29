@@ -101,7 +101,7 @@ def main():
 
         try:
             lat, lon = h3.cell_to_latlng(hex_id)
-        except Exception:
+        except (ValueError, TypeError):
             continue
 
         total_hexes += 1

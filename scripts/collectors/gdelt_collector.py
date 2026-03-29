@@ -27,7 +27,8 @@ def load_sites(path="/dags/config/military_sites.yaml"):
     try:
         with open(path) as f:
             return {s["id"]: s for s in yaml.safe_load(f).get("sites", [])}
-    except:
+    except Exception as e:
+        print(f"GDELT config load error: {e}", file=sys.stderr)
         return {}
 
 # Consolidated into 2 broad queries instead of 8 per-site queries
