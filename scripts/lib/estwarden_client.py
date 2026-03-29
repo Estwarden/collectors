@@ -144,7 +144,7 @@ class EstWardenClient:
 
     # ── Internal ──
 
-    def _post(self, path, body):
+    def _post(self, path, body, timeout=30):
         data = json.dumps(body).encode()
         url = f"{self.base}/{path.lstrip('/')}"
         req = urllib.request.Request(
@@ -156,7 +156,7 @@ class EstWardenClient:
             },
             method="POST",
         )
-        return self._do(req)
+        return self._do(req, timeout=timeout)
 
     def _get(self, path):
         url = f"{self.base}/{path.lstrip('/')}"
@@ -166,9 +166,9 @@ class EstWardenClient:
         )
         return self._do(req)
 
-    def _do(self, req):
+    def _do(self, req, timeout=30):
         try:
-            with urllib.request.urlopen(req, timeout=30) as r:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
                 return json.loads(r.read())
         except urllib.error.HTTPError as e:
             body = e.read().decode()[:500]

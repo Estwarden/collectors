@@ -40,7 +40,7 @@ steps:
       sys.path.insert(0, 'scripts/lib')
       from estwarden_client import EstWardenClient
       client = EstWardenClient()
-      r = client._post('/api/v1/process/embed', {})
+      r = client._post('/api/v1/process/embed', {}, timeout=300)
       print('Embed: %d embedded, %d rejected, %d passed gate' % (
           r.get('embedded', 0), r.get('rejected', 0), r.get('passed', 0)))
       "
@@ -56,7 +56,7 @@ steps:
       sys.path.insert(0, 'scripts/lib')
       from estwarden_client import EstWardenClient
       client = EstWardenClient()
-      r = client._post('/api/v1/process/cluster', {})
+      r = client._post('/api/v1/process/cluster', {}, timeout=300)
       print('Cluster: %d signals → %d new clusters' % (
           r.get('signals', 0), r.get('new_clusters', 0)))
       "
