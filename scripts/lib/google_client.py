@@ -1,208 +1,97 @@
-"""Google Cloud API client for pipeline DAGs.
+"""Google Cloud API client — flat functions using google-auth library.
 
-Wraps Translation, Natural Language, Vision, Geocoding, and TTS.
-Uses service account key from GOOGLE_APPLICATION_CREDENTIALS env var.
-
-Usage:
-    from google_client import GoogleClient
-    gc = GoogleClient()
-    translated = gc.translate("Российские войска...", target="en")
-    entities = gc.extract_entities("Estonian border patrol reported...")
-    coords = gc.geocode("Kaliningrad port")
+Uses Application Default Credentials or GOOGLE_APPLICATION_CREDENTIALS.
 """
-
-import json
-import os
-import sys
-import time
-import urllib.request
-import urllib.error
-
-# Google auth via service account JWT
-# We use the REST API directly — no google-cloud-* pip packages needed.
-# Auth: get access token from service account key via JWT → OAuth2 token exchange.
-
 import base64
-import hashlib
-import hmac
-
-
-def _b64url(data):
-    return base64.urlsafe_b64encode(data).rstrip(b"=").decode()
-
-
-def _get_access_token(key_path=None):
-    """Get OAuth2 access token from service account JSON key."""
-    key_path = key_path or os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "")
-    if not key_path or not os.path.exists(key_path):
-        raise ValueError(f"GOOGLE_APPLICATION_CREDENTIALS not set or file missing: {key_path}")
-
-    with open(key_path) as f:
-        sa = json.load(f)
-
-    # Build JWT
-    now = int(time.time())
-    header = _b64url(json.dumps({"alg": "RS256", "typ": "JWT"}).encode())
-    payload = _b64url(json.dumps({
-        "iss": sa["client_email"],
-        "scope": "https://www.googleapis.com/auth/cloud-platform",
-        "aud": "https://oauth2.googleapis.com/token",
-        "iat": now,
-        "exp": now + 3600,
-    }).encode())
-
-    # Sign with private key
-    from cryptography.hazmat.primitives import hashes, serialization
-    from cryptography.hazmat.primitives.asymmetric import padding
-
-    private_key = serialization.load_pem_private_key(
-        sa["private_key"].encode(), password=None
-    )
-    signature = private_key.sign(
-        f"{header}.{payload}".encode(),
-        padding.PKCS1v15(),
-        hashes.SHA256(),
-    )
-    jwt = f"{header}.{payload}.{_b64url(signature)}"
-
-    # Exchange JWT for access token
-    data = urllib.parse.urlencode({
-        "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
-        "assertion": jwt,
-    }).encode()
-    req = urllib.request.Request("https://oauth2.googleapis.com/token", data=data)
-    with urllib.request.urlopen(req, timeout=10) as r:
-        return json.loads(r.read())["access_token"]
-
-
-# Cache token for reuse within a DAG run
-_token_cache = {"token": None, "expires": 0}
+import json
+import urllib.error
 import urllib.parse
+import urllib.request
+
+import google.auth
+import google.auth.transport.requests
+
+_credentials = None
+_auth_request = google.auth.transport.requests.Request()
+
+
+def _get_creds():
+    global _credentials
+    if _credentials is None or not _credentials.valid:
+        _credentials, _ = google.auth.default(
+            scopes=["https://www.googleapis.com/auth/cloud-platform"])
+    if not _credentials.valid:
+        _credentials.refresh(_auth_request)
+    return _credentials
 
 
 def _auth_headers():
-    now = time.time()
-    if _token_cache["token"] and _token_cache["expires"] > now + 60:
-        token = _token_cache["token"]
-    else:
-        token = _get_access_token()
-        _token_cache["token"] = token
-        _token_cache["expires"] = now + 3500
-    return {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+    creds = _get_creds()
+    return {"Authorization": f"Bearer {creds.token}", "Content-Type": "application/json"}
 
 
-class GoogleClient:
-    """Lightweight Google Cloud API client using REST + service account auth."""
+def _post(url, body):
+    data = json.dumps(body).encode()
+    req = urllib.request.Request(url, data=data, headers=_auth_headers(), method="POST")
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.loads(r.read())
 
-    # ── Translation ──
 
-    def translate(self, text, target="en", source=None):
-        """Translate text. Returns translated string."""
-        body = {"q": text, "target": target, "format": "text"}
-        if source:
-            body["source"] = source
-        resp = self._post(
-            "https://translation.googleapis.com/language/translate/v2",
-            body,
-        )
-        translations = resp.get("data", {}).get("translations", [])
-        if translations:
-            return translations[0].get("translatedText", text)
-        return text
+def _get(url):
+    req = urllib.request.Request(url, headers=_auth_headers())
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.loads(r.read())
 
-    def detect_language(self, text):
-        """Detect language. Returns language code (e.g., 'ru', 'et')."""
-        resp = self._post(
-            "https://translation.googleapis.com/language/translate/v2/detect",
-            {"q": text},
-        )
-        detections = resp.get("data", {}).get("detections", [[]])
-        if detections and detections[0]:
-            return detections[0][0].get("language", "unknown")
-        return "unknown"
 
-    # ── Natural Language ──
+# ── Public API ──
 
-    def extract_entities(self, text, language=None):
-        """Extract entities (persons, orgs, locations, events). Returns list of dicts."""
-        doc = {"type": "PLAIN_TEXT", "content": text}
-        if language:
-            doc["language"] = language
-        resp = self._post(
-            "https://language.googleapis.com/v1/documents:analyzeEntities",
-            {"document": doc, "encodingType": "UTF8"},
-        )
-        entities = []
-        for e in resp.get("entities", []):
-            entities.append({
-                "name": e.get("name", ""),
-                "type": e.get("type", ""),
-                "salience": e.get("salience", 0),
-                "mentions": len(e.get("mentions", [])),
-                "metadata": e.get("metadata", {}),
-            })
-        return entities
+def translate(text, target="en", source=None):
+    body = {"q": text, "target": target, "format": "text"}
+    if source:
+        body["source"] = source
+    resp = _post("https://translation.googleapis.com/language/translate/v2", body)
+    translations = resp.get("data", {}).get("translations", [])
+    return translations[0].get("translatedText", text) if translations else text
 
-    def analyze_sentiment(self, text):
-        """Analyze sentiment. Returns {"score": -1..1, "magnitude": 0..inf}."""
-        resp = self._post(
-            "https://language.googleapis.com/v1/documents:analyzeSentiment",
-            {"document": {"type": "PLAIN_TEXT", "content": text}, "encodingType": "UTF8"},
-        )
-        s = resp.get("documentSentiment", {})
-        return {"score": s.get("score", 0), "magnitude": s.get("magnitude", 0)}
 
-    # ── Geocoding ──
+def detect_language(text):
+    resp = _post("https://translation.googleapis.com/language/translate/v2/detect", {"q": text})
+    detections = resp.get("data", {}).get("detections", [[]])
+    return detections[0][0].get("language", "unknown") if detections and detections[0] else "unknown"
 
-    def geocode(self, address):
-        """Geocode an address/place name. Returns {"lat": float, "lng": float, "formatted": str} or None."""
-        params = urllib.parse.urlencode({"address": address})
-        resp = self._get(f"https://maps.googleapis.com/maps/api/geocode/json?{params}")
-        results = resp.get("results", [])
-        if results:
-            loc = results[0].get("geometry", {}).get("location", {})
-            return {
-                "lat": loc.get("lat"),
-                "lng": loc.get("lng"),
-                "formatted": results[0].get("formatted_address", ""),
-            }
-        return None
 
-    # ── Vision ──
+def extract_entities(text, language=None):
+    doc = {"type": "PLAIN_TEXT", "content": text}
+    if language:
+        doc["language"] = language
+    resp = _post("https://language.googleapis.com/v1/documents:analyzeEntities",
+                 {"document": doc, "encodingType": "UTF8"})
+    return [{"name": e.get("name", ""), "type": e.get("type", ""),
+             "salience": e.get("salience", 0), "mentions": len(e.get("mentions", [])),
+             "metadata": e.get("metadata", {})} for e in resp.get("entities", [])]
 
-    def ocr_image(self, image_bytes):
-        """Extract text from image bytes. Returns string."""
-        b64 = base64.b64encode(image_bytes).decode()
-        resp = self._post(
-            "https://vision.googleapis.com/v1/images:annotate",
-            {"requests": [{"image": {"content": b64},
-                           "features": [{"type": "TEXT_DETECTION"}]}]},
-        )
-        annotations = resp.get("responses", [{}])[0].get("textAnnotations", [])
-        if annotations:
-            return annotations[0].get("description", "")
-        return ""
 
-    def label_image(self, image_bytes):
-        """Detect labels in image. Returns list of {"label": str, "score": float}."""
-        b64 = base64.b64encode(image_bytes).decode()
-        resp = self._post(
-            "https://vision.googleapis.com/v1/images:annotate",
-            {"requests": [{"image": {"content": b64},
-                           "features": [{"type": "LABEL_DETECTION", "maxResults": 10}]}]},
-        )
-        labels = resp.get("responses", [{}])[0].get("labelAnnotations", [])
-        return [{"label": l["description"], "score": l["score"]} for l in labels]
+def analyze_sentiment(text):
+    resp = _post("https://language.googleapis.com/v1/documents:analyzeSentiment",
+                 {"document": {"type": "PLAIN_TEXT", "content": text}, "encodingType": "UTF8"})
+    s = resp.get("documentSentiment", {})
+    return {"score": s.get("score", 0), "magnitude": s.get("magnitude", 0)}
 
-    # ── Internal ──
 
-    def _post(self, url, body):
-        data = json.dumps(body).encode()
-        req = urllib.request.Request(url, data=data, headers=_auth_headers(), method="POST")
-        with urllib.request.urlopen(req, timeout=30) as r:
-            return json.loads(r.read())
+def geocode(address):
+    params = urllib.parse.urlencode({"address": address})
+    resp = _get(f"https://maps.googleapis.com/maps/api/geocode/json?{params}")
+    results = resp.get("results", [])
+    if results:
+        loc = results[0].get("geometry", {}).get("location", {})
+        return {"lat": loc.get("lat"), "lng": loc.get("lng"),
+                "formatted": results[0].get("formatted_address", "")}
+    return None
 
-    def _get(self, url):
-        req = urllib.request.Request(url, headers=_auth_headers())
-        with urllib.request.urlopen(req, timeout=30) as r:
-            return json.loads(r.read())
+
+def ocr_image(image_bytes):
+    b64 = base64.b64encode(image_bytes).decode()
+    resp = _post("https://vision.googleapis.com/v1/images:annotate",
+                 {"requests": [{"image": {"content": b64}, "features": [{"type": "TEXT_DETECTION"}]}]})
+    annotations = resp.get("responses", [{}])[0].get("textAnnotations", [])
+    return annotations[0].get("description", "") if annotations else ""

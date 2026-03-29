@@ -3,13 +3,13 @@
 import csv, io, os, sys, urllib.request
 from datetime import datetime, timezone
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 
 LAT_MIN, LAT_MAX = 50.0, 70.0
 LON_MIN, LON_MAX = 20.0, 45.0
 
 def main():
-    client = EstWardenClient()
+    # Using flat API
     map_key = os.environ.get("FIRMS_MAP_KEY", "")
     if not map_key:
         print("FIRMS_MAP_KEY not set"); return
@@ -47,7 +47,7 @@ def main():
         })
 
     if signals:
-        result = client.ingest_signals(signals[:500])
+        result = ingest_signals(signals[:500])
         print(f"FIRMS: {result['inserted']} new from {len(signals)} hotspots")
     else:
         print("FIRMS: no hotspots in region")

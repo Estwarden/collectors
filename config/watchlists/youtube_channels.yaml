@@ -1,0 +1,847 @@
+channels:
+- handle: muzhdabaev
+  name: Айдер Муждабаєв
+  channel_id: UCBFMHmDv35C-mTbOlSq43JA
+  lang: ru
+  category: unverified_commentator
+  tier: T1
+  notes: Crimean Tatar journalist, anti-Putin, known for alarmist predictions
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: medium
+- handle: babchenko
+  name: Аркадій Бабченко
+  channel_id: UC2pMdaGmzGPVW5NSOO0nDCA
+  lang: ru
+  category: unverified_commentator
+  tier: T1
+  notes: Russian journalist in UA exile, staged-death controversy (Carnegie 2018), dramatic content
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: medium
+- handle: portnikov
+  name: Віталій Портніков
+  channel_id: UCCbGgIcJlER5NKGb56oVFOA
+  lang: ru
+  category: unverified_commentator
+  tier: T1
+  notes: Ukrainian journalist, strong anti-RU commentary, sometimes sensationalist
+  rationality:
+    calibration: medium
+    updating: low
+    evidence: medium
+    uncertainty: low
+    independence: medium
+- handle: arestovych
+  name: Олексій Арестович
+  channel_id: UCQSbfxPhGGCAFUFhKEPVqRQ
+  lang: ru
+  category: unverified_commentator
+  tier: T1
+  notes: Ex-Zelensky advisor, fired for spreading false info about Dnipro strike. Changes positions frequently but not evidence-driven — shifts for audience engagement, not in response to new data. High
+    reach.
+  rationality:
+    calibration: low
+    updating: low
+    evidence: medium
+    uncertainty: low
+    independence: low
+- handle: feygin
+  name: Марк Фейгін
+  channel_id: UCEbfBfp9IbqFuF4XPOax3Jg
+  lang: ru
+  category: unverified_commentator
+  tier: T1
+  notes: Russian lawyer in exile, frequent Arestovych collaborator
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: low
+- handle: gordon
+  name: Дмитро Гордон
+  channel_id: UCrlz6AMFRKp0_kcbOIQBi1A
+  lang: ru
+  category: unverified_commentator
+  tier: T1
+  notes: Massive interview channel, clickbait titles, top-5 UA YouTube by views
+  rationality:
+    calibration: low
+    updating: low
+    evidence: medium
+    uncertainty: low
+    independence: low
+- handle: romanenko
+  name: Юрій Романенко
+  channel_id: UCfoRnST-nf0F__ADwgNkRfA
+  lang: uk
+  category: unverified_commentator
+  tier: T2
+  notes: Political analyst, opinion content
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: medium
+- handle: fursa
+  name: Сергій Фурса
+  channel_id: UC3VHQS1ygxLMl1jTJ5gCJSA
+  lang: uk
+  category: unverified_commentator
+  tier: T2
+  notes: Investment banker, economic/political commentary
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: medium
+- handle: ponomarev
+  name: Ілля Пономарьов
+  channel_id: UCKMqS96fpp2AfiHrRfkTwBA
+  lang: ru
+  category: unverified_commentator
+  tier: T2
+  notes: Russian opposition MP in exile
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: medium
+- handle: katz
+  name: Максим Кац
+  channel_id: UCXhSCMRRPyxSoyLSPFxK7VA
+  lang: ru
+  category: unverified_commentator
+  tier: T1
+  notes: 500K+ subs, Russian opposition blogger. Claims Crimea should stay Russian.
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: medium
+- handle: latynina
+  name: Юлія Латиніна
+  channel_id: UCeOlY5WfN_TCggYpCJQVk5A
+  lang: ru
+  category: unverified_commentator
+  tier: T2
+  notes: Russian journalist, long-form, Novaya Gazeta background
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: medium
+- handle: pivovarov
+  name: Пивоваров (Редакція)
+  channel_id: UC1eFXmJNkjITxPFWTy6RsWg
+  lang: ru
+  category: ru_proxy
+  tier: T2
+  notes: Russian soft power propaganda. Investigative framing but narratives align with Kremlin interests.
+  rationality:
+    calibration: low
+    updating: low
+    evidence: medium
+    uncertainty: medium
+    independence: low
+- handle: butusov
+  name: Юрій Бутусов
+  channel_id: UCJOmqeR1JStDYSwmBxNunPQ
+  lang: uk
+  category: unverified_commentator
+  tier: T1
+  notes: Military journalist, sensationalist streak
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: low
+    independence: medium
+- handle: zolkin
+  name: Володимир Золкін
+  channel_id: UCXo2hs5IOvXl7kZeJUjUajQ
+  lang: uk
+  category: unverified_commentator
+  tier: T2
+  notes: POW interviews, emotionally charged framing
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: high
+    uncertainty: low
+    independence: medium
+- handle: sternenko_yt
+  name: Сергій Стерненко
+  channel_id: UC2oGvXIpafkPgMJKUqmRMKw
+  lang: uk
+  category: unverified_commentator
+  tier: T1
+  notes: Activist-blogger, effective communicator but not a journalist. Claims should be verified independently. +13.6% growth in 2024
+  rationality:
+    calibration: medium
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: medium
+- handle: dud
+  name: вДудь
+  channel_id: UCMCgOm8GZkHp8zJ6l7_hIuA
+  lang: ru
+  category: ru_proxy
+  tier: T2
+  notes: Russian soft power propaganda. Large interviewer platform normalizing Kremlin-adjacent narratives.
+  rationality:
+    calibration: low
+    updating: low
+    evidence: medium
+    uncertainty: low
+    independence: low
+- handle: goncharenko
+  name: Олексій Гончаренко
+  channel_id: UCa4C0TMU3w5FBv6xGzSMjdA
+  lang: uk
+  category: unverified_commentator
+  tier: T1
+  notes: Ukrainian MP, +24.8% subscriber growth in 2024, political commentary
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: low
+- handle: tsymbalyuk
+  name: Роман Цимбалюк
+  channel_id: UCu3AYhmHTOCkWzYboGJk8PA
+  lang: ru
+  category: unverified_commentator
+  tier: T1
+  notes: Last UA correspondent accredited at Russian MFA, analyses Russian propaganda
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: medium
+- handle: zhdanov
+  name: Олег Жданов
+  channel_id: UC4GR2DE38sSBVnBhjnXuKzQ
+  lang: uk
+  category: unverified_commentator
+  tier: T1
+  notes: '270M+ views. Most popular UA military expert on YouTube. Babel: predictions often wrong.'
+  rationality:
+    calibration: low
+    updating: low
+    evidence: medium
+    uncertainty: low
+    independence: low
+- handle: svitan
+  name: Роман Світан
+  channel_id: UCwCgkLxMSVapMVTqz0j4sGA
+  lang: uk
+  category: unverified_commentator
+  tier: T1
+  notes: 'Babel: ''predictions are mostly wrong'', appears daily on news channels, no own channel but massive TV presence'
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: low
+- handle: durnev
+  name: Олексій Дурнєв
+  channel_id: UCheq7FiIk_ZRdHmMBR3MJxQ
+  lang: uk
+  category: unverified_commentator
+  tier: T2
+  notes: Blogger/entertainer turned war commentator
+  rationality:
+    calibration: unknown
+    updating: unknown
+    evidence: low
+    uncertainty: low
+    independence: unknown
+- handle: tsaplienko
+  name: Андрій Цаплієнко
+  channel_id: UC_V_XVzJVBBLFGiMEDz8vBQ
+  lang: uk
+  category: unverified_commentator
+  tier: T1
+  notes: War correspondent, Order for Courage. Has credibility but emotional framing.
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: high
+    uncertainty: low
+    independence: medium
+- handle: eskhakzai
+  name: Раміна Есхакзай
+  channel_id: UCdRYcPq1sAiPxR6S2Ahwtfg
+  lang: uk
+  category: unverified_commentator
+  tier: T2
+  notes: Growing audience, political commentary
+  rationality:
+    calibration: unknown
+    updating: unknown
+    evidence: low
+    uncertainty: low
+    independence: unknown
+- handle: komarov
+  name: Дмитро Комаров
+  channel_id: UCWwJxekQCMKdY7U45D36qVg
+  lang: uk
+  category: unverified_commentator
+  tier: T2
+  notes: Travel blogger turned war reporter, large audience
+  rationality:
+    calibration: unknown
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: medium
+- handle: yakovina
+  name: Іван Яковіна
+  channel_id: UCYJMFSIacFsBaI2BN2ADq6Q
+  lang: uk
+  category: unverified_commentator
+  tier: T2
+  notes: Political commentator, dropped from ratings (fact-news.com.ua)
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: medium
+- handle: denys_davydov
+  name: Denys Davydov
+  channel_id: UCbR3blpbMjXnLby-wEz3LQQ
+  lang: en
+  category: unverified_independent
+  tier: T1
+  notes: 500K+ subs, citizen journalist, pro-UA
+  rationality:
+    calibration: medium
+    updating: low
+    evidence: medium
+    uncertainty: low
+    independence: medium
+- handle: reporting_from_ukraine
+  name: Reporting from Ukraine
+  channel_id: UCO4Rrs_bJk5V39z5LUzrGRQ
+  lang: en
+  category: unverified_independent
+  tier: T1
+  notes: Animated maps, daily updates
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: medium
+- handle: military_summary
+  name: Military Summary Channel
+  channel_id: UCl4CP9MKCEkbRrsagr1yHIg
+  lang: en
+  category: unverified_independent
+  tier: T1
+  notes: 'Belarusian. Reddit: ''pro-Russian but keeps mapping factual, terrible titles'''
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: low
+    independence: low
+- handle: speak_the_truth
+  name: Speak the Truth
+  channel_id: UC8HuVRUNiQftkfC2kGD1YmA
+  lang: en
+  category: unverified_independent
+  tier: T2
+  notes: Pro-UA commentary channel, covers war developments and geopolitics
+  rationality:
+    calibration: unknown
+    updating: unknown
+    evidence: low
+    uncertainty: low
+    independence: unknown
+- handle: good_times_bad_times
+  name: Good Times Bad Times
+  channel_id: UCIQ-jL8ONMlpVNulBJfVjfQ
+  lang: en
+  category: unverified_independent
+  tier: T2
+  notes: Geopolitics explainer channel, animated scenarios on NATO, Russia, and global conflicts
+  rationality:
+    calibration: unknown
+    updating: unknown
+    evidence: medium
+    uncertainty: medium
+    independence: unknown
+- handle: weeb_union
+  name: Weeb Union
+  channel_id: UCfT0rmEkvQVb-mNJT46-MsQ
+  lang: en
+  category: unverified_independent
+  tier: T2
+  notes: Animated war explainer maps and conflict summaries, growing audience
+  rationality:
+    calibration: unknown
+    updating: unknown
+    evidence: medium
+    uncertainty: medium
+    independence: unknown
+- handle: operator_starsky
+  name: Operator Starsky
+  channel_id: UCvhIDGB0nNXLG4ZP7RpbNuQ
+  lang: en
+  category: unverified_independent
+  tier: T2
+  notes: Ukrainian soldier providing frontline perspective and war updates in English
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: low
+    independence: medium
+- handle: jake_broe
+  name: Jake Broe
+  channel_id: UCDwFkq18FQk-FMRmEHBIjCQ
+  lang: en
+  category: unverified_independent
+  tier: T2
+  notes: US Air Force veteran (6 yrs, Nuclear Ops Officer). Pivoted to Ukraine war updates. Euromaidan Press top-10 list. 316K subs.
+  rationality:
+    calibration: medium
+    updating: low
+    evidence: medium
+    uncertainty: low
+    independence: low
+- handle: suchomimus
+  name: Suchomimus
+  channel_id: UC1giY07xKRb0IadLirGJKqw
+  lang: en
+  category: unverified_independent
+  tier: T2
+  notes: Frontline analysis with detailed mapping, daily situation updates
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: high
+    uncertainty: medium
+    independence: medium
+- handle: war_in_ukraine
+  name: Ukraine War Awareness
+  channel_id: UCXAlWdswYAHoN0FoMnqRGHQ
+  lang: en
+  category: unverified_independent
+  tier: T2
+  notes: Third-party neutrality stance, translates raw footage
+  rationality:
+    calibration: unknown
+    updating: unknown
+    evidence: medium
+    uncertainty: medium
+    independence: medium
+- handle: uatv_english
+  name: UATV English
+  channel_id: UCRT2PFQd5InhVY0VJnR21tA
+  lang: en
+  category: unverified_media
+  tier: T2
+  notes: Ukrainian state international broadcaster
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: low
+- handle: perun
+  name: Perun
+  channel_id: UCC3ehuUkPMGNMBZkGQkVQxg
+  lang: en
+  category: trusted
+  tier: T1
+  notes: Australian defense analyst. Data-driven, sourced, cited by defense community.
+  rationality:
+    calibration: high
+    updating: high
+    evidence: high
+    uncertainty: high
+    independence: high
+- handle: anders_puck_nielsen
+  name: Anders Puck Nielsen
+  channel_id: UCiPXKhQLY9HBdrgOMFKaTBg
+  lang: en
+  category: trusted
+  tier: T1
+  notes: Danish Royal Defence College researcher. Institutional credentials.
+  rationality:
+    calibration: high
+    updating: high
+    evidence: high
+    uncertainty: high
+    independence: high
+- handle: ryan_mcbeth
+  name: Ryan McBeth
+  channel_id: UCBvxERhGaHyrF2KY_LY5s0A
+  lang: en
+  category: trusted
+  tier: T2
+  notes: US defense industry, focuses on debunking disinfo
+  rationality:
+    calibration: medium
+    updating: high
+    evidence: high
+    uncertainty: medium
+    independence: high
+- handle: task_and_purpose
+  name: Task & Purpose
+  channel_id: UCh8WjGaHVnH0JA2Nz-d7tsg
+  lang: en
+  category: trusted
+  tier: T2
+  notes: Established US military news outlet, editorial team
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: high
+    uncertainty: medium
+    independence: medium
+- handle: redacted_news
+  name: Redacted (Clayton Morris)
+  channel_id: UCIGMvDOvP3gxgjFedS4wXYA
+  lang: en
+  category: ru_proxy
+  tier: T1
+  notes: 'VoxUkraine: ''promotes conspiracy theories aligned with Russian perspective''. Ukrainian Review debunked multiple claims.'
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: low
+- handle: the_new_atlas
+  name: The New Atlas (Brian Berletic)
+  channel_id: UCYwl34GUkGA9bYCEB-Q4Xzg
+  lang: en
+  category: ru_proxy
+  tier: T2
+  notes: 'VoxUkraine network analysis. FORSEA: ''conspiracy blogger''.'
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: low
+- handle: the_duran
+  name: The Duran
+  channel_id: UCdeMVCoperuoygk1LaFiKYA
+  lang: en
+  category: ru_proxy
+  tier: T1
+  notes: 'NewsGuard: ''pro-Russia website publishing conspiracy theories''. Co-owned by RT host Peter Lavelle.'
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: low
+- handle: scott_ritter
+  name: Scott Ritter
+  channel_id: UCe8v7IJ5L_mDo7GNBkpNFaw
+  lang: en
+  category: ru_proxy
+  tier: T1
+  notes: 'Euronews: ''disgraced American spouting pro-Putin propaganda''. Frequent RT guest.'
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: low
+- handle: douglas_macgregor
+  name: Douglas Macgregor
+  channel_id: UCLwjzfyrFwTtXHAs4FMYgDQ
+  lang: en
+  category: ru_proxy
+  tier: T1
+  notes: Retired US colonel. Consistent Kremlin-aligned predictions.
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: low
+- handle: danny_haiphong
+  name: Danny Haiphong
+  channel_id: UC4NYCnJzdqFzHPHKRNaAJzg
+  lang: en
+  category: ru_proxy
+  tier: T2
+  notes: 'VoxUkraine: ''RT actively circulates translated excerpts''. Frequent Ritter collaborator.'
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: low
+- handle: shariy
+  name: Анатолій Шарій
+  channel_id: UCVr1RZxAJiJvKOvGhMgVP2w
+  lang: ru
+  category: ru_proxy
+  tier: T1
+  notes: 'EU-sanctioned. Detector Media: ''pro-Russian blogger, unreliable''. Party banned by UA Supreme Court.'
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: low
+- handle: podolyaka_yt
+  name: Юрій Подоляка
+  channel_id: UC4k7AIFBa4oWwiOYxl_LnNQ
+  lang: ru
+  category: ru_proxy
+  tier: T1
+  notes: 'Most popular RU military blogger on YouTube. BBC: linked to InfoDefense network.'
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: low
+- handle: nexta_yt
+  name: NEXTA Live
+  channel_id: UCBd48BiccuSFfPjNytjRqkA
+  lang: ru
+  category: unverified_media
+  tier: T1
+  notes: '3.1M subs. Belarusian opposition, #1 UA News YouTube per HypeAuditor.'
+  rationality:
+    calibration: medium
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: medium
+- handle: ptv_ua
+  name: PTV UA
+  channel_id: UC-bxE3CEVF_b9qlI2nmkwdw
+  lang: uk
+  category: unverified_media
+  tier: T1
+  notes: '1.1M subs. #2 UA News YouTube per HypeAuditor.'
+  rationality:
+    calibration: unknown
+    updating: unknown
+    evidence: unknown
+    uncertainty: unknown
+    independence: unknown
+- handle: kanal24_yt
+  name: 24 Канал
+  channel_id: UCYyrKTj_VPx5ECXYXjUMmpA
+  lang: uk
+  category: trusted
+  tier: T1
+  notes: Major UA TV, editorial team, 4.87M subs (vidIQ)
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: medium
+- handle: tsn_yt
+  name: ТСН
+  channel_id: UC3bB1AYxBKr_URciBzZrMxQ
+  lang: uk
+  category: trusted
+  tier: T1
+  notes: 1+1 media TV news, state media, institutional
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: low
+- handle: espreso_yt
+  name: Еспресо TV
+  channel_id: UCS1Yj0kpmmLNcsFG3aJOgGw
+  lang: uk
+  category: trusted
+  tier: T2
+  notes: Ukrainian independent TV channel
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: medium
+- handle: pryamiy_yt
+  name: Телеканал Прямий
+  channel_id: UCxt5J-0abp1ueVvJSVVbh4Q
+  lang: uk
+  category: trusted
+  tier: T2
+  notes: Independent UA TV, editorial team
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: medium
+- handle: unian_yt
+  name: УНІАН
+  channel_id: UCx5lh_E2R8IpGoJoSI0oMmg
+  lang: uk
+  category: unverified_media
+  tier: T1
+  notes: 4.87M subs (vidIQ). News agency but sensationalist framing.
+  rationality:
+    calibration: medium
+    updating: low
+    evidence: medium
+    uncertainty: low
+    independence: medium
+- handle: gordon_2
+  name: В гостях у Гордона
+  channel_id: UCKBhGzw1VHmDJjJhOQ9Nurg
+  lang: ru
+  category: unverified_media
+  tier: T1
+  notes: 4.47M subs (vidIQ). Gordon's interview channel, second largest.
+  rationality:
+    calibration: low
+    updating: low
+    evidence: medium
+    uncertainty: low
+    independence: low
+- handle: fakty_ictv
+  name: Факти ICTV
+  channel_id: UCGPe9_-VOsgswKqp2GBXB6g
+  lang: uk
+  category: trusted
+  tier: T2
+  notes: Starlight Media group, institutional
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: medium
+- handle: politeka_yt
+  name: Politeka Online
+  channel_id: UCjNjXc-p9bOjOfJzYwlUY6g
+  lang: uk
+  category: unverified_media
+  tier: T2
+  notes: Facebook removed Politeka for fake news (IMI 2019)
+  rationality:
+    calibration: low
+    updating: low
+    evidence: low
+    uncertainty: low
+    independence: low
+- handle: bihus_yt
+  name: BIHUS Info
+  channel_id: UCGvrq0vTsQdyHjHBSaQJsxA
+  lang: uk
+  category: trusted
+  tier: T1
+  notes: Investigative journalism, editorial standards, anti-corruption
+  rationality:
+    calibration: high
+    updating: high
+    evidence: high
+    uncertainty: medium
+    independence: high
+- handle: censor_yt
+  name: Цензор.НЕТ
+  channel_id: UCEhKvfIHi4h1b7K9tFO3hxA
+  lang: uk
+  category: unverified_media
+  tier: T1
+  notes: Butusov's outlet, mix of journalism and sensationalism
+  rationality:
+    calibration: medium
+    updating: low
+    evidence: medium
+    uncertainty: low
+    independence: medium
+- handle: we_ukraine_tv
+  name: Ми - Україна
+  channel_id: UCkZhP-w7OxHPH9IVlJmhagA
+  lang: uk
+  category: unverified_media
+  tier: T2
+  notes: HypeAuditor UA list
+  rationality:
+    calibration: unknown
+    updating: unknown
+    evidence: unknown
+    uncertainty: unknown
+    independence: unknown
+- handle: army_tv
+  name: Army TV
+  channel_id: UCxYNWzJHBXaXRkJPVB8FvfA
+  lang: uk
+  category: trusted
+  tier: T2
+  notes: Official Ukrainian military broadcasting channel
+  rationality:
+    calibration: medium
+    updating: medium
+    evidence: medium
+    uncertainty: medium
+    independence: low
+- handle: kyiv_independent_yt
+  name: Kyiv Independent
+  channel_id: UCfgw2Js6zRQp1SHQfVXJPtA
+  lang: en
+  category: trusted
+  tier: T1
+  notes: Independent newsroom, editorial standards, international awards
+  rationality:
+    calibration: medium
+    updating: high
+    evidence: high
+    uncertainty: high
+    independence: high
+- handle: ukrainian_witness
+  name: Ukrainian Witness
+  channel_id: UCN55QiDvK2RQxaLqxFxCJ2Q
+  lang: en
+  category: unverified_independent
+  tier: T2
+  notes: War documentation
+  rationality:
+    calibration: unknown
+    updating: unknown
+    evidence: high
+    uncertainty: medium
+    independence: medium
+- handle: anna_from_ukraine
+  name: Anna from Ukraine
+  channel_id: UC-GC7UrQ_xp49eGT9jB2sPA
+  lang: en
+  category: unverified_independent
+  tier: T2
+  notes: 'Propastop: personal insights into wartime Ukraine, 40K+ subs'
+  rationality:
+    calibration: unknown
+    updating: unknown
+    evidence: medium
+    uncertainty: medium
+    independence: medium

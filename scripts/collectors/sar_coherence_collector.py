@@ -7,7 +7,7 @@ from datetime import datetime, timezone, timedelta
 
 # Add lib path for EstWardenClient
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 
 try:
     import ee
@@ -113,7 +113,7 @@ def compute_coherence(site, end_date):
 
 def main():
     init_gee()
-    client = EstWardenClient()
+    # Using flat API
     
     now = datetime.now(timezone.utc)
     signals = []
@@ -166,7 +166,7 @@ def main():
             continue
     
     if signals:
-        result = client.ingest_signals(signals)
+        result = ingest_signals(signals)
         print(f"\nSAR Coherence: {result['inserted']} new signals from {len(signals)} detections")
     else:
         print("\nSAR Coherence: no anomalies detected")

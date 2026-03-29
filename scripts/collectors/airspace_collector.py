@@ -3,11 +3,11 @@
 import os, sys, urllib.request, hashlib, re
 from datetime import datetime, timezone
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 from bs4 import BeautifulSoup
 
 def main():
-    client = EstWardenClient()
+    # Using flat API
     signals = []
 
     # Scrape EASA CZIBs page
@@ -47,7 +47,7 @@ def main():
         print(f"  EASA scrape: {e}", file=sys.stderr)
 
     if signals:
-        result = client.ingest_signals(signals)
+        result = ingest_signals(signals)
         print(f"Airspace: {result['inserted']} CZIBs from EASA")
     else:
         print("Airspace: no CZIBs found")

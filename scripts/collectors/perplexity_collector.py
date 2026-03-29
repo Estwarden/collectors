@@ -3,7 +3,7 @@
 import json, os, sys, urllib.request, hashlib
 from datetime import datetime, timezone
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 
 QUERIES = [
     "Latest Russian military movements near Baltic states this week",
@@ -14,7 +14,7 @@ QUERIES = [
 ]
 
 def main():
-    client = EstWardenClient()
+    # Using flat API
     api_key = os.environ.get("PERPLEXITY_API_KEY", "")
     if not api_key:
         print("PERPLEXITY_API_KEY not set"); return
@@ -46,7 +46,7 @@ def main():
         except Exception as e:
             print(f"  Query failed: {e}", file=sys.stderr)
     if signals:
-        result = client.ingest_signals(signals)
+        result = ingest_signals(signals)
         print(f"Perplexity: {result['inserted']} research results")
 
 if __name__ == "__main__": main()

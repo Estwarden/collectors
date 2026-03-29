@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """IODA internet outage collector. Monitors Baltic ASNs for connectivity drops."""
-import json, os, sys, urllib.request
+import json, os, sys, urllib.request, urllib.error
 from datetime import datetime, timezone, timedelta
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 
 BALTIC_ASNS = {"3249": "Estonia (Telia)", "6712": "Estonia (Elisa)", "8728": "Latvia (Tet)",
                "12578": "Latvia (LMT)", "8764": "Lithuania (Telia)", "13194": "Lithuania (Bite)"}
 
 def main():
-    client = EstWardenClient()
+    # Using flat API
     now = datetime.now(timezone.utc)
     from_ts = int((now - timedelta(hours=2)).timestamp())
     until_ts = int(now.timestamp())
@@ -20,7 +20,7 @@ def main():
         try:
             with urllib.request.urlopen(url, timeout=15) as r:
                 data = json.loads(r.read())
-        except: continue
+        except (urllib.error.URLError, json.JSONDecodeError, OSError): continue
 
         for series in data.get("data", []):
             values = series.get("values", [])
@@ -37,7 +37,7 @@ def main():
                 })
 
     if signals:
-        result = client.ingest_signals(signals)
+        result = ingest_signals(signals)
         print(f"IODA: {result['inserted']} alerts from {len(BALTIC_ASNS)} ASNs")
     else:
         print("IODA: all Baltic ASNs healthy")

@@ -4,7 +4,7 @@ Uses GDELT GKG for protest/conflict events + Uppsala UCDP API."""
 import json, os, sys, urllib.request, hashlib
 from datetime import datetime, timezone, timedelta
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 
 BALTIC_COUNTRIES = ["Estonia", "Latvia", "Lithuania", "Russia", "Belarus", "Ukraine", "Finland", "Poland"]
 
@@ -63,10 +63,10 @@ def fetch_crisis_group():
     return signals
 
 def main():
-    client = EstWardenClient()
+    # Using flat API
     signals = fetch_ucdp() + fetch_crisis_group()
     if signals:
-        result = client.ingest_signals(signals)
+        result = ingest_signals(signals)
         print(f"Conflict: {result['inserted']} events from UCDP + Crisis Group")
     else:
         print("Conflict: no new events")

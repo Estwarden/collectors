@@ -1,0 +1,506 @@
+narratives:
+- id: baltic_attack_imminent
+  theme: Russia will attack Baltic states
+  description: Claims that Russia is preparing or planning military attack on Estonia, Latvia, or Lithuania. Designed to create panic and test Western reaction.
+  keywords:
+    en:
+    - attack Estonia
+    - attack Latvia
+    - attack Lithuania
+    - invade Baltic
+    - Baltic invasion
+    - attack Tallinn
+    - attack Riga
+    - attack Vilnius
+    - strike Baltic
+    - war with NATO
+    ru:
+    - удар по Эстонии
+    - удар по Латвии
+    - удар по Литве
+    - атака на Прибалтику
+    - вторжение в Прибалтику
+    - война с НАТО
+    - ударить по Таллину
+    - удар по Риге
+    uk:
+    - удар по Естонії
+    - атака на Балтію
+    - напад на Прибалтику
+    - вторгнення в Прибалтику
+  first_seen: '2016'
+  frequency: high
+  target_regions:
+  - baltic
+  - estonia
+  - latvia
+  - lithuania
+- id: article5_failure
+  theme: NATO Article 5 will not be triggered
+  description: Claims that NATO allies will not defend Baltic states, Article 5 is fiction, Western nations will abandon Estonia/Latvia/Lithuania.
+  keywords:
+    en:
+    - Article 5 won't work
+    - NATO won't defend
+    - abandon Baltic
+    - NATO bluff
+    - Article 5 fiction
+    - NATO paper tiger
+    - won't fight for Estonia
+    - won't fight for Latvia
+    ru:
+    - статья 5 не сработает
+    - НАТО не защитит
+    - бросят Прибалтику
+    - НАТО блеф
+    - бумажный тигр
+    - не будут воевать за Эстонию
+    uk:
+    - стаття 5 не спрацює
+    - НАТО не захистить
+    - кинуть Прибалтику
+  first_seen: '2014'
+  frequency: high
+  target_regions:
+  - global
+- id: nato_provocation
+  theme: NATO/Baltic states are provoking Russia
+  description: Frames NATO exercises, troop deployments, and defense spending as aggressive provocation against Russia.
+  keywords:
+    en:
+    - NATO provocation
+    - Baltic provocation
+    - aggressive NATO
+    - NATO expansion threat
+    - threatening Russia
+    - encircling Russia
+    - NATO aggression
+    ru:
+    - провокация НАТО
+    - провокация Прибалтики
+    - агрессия НАТО
+    - угроза НАТО
+    - окружение России
+    - расширение НАТО
+    uk:
+    - провокація НАТО
+    - агресія НАТО
+    - оточення Росії
+  first_seen: '2004'
+  frequency: high
+  target_regions:
+  - global
+- id: suwalki_gap
+  theme: Suwalki Gap makes Baltic states indefensible
+  description: Claims that the narrow land corridor between Kaliningrad and Belarus makes Baltic defense impossible.
+  keywords:
+    en:
+    - Suwalki gap
+    - Suwalki corridor
+    - cut off Baltic
+    - Baltic indefensible
+    - isolated Baltic
+    - Kaliningrad corridor
+    ru:
+    - Сувалкский коридор
+    - отрезать Прибалтику
+    - Прибалтика неприкрыта
+    - изолировать Прибалтику
+    uk:
+    - Сувалкський коридор
+    - відрізати Прибалтику
+  first_seen: '2016'
+  frequency: medium
+  target_regions:
+  - baltic
+  - poland
+  - lithuania
+- id: nuclear_threat
+  theme: Nuclear escalation is imminent
+  description: Claims that nuclear war is imminent, Russia will use nuclear weapons, Baltic states will be nuked. Panic-generating narrative.
+  keywords:
+    en:
+    - nuclear war
+    - nuclear strike
+    - nuclear attack
+    - tactical nuclear
+    - nuke Estonia
+    - nuke Baltic
+    - nuclear escalation
+    - World War 3
+    - WW3
+    ru:
+    - ядерная война
+    - ядерный удар
+    - тактическое ядерное
+    - третья мировая
+    - ядерная эскалация
+    uk:
+    - ядерна війна
+    - ядерний удар
+    - третя світова
+    - ядерна ескалація
+  first_seen: '2022'
+  frequency: high
+  target_regions:
+  - global
+- id: russian_speakers_oppressed
+  theme: Russian speakers in Baltic states are oppressed
+  description: Claims ethnic Russians in Estonia/Latvia face discrimination, language bans, cultural genocide. Pretext narrative similar to Donbas 2014.
+  keywords:
+    en:
+    - oppressed Russians
+    - Russian minority
+    - language ban
+    - discriminate Russian speakers
+    - apartheid Baltic
+    - Russian rights Baltic
+    ru:
+    - притеснение русских
+    - русское меньшинство
+    - запрет русского языка
+    - дискриминация русскоязычных
+    - апартеид в Прибалтике
+    - права русских
+    uk:
+    - утиск росіян
+    - російська меншина
+    - заборона російської мови
+  first_seen: '2007'
+  frequency: high
+  target_regions:
+  - estonia
+  - latvia
+  - baltic
+- id: baltic_failed_states
+  theme: Baltic states are failed/failing states
+  description: Claims Baltic economies are collapsing, populations fleeing, states are unsustainable without Russian trade/energy.
+  keywords:
+    en:
+    - Baltic failed state
+    - Estonia collapsing
+    - Latvia economy collapse
+    - population decline Baltic
+    - Baltic exodus
+    - Baltic poverty
+    ru:
+    - Прибалтика разваливается
+    - экономика Эстонии рухнула
+    - Латвия вымирает
+    - нищая Прибалтика
+    - бегство из Прибалтики
+    uk:
+    - Прибалтика розвалюється
+    - економіка Естонії
+  first_seen: '2010'
+  frequency: medium
+  target_regions:
+  - baltic
+  - estonia
+  - latvia
+  - lithuania
+- id: western_fatigue
+  theme: Western support for Ukraine is collapsing
+  description: Claims that NATO/EU/US are tired of supporting Ukraine, aid will stop, Ukraine should negotiate. Demoralization narrative.
+  keywords:
+    en:
+    - Ukraine fatigue
+    - aid fatigue
+    - stop supporting Ukraine
+    - abandon Ukraine
+    - Ukraine can't win
+    - war is lost
+    - negotiate now
+    - peace deal
+    ru:
+    - усталость от Украины
+    - прекратить помощь
+    - бросить Украину
+    - Украина проиграла
+    - переговоры сейчас
+    uk:
+    - втома від України
+    - припинити допомогу
+    - Україна програла
+    - переговори зараз
+  first_seen: '2022'
+  frequency: high
+  target_regions:
+  - global
+- id: sanctions_backfire
+  theme: Sanctions hurt Europe more than Russia
+  description: Claims that Western sanctions are destroying European economies while Russia thrives.
+  keywords:
+    en:
+    - sanctions backfire
+    - sanctions hurt Europe
+    - Europe suffering
+    - sanctions failed
+    - Russia stronger
+    - Russian economy growing
+    ru:
+    - санкции бьют по Европе
+    - Европа страдает
+    - санкции провалились
+    - Россия сильнее
+    - экономика России растет
+    uk:
+    - санкції б'ють по Європі
+    - санкції провалилися
+  first_seen: '2022'
+  frequency: high
+  target_regions:
+  - global
+- id: nazi_baltic
+  theme: Baltic states harbor Nazi sympathizers
+  description: Equates Baltic independence movements with Nazism, references Waffen-SS legions, claims governments are neo-Nazi.
+  keywords:
+    en:
+    - Baltic Nazi
+    - Estonian SS
+    - Latvian SS
+    - Nazi march
+    - Nazi Baltic
+    - fascist Baltic
+    - neo-Nazi Estonia
+    ru:
+    - прибалтийские нацисты
+    - эстонский СС
+    - латышский СС
+    - марш нацистов
+    - фашистская Прибалтика
+    uk:
+    - прибалтійські нацисти
+    - естонські СС
+  first_seen: '2005'
+  frequency: medium
+  target_regions:
+  - baltic
+  - estonia
+  - latvia
+  - lithuania
+- id: gps_jamming_false_flag
+  theme: GPS jamming is a Western false flag
+  description: Claims that GPS interference near Baltic states is caused by NATO, not Russia, or is exaggerated.
+  keywords:
+    en:
+    - GPS false flag
+    - NATO jamming
+    - fake GPS interference
+    - jamming exaggerated
+    - GPS hoax
+    ru:
+    - GPS провокация
+    - НАТО глушит
+    - преувеличение помех GPS
+    uk:
+    - GPS провокація
+    - НАТО глушить
+  first_seen: '2023'
+  frequency: low
+  target_regions:
+  - baltic
+  - finland
+- id: hybrid_attacks_staged
+  theme: Hybrid attacks on Baltic states are staged
+  description: Claims that cyber attacks, undersea cable cuts, border incidents are fabricated by Baltic/Western governments.
+  keywords:
+    en:
+    - staged attack
+    - false flag
+    - fabricated incident
+    - Baltic hoax
+    - cable cut hoax
+    - cyber attack staged
+    ru:
+    - постановка
+    - ложный флаг
+    - сфабрикованный инцидент
+    - провокация Прибалтики
+    uk:
+    - постановка
+    - хибний прапор
+    - сфабрикований інцидент
+  first_seen: '2024'
+  frequency: medium
+  target_regions:
+  - baltic
+  - finland
+- id: migration_weapon
+  theme: Migrants are weaponized against Baltic states
+  description: Amplifies migration fears, claims Baltic states are being flooded by migrants, instrumentalizes Belarus border crisis.
+  keywords:
+    en:
+    - migrant invasion Baltic
+    - border crisis Baltic
+    - migrant weapon
+    - Belarus border
+    - flood with migrants
+    ru:
+    - миграционное оружие
+    - нашествие мигрантов
+    - кризис на границе
+    - оружие Беларуси
+    uk:
+    - міграційна зброя
+    - навала мігрантів
+  first_seen: '2021'
+  frequency: medium
+  target_regions:
+  - baltic
+  - finland
+  - poland
+  - lithuania
+- id: finland_nato_aggressor
+  theme: Finland joined NATO for offensive, not defensive purposes
+  description: Frames Finland's NATO membership as aggressive provocation against Russia, not legitimate defense. Claims Finland abandoned neutrality to serve US interests.
+  target_regions:
+  - finland
+  keywords:
+    en:
+    - Finland NATO aggression
+    - Finland provokes Russia
+    - Finland abandoned neutrality
+    - Finlandization was better
+    - Finland NATO offensive
+    ru:
+    - Финляндия в НАТО агрессия
+    - Финляндия провоцирует
+    - Финляндия отказалась от нейтралитета
+    - финляндизация
+    fi:
+    - NATO-provokaatio
+    - Suomi hyökkääjä
+    - puolueettomuus parempi
+  first_seen: '2022'
+  frequency: high
+- id: finland_border_brutality
+  theme: Finland's border closure is a human rights violation
+  description: Claims Finland's closure of Russian border crossings is "brutal", "US-ordered", driven by "paranoid Russophobia". Simultaneously claims border will reopen soon.
+  target_regions:
+  - finland
+  keywords:
+    en:
+    - Finland border brutal
+    - Finland border human rights
+    - Finland border Russophobia
+    - close Finnish border
+    - Finland border closure
+    ru:
+    - закрытие границы Финляндии
+    - Финляндия русофобия граница
+    - граница Финляндии жестоко
+    - права человека граница Финляндии
+    fi:
+    - raja suljettu ihmisoikeus
+    - raja venäläisviha
+  first_seen: '2023'
+  frequency: high
+- id: finland_historical_guilt
+  theme: Finland was Nazi ally, owes territorial debt to Russia
+  description: Uses Finland's WWII Continuation War alliance with Germany to brand Finns as Nazi sympathizers. Claims territorial concessions to USSR as precedent for Ukraine.
+  target_regions:
+  - finland
+  keywords:
+    en:
+    - Finland Nazi ally
+    - Finland fascist
+    - Winter War justified
+    - Continuation War
+    - Finland territorial concessions
+    - Karelia belongs to Russia
+    ru:
+    - Финляндия союзник нацистов
+    - Финляндия фашист
+    - Карелия Россия
+    - территориальные уступки Финляндии
+  first_seen: '2022'
+  frequency: medium
+- id: poland_anti_ukrainian_refugees
+  theme: Ukrainian refugees exploit Poland and abuse benefits
+  description: Fabricated claims that Ukrainians abuse social benefits, receive advantages over Poles, behave aggressively. Exploits Volhynia massacre history to fuel anti-Ukrainian sentiment.
+  target_regions:
+  - poland
+  keywords:
+    en:
+    - Ukrainian refugees abuse Poland
+    - Ukrainians steal Polish benefits
+    - Ukrainians expelled Polish children
+    - Volhynia massacre Ukraine
+    ru:
+    - украинские беженцы Польша
+    - украинцы злоупотребляют Польша
+    - Волынская резня
+    pl:
+    - uchodźcy ukraińscy nadużycia
+    - Ukraińcy zabierają
+    - rzeź wołyńska
+  first_seen: '2022'
+  frequency: high
+- id: poland_us_puppet
+  theme: Poland is a US puppet state destroying European sovereignty
+  description: Claims Poland acts purely on US orders against European interests. Poland as "America's Trojan horse" in the EU. Polish defense spending serves US military-industrial complex.
+  target_regions:
+  - poland
+  keywords:
+    en:
+    - Poland US puppet
+    - Poland American colony
+    - Poland Trojan horse
+    - Poland serves Washington
+    - Fort Trump
+    ru:
+    - Польша марионетка США
+    - Польша американская колония
+    - Польша троянский конь
+    - Форт Трамп
+    pl:
+    - Polska marionetkа USA
+    - kolonia amerykańska
+    - koń trojański
+  first_seen: '2019'
+  frequency: medium
+- id: poland_russophobia_hysteria
+  theme: Poland's anti-Russian stance is paranoid hysteria
+  description: Frames Poland's security concerns as irrational Russophobia. Mocks Polish threat assessments. Claims Polish government manufactures Russia threat for domestic politics.
+  target_regions:
+  - poland
+  keywords:
+    en:
+    - Polish Russophobia
+    - Poland paranoid
+    - Poland hysteria Russia
+    - Poland exaggerates threat
+    ru:
+    - польская русофобия
+    - Польша истерика
+    - Польша паранойя
+    - Польша преувеличивает угрозу
+    pl:
+    - rusofobia
+    - histeria antyrosyjska
+    - wyolbrzymianie zagrożenia
+  first_seen: '2014'
+  frequency: high
+- id: poland_belarus_border_staged
+  theme: Poland's Belarus border crisis response is inhumane
+  description: Frames Poland's border reinforcement against Lukashenko's hybrid attack as humanitarian crisis. Claims Polish border guards commit atrocities against migrants.
+  target_regions:
+  - poland
+  - lithuania
+  keywords:
+    en:
+    - Poland border inhumane
+    - Polish border guards brutal
+    - Belarus border humanitarian
+    - Poland pushbacks migrants
+    ru:
+    - Польша граница бесчеловечно
+    - польские пограничники жестокость
+    - пушбэки Польша
+    pl:
+    - granica nieludzka
+    - pushbacki
+    - kryzys graniczny
+  first_seen: '2021'
+  frequency: high

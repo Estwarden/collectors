@@ -11,7 +11,7 @@ import sys
 import urllib.request
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 import h3
 
 MANIFEST_URL = "https://gpsjam.org/data/manifest.csv"
@@ -57,56 +57,26 @@ def fetch_dataset(date):
         return r.read().decode()
 
 
-def main():
-    client = EstWardenClient()
-
-    try:
-        manifest = fetch_manifest()
-    except Exception as e:
-        print(f"GPSJam: failed to load manifest: {e}", file=sys.stderr)
-        sys.exit(1)
-
-    latest = manifest[-1]
-    date = latest.get("date", "")
-    suspect = str(latest.get("suspect", "false")).lower() == "true"
-    num_bad_hexes = int(latest.get("num_bad_aircraft_hexes") or 0)
-    if not date:
-        print("GPSJam: manifest missing latest date", file=sys.stderr)
-        sys.exit(1)
-
-    try:
-        text = fetch_dataset(date)
-    except Exception as e:
-        print(f"GPSJam: failed to fetch dataset for {date}: {e}", file=sys.stderr)
-        sys.exit(1)
-
-    if len(text) <= 100:
-        print(f"GPSJam: dataset for {date} is unexpectedly small", file=sys.stderr)
-        sys.exit(1)
-
+def process_hex_data(text, date, suspect, num_bad_hexes):
+    """Process CSV hex data and return zone stats."""
     zone_data = {z: {"count": 0, "bad": 0, "good": 0, "total_rate": 0.0} for z in ZONES}
     total_hexes = 0
-
     reader = csv.DictReader(io.StringIO(text))
     for row in reader:
+        hex_id = row.get("hex", "")
         try:
-            hex_id = row.get("hex", "")
             good = int(row.get("count_good_aircraft", 0))
             bad = int(row.get("count_bad_aircraft", 0))
         except (ValueError, TypeError):
             continue
-
         if good + bad < 5:
             continue
-
         try:
             lat, lon = h3.cell_to_latlng(hex_id)
         except (ValueError, TypeError):
             continue
-
         total_hexes += 1
         rate = bad / (good + bad) if (good + bad) > 0 else 0
-
         for zone, (la_min, la_max, lo_min, lo_max) in ZONES.items():
             if la_min <= lat <= la_max and lo_min <= lon <= lo_max:
                 zone_data[zone]["count"] += 1
@@ -114,7 +84,11 @@ def main():
                 zone_data[zone]["good"] += good
                 zone_data[zone]["total_rate"] += rate
                 break
+    return zone_data, total_hexes
 
+
+def build_signals(zone_data, date, suspect, num_bad_hexes):
+    """Build signal list from zone data."""
     signals = []
     for zone, d in zone_data.items():
         if d["count"] == 0:
@@ -148,19 +122,40 @@ def main():
                 "manifest_bad_hexes": num_bad_hexes,
             },
         })
+    return signals
 
+
+def main():
+    try:
+        manifest = fetch_manifest()
+    except Exception as e:
+        print(f"GPSJam: failed to load manifest: {e}", file=sys.stderr)
+        sys.exit(1)
+    latest = manifest[-1]
+    date = latest.get("date", "")
+    suspect = str(latest.get("suspect", "false")).lower() == "true"
+    num_bad_hexes = int(latest.get("num_bad_aircraft_hexes") or 0)
+    if not date:
+        print("GPSJam: manifest missing latest date", file=sys.stderr)
+        sys.exit(1)
+    try:
+        text = fetch_dataset(date)
+    except Exception as e:
+        print(f"GPSJam: failed to fetch dataset for {date}: {e}", file=sys.stderr)
+        sys.exit(1)
+    if len(text) <= 100:
+        print(f"GPSJam: dataset for {date} is unexpectedly small", file=sys.stderr)
+        sys.exit(1)
+    zone_data, total_hexes = process_hex_data(text, date, suspect, num_bad_hexes)
+    signals = build_signals(zone_data, date, suspect, num_bad_hexes)
     if signals:
-        result = client.ingest_signals(signals)
+        result = ingest_signals(signals)
         high = sum(1 for s in signals if s["severity"] == "HIGH")
-        print(
-            f"GPSJam: {result.get('inserted', 0)} zones (date={date}, suspect={suspect}, "
-            f"bad_hexes={num_bad_hexes}, {high} HIGH, {len(signals)} total, {total_hexes} hexes scanned)"
-        )
+        print(f"GPSJam: {result.get('inserted', 0)} zones (date={date}, suspect={suspect}, "
+              f"bad_hexes={num_bad_hexes}, {high} HIGH, {len(signals)} total, {total_hexes} hexes scanned)")
     else:
-        print(
-            f"GPSJam: 0 zones with data (date={date}, suspect={suspect}, "
-            f"bad_hexes={num_bad_hexes}, {total_hexes} hexes scanned)"
-        )
+        print(f"GPSJam: 0 zones with data (date={date}, suspect={suspect}, "
+              f"bad_hexes={num_bad_hexes}, {total_hexes} hexes scanned)")
 
 
 if __name__ == "__main__":

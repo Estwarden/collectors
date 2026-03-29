@@ -3,7 +3,7 @@
 import json, os, sys, urllib.request
 from datetime import datetime, timezone
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 
 INDICATORS = [
     ("CPI", "https://andmed.stat.ee/api/v1/en/stat/IA001"),
@@ -11,7 +11,7 @@ INDICATORS = [
 ]
 
 def main():
-    client = EstWardenClient()
+    # Using flat API
     signals = []
     for name, url in INDICATORS:
         try:
@@ -32,7 +32,7 @@ def main():
         except Exception as e:
             print(f"  {name}: {e}", file=sys.stderr)
     if signals:
-        result = client.ingest_signals(signals)
+        result = ingest_signals(signals)
         print(f"Stats.ee: {result['inserted']} indicators")
 
 if __name__ == "__main__": main()

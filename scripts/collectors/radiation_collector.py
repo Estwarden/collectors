@@ -4,12 +4,12 @@ import os, sys, urllib.request, hashlib
 from datetime import datetime, timezone
 from xml.etree import ElementTree as ET
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 
 NS = {"BsWfs": "http://xml.fmi.fi/schema/wfs/2.0", "gml": "http://www.opengis.net/gml/3.2"}
 
 def main():
-    client = EstWardenClient()
+    # Using flat API
     now = datetime.now(timezone.utc)
 
     url = ("https://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature"
@@ -70,7 +70,7 @@ def main():
         })
 
     if signals:
-        result = client.ingest_signals(signals)
+        result = ingest_signals(signals)
         print(f"Radiation: {result['inserted']} stations ({elevated} elevated, {len(stations)} total)")
     else:
         print("Radiation: no STUK data")

@@ -25,7 +25,7 @@ from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 
 import yaml
 
@@ -145,7 +145,7 @@ def main():
         print("No channels to collect")
         return
 
-    client = EstWardenClient()
+    # Using flat API - no client needed
     total_signals = 0
     total_errors = 0
 
@@ -199,7 +199,7 @@ def main():
 
         if signals:
             try:
-                result = client.ingest_signals(signals)
+                result = ingest_signals(signals)
                 inserted = result.get("inserted", 0)
                 total_signals += inserted
                 print(f"  ✓ {handle}: {inserted}/{len(signals)} new")

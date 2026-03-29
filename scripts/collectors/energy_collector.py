@@ -14,7 +14,7 @@ Nord Pool day-ahead prices are published for all countries.
 import json, os, sys, urllib.request
 from datetime import datetime, timedelta, timezone
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 
 # Nord Pool areas mapped to country codes and regions
 AREAS = {
@@ -73,7 +73,7 @@ def fetch_nordpool_entso(country, start_date):
         return []
 
 def main():
-    client = EstWardenClient()
+    # Using flat API - no client needed
     now = datetime.now(timezone.utc)
     start = (now - timedelta(hours=2)).strftime("%Y-%m-%dT%H:%M:%SZ")
     end = now.strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -122,7 +122,7 @@ def main():
                 })
     
     if signals:
-        result = client.ingest_signals(signals)
+        result = ingest_signals(signals)
         countries = set(s["metadata"]["country"] for s in signals)
         print(f"Energy: {result['inserted']} new from {', '.join(sorted(countries))}")
     else:

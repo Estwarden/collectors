@@ -7,7 +7,7 @@ to signals for intelligence map display. Filters for actual military content.
 import json, os, sys, urllib.request, urllib.parse, hashlib, time, yaml
 from datetime import datetime, timezone
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 
 # Strict military keywords — reduces noise
 MIL_KEYWORDS = {
@@ -39,7 +39,7 @@ QUERIES = [
 ]
 
 def main():
-    client = EstWardenClient()
+    # Using flat API
     sites = load_sites()
     signals = []
 
@@ -99,7 +99,7 @@ def main():
         time.sleep(12)
 
     if signals:
-        result = client.ingest_signals(signals[:200])
+        result = ingest_signals(signals[:200])
         print(f"GDELT: {result.get('inserted', 0)} articles from {len(QUERIES)} site queries")
     else:
         print("GDELT: 0 relevant articles found")

@@ -3,14 +3,14 @@
 import json, os, sys, urllib.request, hashlib
 from datetime import datetime, timezone
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 
 BBOX = {"lat_min": 53.0, "lat_max": 62.0, "lon_min": 18.0, "lon_max": 32.0}
 # Shadow fleet indicators: old tankers, flag-hoppers, AIS gaps
 SHADOW_FLAGS = {"CM", "GA", "TG", "TZ", "PW", "KM"}  # Cameroon, Gabon, Togo, Tanzania, Palau, Comoros
 
 def main():
-    client = EstWardenClient()
+    # Using flat API
     # Use AISHub or MarineTraffic free API — simplified version
     url = "https://meri.digitraffic.fi/api/ais/v1/locations"
     req = urllib.request.Request(url, headers={
@@ -54,7 +54,7 @@ def main():
                          "shadow_fleet": is_shadow, "vessel_type": props.get("shipType", "")},
         })
     if signals:
-        result = client.ingest_signals(signals[:500])
+        result = ingest_signals(signals[:500])
         print(f"AIS: {result['inserted']} new, {len(signals)} vessels, {shadow} shadow fleet")
 
 if __name__ == "__main__": main()

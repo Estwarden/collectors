@@ -3,10 +3,10 @@
 import json, os, sys, urllib.request, urllib.parse
 from datetime import datetime, timezone, timedelta
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 
 def main():
-    client = EstWardenClient()
+    # Using flat API
     now = datetime.now(timezone.utc)
     from_date = (now - timedelta(days=14)).strftime("%Y-%m-%d")
     params = urllib.parse.urlencode({"event_date": f"{from_date}|{now.strftime('%Y-%m-%d')}",
@@ -30,7 +30,7 @@ def main():
                          "country": ev.get("country"), "fatalities": ev.get("fatalities", 0)},
         })
     if signals:
-        result = client.ingest_signals(signals[:500])
+        result = ingest_signals(signals[:500])
         print(f"ACLED: {result['inserted']} events")
 
 if __name__ == "__main__": main()

@@ -15,7 +15,7 @@ import urllib.request
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 
 URL = "https://deepstatemap.live/api/history/last"
 UA = "EstWarden/1.0"
@@ -70,7 +70,7 @@ def is_attack_point(props: dict) -> bool:
 
 
 def main():
-    client = EstWardenClient()
+    # Using flat API
     data, geo, features = fetch_snapshot()
 
     ds_id = str(data.get("id") or "latest")
@@ -160,7 +160,7 @@ def main():
             },
         })
 
-    result = client.ingest_signals(signals)
+    result = ingest_signals(signals)
     print(
         f"DeepState: {len(features)} features → {result.get('inserted', 0)} new, "
         f"{result.get('duplicates', 0)} dups; polygons={total_polygons}, attack_points={len(attack_points)}"

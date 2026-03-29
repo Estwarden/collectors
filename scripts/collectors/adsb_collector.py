@@ -3,7 +3,7 @@
 import json, os, sys, urllib.request
 from datetime import datetime, timezone
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from estwarden_client import EstWardenClient
+from estwarden_client import ingest_signals
 
 BBOX = {"lat_min": 53.0, "lat_max": 61.0, "lon_min": 18.0, "lon_max": 32.0}
 THREAT_ICAO = [(0x140000, 0x15FFFF, "Russia"), (0x510000, 0x5103FF, "Belarus")]
@@ -14,14 +14,14 @@ def classify(icao24, callsign):
         val = int(icao24.lower(), 16)
         for low, high, country in THREAT_ICAO:
             if low <= val <= high: return country, "threat_icao"
-    except: pass
+    except (ValueError, TypeError): pass
     cs = (callsign or "").strip().upper()
     for pfx, desc in MIL_PREFIXES.items():
         if cs.startswith(pfx): return desc, "mil_callsign"
     return "", ""
 
 def main():
-    client = EstWardenClient()
+    # Using flat API - no client needed
     lat_c = (BBOX["lat_min"] + BBOX["lat_max"]) / 2
     lon_c = (BBOX["lon_min"] + BBOX["lon_max"]) / 2
     url = f"https://api.adsb.lol/v2/lat/{lat_c}/lon/{lon_c}/dist/500"
@@ -50,7 +50,7 @@ def main():
                          "category": "military" if threat else "civilian", "threat": threat, "reason": reason},
         })
     if signals:
-        result = client.ingest_signals(signals[:500])
+        result = ingest_signals(signals[:500])
         print(f"ADS-B: {result['inserted']} new, {len(signals)} total, {mil_count} military")
 
 if __name__ == "__main__": main()
