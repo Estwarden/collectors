@@ -1,0 +1,14 @@
+name: sentiment-topics
+description: Daily topic extraction + sentiment from Telegram group chats
+schedule: "30 1,7,13,19 * * *"
+queue: llm
+
+steps:
+  - id: extract
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 processors/sentiment_topics.py
+    retry_policy:
+      limit: 1
+      interval_sec: 60
