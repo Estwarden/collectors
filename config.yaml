@@ -12,5 +12,10 @@ queues:
     - name: maintenance
       max_concurrency: 1
 
+# Telegram Workflow Operator: AI agent via Ops Monitor bot
+bots:
+  provider: telegram
+  safe_mode: false
+
 # Prometheus metrics: public (scraped by VPS2 prometheus)
 metrics: public
