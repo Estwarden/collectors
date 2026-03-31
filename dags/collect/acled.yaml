@@ -1,10 +1,8 @@
 name: collect-acled
 description: Collect ACLED European conflict events
 schedule: "0 */12 * * *"
+queue: collectors
 
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
   - id: collect

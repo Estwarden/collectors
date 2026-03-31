@@ -25,7 +25,9 @@ def main():
     lat_c = (BBOX["lat_min"] + BBOX["lat_max"]) / 2
     lon_c = (BBOX["lon_min"] + BBOX["lon_max"]) / 2
     url = f"https://api.adsb.lol/v2/lat/{lat_c}/lon/{lon_c}/dist/500"
-    req = urllib.request.Request(url, headers={"User-Agent": "EstWarden/1.0"})
+    from lib.ua import random_ua, jitter
+    jitter(90)
+    req = urllib.request.Request(url, headers={"User-Agent": random_ua()})
     with urllib.request.urlopen(req, timeout=30) as r:
         data = json.loads(r.read())
 

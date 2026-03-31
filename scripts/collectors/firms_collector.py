@@ -4,6 +4,7 @@ import csv, io, os, sys, urllib.request
 from datetime import datetime, timezone
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 from estwarden_client import ingest_signals
+from lib.ua import random_ua
 
 LAT_MIN, LAT_MAX = 50.0, 70.0
 LON_MIN, LON_MAX = 20.0, 45.0
@@ -16,7 +17,7 @@ def main():
 
     date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{map_key}/VIIRS_SNPP_NRT/world/2/{date}"
-    req = urllib.request.Request(url, headers={"User-Agent": "EstWarden/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": random_ua()})
     with urllib.request.urlopen(req, timeout=30) as r:
         text = r.read().decode("utf-8", errors="replace")
 

@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 from estwarden_client import ingest_signals
+from lib.ua import random_ua
 
 import feedparser
 
@@ -40,7 +41,7 @@ def entry_date(entry):
 def main():
     signals = []
     for name, url in FEEDS:
-        parsed = feedparser.parse(url, agent="EstWarden/1.0")
+        parsed = feedparser.parse(url, agent=random_ua())
         count = 0
         for entry in parsed.entries:
             title = getattr(entry, "title", "").strip()

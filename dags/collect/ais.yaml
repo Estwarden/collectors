@@ -1,10 +1,8 @@
 name: collect-ais
 description: Collect AIS vessel positions (Baltic Sea)
 schedule: "*/5 * * * *"
+queue: collectors
 
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
   - id: collect

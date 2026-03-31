@@ -1,0 +1,14 @@
+name: bot-detection
+description: DBSCAN clustering for Telegram channel bot detection
+schedule: "30 2 * * *"
+
+
+steps:
+  - id: cluster
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 processors/bot_cluster.py
+    retry_policy:
+      limit: 1
+      interval_sec: 120

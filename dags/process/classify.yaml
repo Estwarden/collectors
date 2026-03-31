@@ -1,12 +1,8 @@
 name: classify-signals
 description: LLM narrative classification (N1-N5) for untagged signals
 schedule: "*/10 * * * *"
+queue: llm
 
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-  - OPENROUTER_API_KEY: "${OPENROUTER_API_KEY}"
-  - LLM_MODEL: "${LLM_MODEL}"
 
 steps:
   - id: classify

@@ -1,10 +1,8 @@
 name: collect-telegram-channels
 description: Scrape public Telegram channel previews for narrative monitoring
 schedule: "30 */2 * * *"
+queue: collectors
 
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
   - id: scrape_channels

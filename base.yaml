@@ -1,0 +1,48 @@
+# EstWarden Dagu base configuration.
+# Applied to ALL DAGs. Location: ${DAGU_HOME}/base.yaml
+
+# Load credentials from .env
+dotenv: /var/lib/dagu/dags/.env
+
+# Secrets — auto-masked in all logs and outputs
+secrets:
+  - name: ESTWARDEN_API_KEY
+    provider: env
+    key: ESTWARDEN_API_KEY
+  - name: OPENROUTER_API_KEY
+    provider: env
+    key: OPENROUTER_API_KEY
+  - name: PIPELINE_BOT_TOKEN
+    provider: env
+    key: PIPELINE_BOT_TOKEN
+  - name: GOOGLE_API_KEY
+    provider: env
+    key: GOOGLE_API_KEY
+  - name: BURNER_SESSION
+    provider: env
+    key: BURNER_SESSION
+
+# Default env
+env:
+  - TZ: Europe/Tallinn
+  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - DATABASE_URL: "${DATABASE_URL}"
+  - PIPELINE_ADMIN_CHAT: "${PIPELINE_ADMIN_CHAT}"
+
+# Default shell (bash if available, fallback to sh)
+shell: /bin/bash
+
+# Default retry for all steps
+defaults:
+  retry_policy:
+    limit: 1
+    interval_sec: 60
+
+# Telegram alert on ANY DAG failure via dedicated pipeline bot
+handler_on:
+  failure:
+    command: 'curl -sf -X POST "https://api.telegram.org/bot${PIPELINE_BOT_TOKEN}/sendMessage" -H "Content-Type: application/json" -d "{\"chat_id\":\"${PIPELINE_ADMIN_CHAT}\",\"text\":\"❌ ${DAG_NAME} failed\",\"parse_mode\":\"HTML\"}" > /dev/null 2>&1 || true'
+
+# History
+hist_retention_days: 30
+max_output_size: 1048576

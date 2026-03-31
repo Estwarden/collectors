@@ -1,10 +1,8 @@
 name: data-quality
 description: Fix orphaned tags, self-loops, duplicates, NEUTRAL tags
 schedule: "30 5 * * *"
+queue: maintenance
 
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
   - id: quality_audit

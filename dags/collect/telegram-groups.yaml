@@ -1,0 +1,15 @@
+name: collect-telegram-groups
+description: Collect messages from Telegram group chats via burner account
+schedule: "*/30 * * * *"
+queue: collectors
+
+
+steps:
+  - id: collect
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 processors/telegram_group_collector.py
+    retry_policy:
+      limit: 1
+      interval_sec: 60

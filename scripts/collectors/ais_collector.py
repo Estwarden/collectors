@@ -13,8 +13,10 @@ def main():
     # Using flat API
     # Use AISHub or MarineTraffic free API — simplified version
     url = "https://meri.digitraffic.fi/api/ais/v1/locations"
+    from lib.ua import random_ua, jitter
+    jitter(90)
     req = urllib.request.Request(url, headers={
-        "User-Agent": "EstWarden/1.0",
+        "User-Agent": random_ua(),
         "Accept": "application/json",
         "Accept-Encoding": "gzip, deflate",
     })

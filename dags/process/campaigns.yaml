@@ -10,9 +10,6 @@ description: |
 
 schedule: "50 */6 * * *"
 
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
   - id: detect

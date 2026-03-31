@@ -1,10 +1,8 @@
 name: dedup-signals
 description: Remove duplicate signals by content_hash
 schedule: "30 4 * * *"
+queue: maintenance
 
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
   - id: dedup

@@ -1,10 +1,8 @@
 name: collect-gpsjam
 description: Collect GPS jamming data from gpsjam.org
 schedule: "0 */12 * * *"
+queue: collectors
 
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
   - id: collect

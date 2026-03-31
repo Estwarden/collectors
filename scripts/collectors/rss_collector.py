@@ -51,7 +51,8 @@ def collect_feed(feed_cfg):
     region = feed_cfg.get("region", [])
     region_str = ",".join(region) if isinstance(region, list) else (region or "")
 
-    parsed = feedparser.parse(url, agent="EstWarden/1.0 (https://estwarden.eu)")
+    from lib.ua import random_ua, jitter, jitter_sleep
+    parsed = feedparser.parse(url, agent=random_ua())
     if parsed.bozo and not parsed.entries:
         print(f"  {handle}: feed error — {parsed.bozo_exception}", file=sys.stderr)
         return []
@@ -92,9 +93,12 @@ def collect_feed(feed_cfg):
 
 
 def main():
+    from lib.ua import jitter, jitter_sleep
+    jitter(90)
     parser = argparse.ArgumentParser(description="RSS collector for EstWarden")
     parser.add_argument("--feeds", default="/dags/config/feeds.yaml", help="Feeds config file")
     parser.add_argument("--category", help="Only collect feeds in this category")
+    parser.add_argument("--handles", help="Comma-separated list of feed handles to collect")
     args = parser.parse_args()
 
     with open(args.feeds) as f:
@@ -103,6 +107,9 @@ def main():
     feeds = config.get("feeds", [])
     if args.category:
         feeds = [f for f in feeds if f.get("category") == args.category]
+    if args.handles:
+        handle_set = set(args.handles.split(","))
+        feeds = [f for f in feeds if f.get("handle") in handle_set]
 
     total_inserted = 0
     total_dupes = 0
@@ -125,7 +132,7 @@ def main():
         except Exception as e:
             print(f"  {feed['handle']}: error — {e}", file=sys.stderr)
             total_errors += 1
-        time.sleep(0.5)
+        jitter_sleep(0.5)
 
     print(f"\nTotal: {total_inserted} inserted, {total_dupes} duplicates, {total_errors} errors")
 

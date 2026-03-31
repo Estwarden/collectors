@@ -1,0 +1,14 @@
+name: compute-narrative-metrics
+description: Daily rollup of narrative metrics for dashboard
+schedule: "0 1 * * *"
+
+
+steps:
+  - id: compute
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 processors/narrative_metrics.py
+    retry_policy:
+      limit: 2
+      interval_sec: 60

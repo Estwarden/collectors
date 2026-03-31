@@ -1,9 +1,7 @@
 name: collect-nato-rss
 description: NATO and defense think tank RSS feeds
 schedule: "30 */4 * * *"
-env:
-  - ESTWARDEN_API_URL: ""
-  - ESTWARDEN_API_KEY: ""
+queue: collectors
 steps:
   - id: collect
     shell: /bin/bash

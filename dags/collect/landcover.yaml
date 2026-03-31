@@ -1,11 +1,8 @@
 name: collect-landcover
 description: Collect Dynamic World land cover changes at military sites
 schedule: "0 8 * * 0"
+queue: collectors
 
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-  - GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
 
 steps:
   - id: collect

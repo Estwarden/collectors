@@ -1,10 +1,8 @@
 name: collect-adsb
 description: Collect ADS-B aircraft positions (Baltic region)
 schedule: "*/15 * * * *"
+queue: collectors
 
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
   - id: collect

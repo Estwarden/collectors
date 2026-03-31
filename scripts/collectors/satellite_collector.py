@@ -306,6 +306,8 @@ def post_to_ingest(site_id, lat, lon, thumb_b64, scene_date, sar, country, site_
 
 
 def main():
+    from lib.ua import jitter, jitter_sleep
+    jitter(90)
     total = len(SITES)
     ok = 0
     skip = 0
@@ -351,7 +353,7 @@ def main():
 
         # Rate-limit between batches
         if i + BATCH_SIZE < total:
-            time.sleep(2)
+            jitter_sleep(2)
 
     print("Done: %d ok, %d skipped, %d failed" % (ok, skip, fail))
 

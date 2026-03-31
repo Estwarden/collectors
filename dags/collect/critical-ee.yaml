@@ -1,0 +1,18 @@
+name: collect-critical-ee
+description: High-frequency collection of critical Estonian government + media sources (30min)
+schedule: "*/30 * * * *"
+queue: collectors
+
+
+steps:
+  - id: collect
+    shell: /bin/bash
+    script: |
+      cd /dags
+      # No jitter for critical sources — time-sensitive
+      SKIP_JITTER=1 python3 scripts/collectors/rss_collector.py \
+        --feeds config/feeds.yaml \
+        --handles err_ee,err_ee_eesti,err_en,err_rus,edf_en,edf_et,est_mod,postimees_et,postimees_en
+    retry_policy:
+      limit: 1
+      interval_sec: 30

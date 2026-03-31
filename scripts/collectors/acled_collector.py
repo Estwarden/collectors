@@ -4,6 +4,7 @@ import json, os, sys, urllib.request, urllib.parse
 from datetime import datetime, timezone, timedelta
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 from estwarden_client import ingest_signals
+from lib.ua import random_ua
 
 def main():
     # Using flat API
@@ -12,7 +13,7 @@ def main():
     params = urllib.parse.urlencode({"event_date": f"{from_date}|{now.strftime('%Y-%m-%d')}",
                                      "event_date_where": "BETWEEN", "region": "1", "limit": "500"})
     url = f"https://api.acleddata.com/acled/read?{params}"
-    req = urllib.request.Request(url, headers={"User-Agent": "EstWarden/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": random_ua()})
     with urllib.request.urlopen(req, timeout=30) as r:
         data = json.loads(r.read())
 

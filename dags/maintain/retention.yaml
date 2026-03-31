@@ -1,10 +1,8 @@
 name: data-retention
 description: Delete signals older than 180 days (except OSINT/satellite)
 schedule: "0 4 * * *"
+queue: maintenance
 
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
 
 steps:
   - id: retention_cleanup

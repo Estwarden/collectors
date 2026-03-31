@@ -1,11 +1,8 @@
 name: collector-health
 description: Check all collectors reported recently, alert if any source is dead
 schedule: "0 */2 * * *"
+queue: maintenance
 
-env:
-  - DATABASE_URL: "${DATABASE_URL}"
-  - TELEGRAM_BOT_TOKEN: "${TELEGRAM_BOT_TOKEN}"
-  - TELEGRAM_ADMIN_ID: "${TELEGRAM_ADMIN_ID}"
 
 steps:
   - id: check

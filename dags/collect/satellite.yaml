@@ -6,17 +6,8 @@
 # Most days: no new scene for a given site (5-day revisit)
 
 schedule: "0 18 * * *"
+queue: collectors
 
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-  - GCP_PROJECT: "${GCP_PROJECT}"
-  - GCP_SERVICE_ACCOUNT: "${GCP_SERVICE_ACCOUNT}"
-  - GOOGLE_EE_KEY: "${GOOGLE_EE_KEY}"
-  - SAT_LOOKBACK_DAYS: "10"
-  - SAT_CLOUD_MAX: "25"
-  - SAT_BATCH_SIZE: "5"
-  - SAT_THUMB_DIM: "1024"
 
 steps:
   - name: collect-satellite

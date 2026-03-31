@@ -1,0 +1,12 @@
+name: collector-watchdog
+description: Monitor all collectors, alert + auto-restart on failures
+schedule: "*/30 * * * *"
+queue: maintenance
+
+
+steps:
+  - id: check
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 processors/collector_watchdog.py

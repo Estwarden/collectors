@@ -18,11 +18,11 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 from estwarden_client import ingest_signals
 
 URL = "https://deepstatemap.live/api/history/last"
-UA = "EstWarden/1.0"
+from lib.ua import random_ua, jitter
 
 
 def fetch_snapshot():
-    req = urllib.request.Request(URL, headers={"User-Agent": UA})
+    req = urllib.request.Request(URL, headers={"User-Agent": random_ua()})
     with urllib.request.urlopen(req, timeout=30) as r:
         data = json.loads(r.read())
     if not isinstance(data, dict):
@@ -70,6 +70,7 @@ def is_attack_point(props: dict) -> bool:
 
 
 def main():
+    jitter(90)
     # Using flat API
     data, geo, features = fetch_snapshot()
 

@@ -4,6 +4,7 @@ import json, os, sys, urllib.request
 from datetime import datetime, timezone
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 from estwarden_client import ingest_signals
+from lib.ua import random_ua
 
 INDICATORS = [
     ("CPI", "https://andmed.stat.ee/api/v1/en/stat/IA001"),
@@ -16,7 +17,7 @@ def main():
     for name, url in INDICATORS:
         try:
             # stat.ee uses POST with JSON query for specific data
-            req = urllib.request.Request(url, headers={"User-Agent": "EstWarden/1.0"})
+            req = urllib.request.Request(url, headers={"User-Agent": random_ua()})
             with urllib.request.urlopen(req, timeout=15) as r:
                 data = json.loads(r.read())
             title = data.get("title", name)

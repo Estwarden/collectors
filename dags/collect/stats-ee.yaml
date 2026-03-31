@@ -1,9 +1,7 @@
 name: collect-stats-ee
 description: Collect Statistics Estonia economic indicators
 schedule: "0 9 * * 1"
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+queue: collectors
 steps:
   - id: collect
     shell: /bin/bash

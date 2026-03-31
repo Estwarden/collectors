@@ -12,6 +12,7 @@ import urllib.request
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 from estwarden_client import ingest_signals
+from lib.ua import random_ua
 import h3
 
 MANIFEST_URL = "https://gpsjam.org/data/manifest.csv"
@@ -41,7 +42,7 @@ def severity(rate):
 
 
 def fetch_manifest():
-    req = urllib.request.Request(MANIFEST_URL, headers={"User-Agent": "EstWarden/1.0"})
+    req = urllib.request.Request(MANIFEST_URL, headers={"User-Agent": random_ua()})
     with urllib.request.urlopen(req, timeout=30) as r:
         text = r.read().decode()
     rows = list(csv.DictReader(io.StringIO(text)))
@@ -52,7 +53,7 @@ def fetch_manifest():
 
 def fetch_dataset(date):
     url = DATA_URL_TMPL.format(date=date)
-    req = urllib.request.Request(url, headers={"User-Agent": "EstWarden/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": random_ua()})
     with urllib.request.urlopen(req, timeout=30) as r:
         return r.read().decode()
 

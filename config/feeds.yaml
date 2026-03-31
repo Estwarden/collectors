@@ -1,4 +1,41 @@
 feeds:
+# ── Critical Estonian sources (missing until 2026-03-31) ──
+- handle: err_ee
+  name: ERR (Estonian)
+  source_type: rss
+  tier: T1
+  category: estonian_media
+  url: https://www.err.ee/rss
+  region:
+  - estonia
+  - baltic
+- handle: err_ee_eesti
+  name: ERR Eesti uudised
+  source_type: rss
+  tier: T1
+  category: estonian_media
+  url: https://www.err.ee/rss/eesti
+  region:
+  - estonia
+- handle: edf_en
+  name: Estonian Defence Forces (EN)
+  source_type: rss
+  tier: T1
+  category: government
+  url: https://mil.ee/en/feed/
+  region:
+  - estonia
+  - baltic
+- handle: edf_et
+  name: Kaitsevägi
+  source_type: rss
+  tier: T1
+  category: government
+  url: https://mil.ee/feed/
+  region:
+  - estonia
+  - baltic
+# ── End critical additions ──
 - handle: propastop
   name: Propastop
   source_type: rss

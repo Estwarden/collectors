@@ -1,0 +1,15 @@
+name: narrative-embed-match
+description: Match signals to narratives via embedding cosine similarity
+schedule: "45 */3 * * *"
+queue: llm
+
+
+steps:
+  - id: match
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 processors/narrative_embed_match.py 14
+    retry_policy:
+      limit: 1
+      interval_sec: 60

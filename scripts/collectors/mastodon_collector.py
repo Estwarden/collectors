@@ -4,6 +4,7 @@ import json, os, sys, urllib.request, hashlib, re
 from datetime import datetime, timezone
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 from estwarden_client import ingest_signals
+from lib.ua import random_ua
 
 INSTANCES = ["mastodon.social", "infosec.exchange", "ioc.exchange"]
 KEYWORDS = {"nato", "baltic", "osint", "ukraine", "russia", "estonia", "latvia", "lithuania",
@@ -18,7 +19,7 @@ def main():
         # Trending statuses (no auth required)
         try:
             url = f"https://{inst}/api/v1/trends/statuses?limit=40"
-            req = urllib.request.Request(url, headers={"User-Agent": "EstWarden/1.0"})
+            req = urllib.request.Request(url, headers={"User-Agent": random_ua()})
             with urllib.request.urlopen(req, timeout=15) as r:
                 posts = json.loads(r.read())
         except Exception as e:

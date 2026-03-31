@@ -1,11 +1,8 @@
 name: collect-youtube-transcripts
 description: Fetch recent YouTube videos and auto-generated transcripts for narrative monitoring
 schedule: "0 */6 * * *"
+queue: collectors
 
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-  - YOUTUBE_API_KEY: "${YOUTUBE_API_KEY}"
 
 steps:
   - id: fetch_transcripts

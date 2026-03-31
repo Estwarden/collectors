@@ -1,0 +1,16 @@
+# Dagu server configuration for EstWarden
+# Location: ${DAGU_HOME}/config.yaml
+
+# Queues: prevent resource contention
+queues:
+  enabled: true
+  config:
+    - name: collectors
+      max_concurrency: 5
+    - name: llm
+      max_concurrency: 2
+    - name: maintenance
+      max_concurrency: 1
+
+# Prometheus metrics: public (scraped by VPS2 prometheus)
+metrics: public

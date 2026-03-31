@@ -8,6 +8,7 @@ import json, os, sys, urllib.request, urllib.parse, hashlib, time, yaml
 from datetime import datetime, timezone
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 from estwarden_client import ingest_signals
+from lib.ua import random_ua, jitter, jitter_sleep
 
 # Strict military keywords — reduces noise
 MIL_KEYWORDS = {
@@ -39,6 +40,7 @@ QUERIES = [
 ]
 
 def main():
+    jitter(90)
     # Using flat API
     sites = load_sites()
     signals = []
@@ -51,7 +53,7 @@ def main():
         q = urllib.parse.quote(query)
         url = f"https://api.gdeltproject.org/api/v2/doc/doc?query={q}&mode=artlist&maxrecords=15&format=json&timespan=2d"
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "EstWarden/1.0"})
+            req = urllib.request.Request(url, headers={"User-Agent": random_ua()})
             with urllib.request.urlopen(req, timeout=20) as r:
                 data = json.loads(r.read())
         except urllib.error.HTTPError as e:
@@ -67,7 +69,7 @@ def main():
             time.sleep(5)
             continue
 
-        time.sleep(10)  # rate limit: ~6 queries/min max
+        jitter_sleep(10)  # rate limit: ~6 queries/min max
 
         for art in data.get("articles", []):
             title = art.get("title", "")
@@ -96,7 +98,7 @@ def main():
                 sig["latitude"] = lat
                 sig["longitude"] = lon
             signals.append(sig)
-        time.sleep(12)
+        jitter_sleep(12)
 
     if signals:
         result = ingest_signals(signals[:200])

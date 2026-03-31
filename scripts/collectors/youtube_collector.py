@@ -109,6 +109,8 @@ def get_transcript(video_id):
 # ── Main ──
 
 def main():
+    from lib.ua import jitter, jitter_sleep
+    jitter(90)
     parser = argparse.ArgumentParser(description="YouTube transcript collector")
     parser.add_argument("--config", required=True, help="Watchlist YAML path")
     parser.add_argument("--hours", type=int, default=12, help="Look back N hours")
@@ -145,7 +147,7 @@ def main():
         if not videos:
             continue
 
-        time.sleep(0.5)
+        jitter_sleep(0.5)
 
         signals = []
         for vid in videos:
@@ -191,7 +193,7 @@ def main():
                 "metadata": json.dumps(metadata),
             })
 
-            time.sleep(0.3)
+            jitter_sleep(0.3)
 
         if signals:
             try:

@@ -1,0 +1,13 @@
+name: backfill-narrative-metrics
+description: One-off backfill of narrative_metrics for last 90 days
+
+
+steps:
+  - id: backfill
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 processors/backfill_narrative_metrics.py
+    retry_policy:
+      limit: 1
+      interval_sec: 60

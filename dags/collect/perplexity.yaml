@@ -1,10 +1,7 @@
 name: collect-perplexity-osint
 description: AI-powered Baltic security research via Perplexity
 schedule: "45 7,13,19 * * *"
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
-  - PERPLEXITY_API_KEY: "${PERPLEXITY_API_KEY}"
+queue: collectors
 steps:
   - id: collect
     shell: /bin/bash

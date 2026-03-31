@@ -6,6 +6,7 @@ import json, os, sys, urllib.request
 from datetime import datetime, timezone, timedelta
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 from estwarden_client import ingest_signals
+from lib.ua import random_ua
 from google_client import GoogleClient
 
 # Military sites to monitor (public knowledge, from Wikipedia/OSM)
@@ -38,7 +39,7 @@ def count_acquisitions(lat, lon, days=7):
     }).encode()
     try:
         req = urllib.request.Request(url, data=body, headers={
-            "Content-Type": "application/json", "User-Agent": "EstWarden/1.0"
+            "Content-Type": "application/json", "User-Agent": random_ua()
         })
         with urllib.request.urlopen(req, timeout=15) as r:
             data = json.loads(r.read())

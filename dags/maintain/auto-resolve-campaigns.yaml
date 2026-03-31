@@ -1,8 +1,6 @@
 name: auto-resolve-campaigns
 description: Resolve stale/evidence-free ACTIVE campaigns
 schedule: "0 */6 * * *"
-env:
-  - DATABASE_URL: "${DATABASE_URL}"
 steps:
   - id: resolve
     shell: /bin/bash

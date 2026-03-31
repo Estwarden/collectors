@@ -1,9 +1,7 @@
 name: collect-radiation
 description: STUK external radiation monitoring via FMI Open Data
 schedule: "0 */6 * * *"
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+queue: collectors
 steps:
   - id: collect
     shell: /bin/bash

@@ -31,8 +31,10 @@ import yaml
 
 # ── Scraping ──
 
+from lib.ua import random_ua, jitter, jitter_sleep
+
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (compatible; EstWarden/1.0; +https://estwarden.eu)",
+    "User-Agent": random_ua(),
     "Accept-Language": "en-US,en;q=0.9",
 }
 
@@ -129,6 +131,7 @@ def scrape_channel(channel_handle, base_url):
 # ── Main ──
 
 def main():
+    jitter(90)
     parser = argparse.ArgumentParser(description="Telegram channel collector")
     parser.add_argument("--config", required=True, help="Watchlist YAML path")
     parser.add_argument("--category", help="Only collect channels in this category")
@@ -155,7 +158,7 @@ def main():
         if not url or "t.me/s/" not in url:
             continue
 
-        time.sleep(1.5)  # rate limit: ~1 req per 1.5s
+        jitter_sleep(1.5)  # rate limit: ~1 req per 1.5s
 
         posts = scrape_channel(handle, url)
         if not posts:
@@ -222,12 +225,13 @@ async def collect_via_api(channels, client_api):
     from telethon.sessions import StringSession
     import os
 
-    api_id = int(os.environ.get('TELEGRAM_API_ID', '0'))
-    api_hash = os.environ.get('TELEGRAM_API_HASH', '')
-    session_str = os.environ.get('TELEGRAM_SESSION', '')
+    # Use burner account only — never personal credentials for collection
+    api_id = int(os.environ.get('BURNER_API_ID', '0'))
+    api_hash = os.environ.get('BURNER_API_HASH', '')
+    session_str = os.environ.get('BURNER_SESSION', '')
 
     if not api_id or not api_hash or not session_str:
-        print("Telegram API credentials not set, skipping restricted channels", file=sys.stderr)
+        print("Burner Telegram credentials not set, skipping restricted channels", file=sys.stderr)
         return []
 
     client = TelegramClient(StringSession(session_str), api_id, api_hash)

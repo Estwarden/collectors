@@ -5,6 +5,7 @@ import json, os, sys, urllib.request, hashlib
 from datetime import datetime, timezone, timedelta
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 from estwarden_client import ingest_signals
+from lib.ua import random_ua
 
 BALTIC_COUNTRIES = ["Estonia", "Latvia", "Lithuania", "Russia", "Belarus", "Ukraine", "Finland", "Poland"]
 
@@ -15,7 +16,7 @@ def fetch_ucdp():
     signals = []
     url = f"https://ucdpapi.pcr.uu.se/api/gedevents/25.0.1?pagesize=100&Country={','.join(['Russia','Ukraine','Belarus'])}&StartDate={year}-01-01"
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": "EstWarden/1.0"})
+        req = urllib.request.Request(url, headers={"User-Agent": random_ua()})
         with urllib.request.urlopen(req, timeout=30) as r:
             data = json.loads(r.read())
         for ev in data.get("Result", []):

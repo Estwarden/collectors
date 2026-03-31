@@ -1,8 +1,6 @@
 name: backfill-cluster-regions
 description: One-off job to recompute event_clusters.regions from cluster members
 
-env:
-  - DATABASE_URL: "${DATABASE_URL}"
 
 steps:
   - id: backfill

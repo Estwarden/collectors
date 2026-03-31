@@ -6,15 +6,15 @@ description: |
   3. Framing: LLM compares state vs trusted media framing per cluster
   4. Assemble: hostile framings → campaigns
 
-  Runs every 4 hours. Each stage is idempotent — safe to re-run.
+  Runs every 2 hours after collectors complete. Each stage is idempotent — safe to re-run.
   Cost: ~$0.01/day (embeddings + 1-2 LLM calls for framing analysis).
 
 schedule: "30 */2 * * *"
+queue: llm
 type: graph
 
-env:
-  - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
-  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
+# Wait for core collectors to finish before running
+# This ensures fresh signals are available for processing
 
 steps:
   - id: outrage_chains
