@@ -1,7 +1,6 @@
 name: collect-deepstate
 description: Collect frontline data from deepstate.live
 schedule: "5 2,8,14,20 * * *"
-queue: collectors
 
 
 steps:

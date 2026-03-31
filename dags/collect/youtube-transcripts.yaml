@@ -1,7 +1,6 @@
 name: collect-youtube-transcripts
 description: Fetch recent YouTube videos and auto-generated transcripts for narrative monitoring
 schedule: "0 */6 * * *"
-queue: collectors
 
 
 steps:

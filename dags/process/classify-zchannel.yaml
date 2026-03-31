@@ -1,7 +1,6 @@
 name: classify-zchannel
 description: Classify Z-channel signals with hostile-source-aware prompt
 schedule: "5 */3 * * *"
-queue: llm
 
 
 steps:

@@ -1,7 +1,6 @@
 name: data-quality
 description: Fix orphaned tags, self-loops, duplicates, NEUTRAL tags
 schedule: "30 5 * * *"
-queue: maintenance
 
 
 steps:

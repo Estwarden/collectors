@@ -1,7 +1,6 @@
 name: collect-perplexity-osint
 description: AI-powered Baltic security research via Perplexity
 schedule: "45 7,13,19 * * *"
-queue: collectors
 steps:
   - id: collect
     shell: /bin/bash

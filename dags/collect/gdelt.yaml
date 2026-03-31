@@ -1,7 +1,6 @@
 name: collect-gdelt
 description: Collect GDELT military news near bases
 schedule: "0 */4 * * *"
-queue: collectors
 
 
 steps:

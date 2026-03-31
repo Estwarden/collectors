@@ -1,7 +1,6 @@
 name: dedup-signals
 description: Remove duplicate signals by content_hash
 schedule: "30 4 * * *"
-queue: maintenance
 
 
 steps:

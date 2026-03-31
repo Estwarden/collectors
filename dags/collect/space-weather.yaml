@@ -1,7 +1,6 @@
 name: collect-space-weather
 description: Collect solar/geomagnetic data from NOAA Space Weather
 schedule: "0 */6 * * *"
-queue: collectors
 
 
 steps:

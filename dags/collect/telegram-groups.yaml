@@ -1,7 +1,6 @@
 name: collect-telegram-groups
 description: Collect messages from Telegram group chats via burner account
 schedule: "*/30 * * * *"
-queue: collectors
 
 
 steps:

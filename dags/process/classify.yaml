@@ -1,7 +1,6 @@
 name: classify-signals
 description: LLM narrative classification (N1-N5) for untagged signals
 schedule: "*/10 * * * *"
-queue: llm
 
 
 steps:

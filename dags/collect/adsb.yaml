@@ -1,7 +1,6 @@
 name: collect-adsb
 description: Collect ADS-B aircraft positions (Baltic region)
 schedule: "*/15 * * * *"
-queue: collectors
 
 
 steps:

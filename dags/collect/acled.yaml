@@ -1,7 +1,6 @@
 name: collect-acled
 description: Collect ACLED European conflict events
 schedule: "0 */12 * * *"
-queue: collectors
 
 
 steps:

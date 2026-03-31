@@ -1,7 +1,6 @@
 name: collect-sar-coherence
 description: Collect Sentinel-1 SAR coherence anomalies at military sites
 schedule: "0 */12 * * *"
-queue: collectors
 
 
 steps:

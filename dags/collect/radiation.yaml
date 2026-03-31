@@ -1,7 +1,6 @@
 name: collect-radiation
 description: STUK external radiation monitoring via FMI Open Data
 schedule: "0 */6 * * *"
-queue: collectors
 steps:
   - id: collect
     shell: /bin/bash

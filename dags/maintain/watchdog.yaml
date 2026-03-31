@@ -1,7 +1,6 @@
 name: collector-watchdog
 description: Monitor all collectors, alert + auto-restart on failures
 schedule: "*/30 * * * *"
-queue: maintenance
 
 
 steps:

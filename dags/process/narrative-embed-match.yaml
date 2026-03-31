@@ -1,7 +1,6 @@
 name: narrative-embed-match
 description: Match signals to narratives via embedding cosine similarity
 schedule: "45 */3 * * *"
-queue: llm
 
 
 steps:

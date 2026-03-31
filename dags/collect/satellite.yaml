@@ -6,7 +6,6 @@
 # Most days: no new scene for a given site (5-day revisit)
 
 schedule: "0 18 * * *"
-queue: collectors
 
 
 steps:

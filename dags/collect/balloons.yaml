@@ -1,7 +1,6 @@
 name: collect-balloons
 description: Collect weather balloon data from SondeHub API (Baltic region)
 schedule: "0 */4 * * *"
-queue: collectors
 
 
 steps:

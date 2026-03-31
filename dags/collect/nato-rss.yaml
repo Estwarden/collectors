@@ -1,7 +1,6 @@
 name: collect-nato-rss
 description: NATO and defense think tank RSS feeds
 schedule: "30 */4 * * *"
-queue: collectors
 steps:
   - id: collect
     shell: /bin/bash

@@ -1,7 +1,6 @@
 name: collect-gpsjam
 description: Collect GPS jamming data from gpsjam.org
 schedule: "0 */12 * * *"
-queue: collectors
 
 
 steps:

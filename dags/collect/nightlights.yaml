@@ -1,7 +1,6 @@
 name: collect-nightlights
 description: Collect VIIRS nighttime lights anomalies at military sites
 schedule: "0 6 * * *"
-queue: collectors
 
 
 steps:

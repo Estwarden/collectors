@@ -1,7 +1,6 @@
 name: collect-stats-ee
 description: Collect Statistics Estonia economic indicators
 schedule: "0 9 * * 1"
-queue: collectors
 steps:
   - id: collect
     shell: /bin/bash

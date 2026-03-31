@@ -1,7 +1,6 @@
 name: collect-youtube
 description: Collect YouTube videos from Baltic security channels
 schedule: "0 */12 * * *"
-queue: collectors
 steps:
   - id: collect
     shell: /bin/bash

@@ -1,7 +1,6 @@
 name: collect-critical-ee
 description: High-frequency collection of critical Estonian government + media sources (30min)
 schedule: "*/30 * * * *"
-queue: collectors
 
 
 steps:

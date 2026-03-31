@@ -1,7 +1,6 @@
 name: collect-conflict
 description: Conflict events from UCDP and Crisis Group (ACLED replacement)
 schedule: "0 7,19 * * *"
-queue: collectors
 steps:
   - id: collect
     shell: /bin/bash

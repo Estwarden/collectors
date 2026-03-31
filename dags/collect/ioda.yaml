@@ -1,7 +1,6 @@
 name: collect-ioda
 description: Monitor Baltic internet connectivity (IODA)
 schedule: "0 */4 * * *"
-queue: collectors
 
 
 steps:

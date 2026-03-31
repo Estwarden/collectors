@@ -1,7 +1,6 @@
 name: collect-energy
 description: Collect electricity prices for all monitored countries (EE, FI, LV, LT, PL)
 schedule: "0 * * * *"
-queue: collectors
 
 
 steps:

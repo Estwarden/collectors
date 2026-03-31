@@ -1,7 +1,6 @@
 name: sentiment-topics
 description: Daily topic extraction + sentiment from Telegram group chats
 schedule: "30 1,7,13,19 * * *"
-queue: llm
 
 steps:
   - id: extract

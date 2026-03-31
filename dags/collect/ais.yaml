@@ -1,7 +1,6 @@
 name: collect-ais
 description: Collect AIS vessel positions (Baltic Sea)
 schedule: "*/5 * * * *"
-queue: collectors
 
 
 steps:

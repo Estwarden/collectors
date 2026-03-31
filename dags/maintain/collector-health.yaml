@@ -1,7 +1,6 @@
 name: collector-health
 description: Check all collectors reported recently, alert if any source is dead
 schedule: "0 */2 * * *"
-queue: maintenance
 
 
 steps:
