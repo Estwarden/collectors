@@ -1,7 +1,7 @@
 # EstWarden Dagu base configuration.
 # Applied to ALL DAGs. Location: ${DAGU_HOME}/base.yaml
 
-# Load credentials from .env
+# Load all credentials from .env — exported to step subprocesses
 dotenv: /var/lib/dagu/dags/.env
 
 # Secrets — auto-masked in all logs and outputs
@@ -15,19 +15,38 @@ secrets:
   - name: PIPELINE_BOT_TOKEN
     provider: env
     key: PIPELINE_BOT_TOKEN
-  - name: GOOGLE_API_KEY
-    provider: env
-    key: GOOGLE_API_KEY
   - name: BURNER_SESSION
     provider: env
     key: BURNER_SESSION
 
-# Default env
+# Env — pass container env vars to step subprocesses
 env:
   - TZ: Europe/Tallinn
+  - PYTHONPATH: /dags/scripts
   - ESTWARDEN_API_URL: "${ESTWARDEN_API_URL}"
+  - ESTWARDEN_API_KEY: "${ESTWARDEN_API_KEY}"
   - DATABASE_URL: "${DATABASE_URL}"
   - PIPELINE_ADMIN_CHAT: "${PIPELINE_ADMIN_CHAT}"
+  - GCP_PROJECT: "${GCP_PROJECT}"
+  - GCP_SERVICE_ACCOUNT: "${GCP_SERVICE_ACCOUNT}"
+  - GOOGLE_EE_KEY: "${GOOGLE_EE_KEY}"
+  - GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
+  - LLM_API_KEY: "${LLM_API_KEY}"
+  - LLM_API_URL: "${LLM_API_URL}"
+  - LLM_MODEL: "${LLM_MODEL}"
+  - OPENROUTER_API_KEY: "${OPENROUTER_API_KEY}"
+  - FIRMS_MAP_KEY: "${FIRMS_MAP_KEY}"
+  - PERPLEXITY_API_KEY: "${PERPLEXITY_API_KEY}"
+  - YOUTUBE_API_KEY: "${YOUTUBE_API_KEY}"
+  - BURNER_API_ID: "${BURNER_API_ID}"
+  - BURNER_API_HASH: "${BURNER_API_HASH}"
+  - BURNER_SESSION: "${BURNER_SESSION}"
+  - TELEGRAM_BOT_TOKEN: "${TELEGRAM_BOT_TOKEN}"
+  - TELEGRAM_CHAT_ID: "${TELEGRAM_CHAT_ID}"
+  - TELEGRAM_ADMIN_ID: "${TELEGRAM_ADMIN_ID}"
+  - GCS_SATELLITE_BUCKET: "${GCS_SATELLITE_BUCKET}"
+  - REDIS_URL: "${REDIS_URL}"
+  - TAVILY_API_KEY: "${TAVILY_API_KEY}"
 
 # Default shell (bash if available, fallback to sh)
 shell: /bin/bash
