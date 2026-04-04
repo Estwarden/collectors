@@ -60,7 +60,7 @@ defaults:
 # Telegram alert on ANY DAG failure via dedicated pipeline bot
 handler_on:
   failure:
-    command: 'curl -sf -X POST "https://api.telegram.org/bot${PIPELINE_BOT_TOKEN}/sendMessage" -H "Content-Type: application/json" -d "{\"chat_id\":\"${PIPELINE_ADMIN_CHAT}\",\"text\":\"❌ ${DAG_NAME} failed\",\"parse_mode\":\"HTML\"}" > /dev/null 2>&1 || true'
+    command: 'curl -sf -X POST "https://api.telegram.org/bot${PIPELINE_BOT_TOKEN}/sendMessage" -H "Content-Type: application/json" -d "{\"chat_id\":\"${PIPELINE_ADMIN_CHAT}\",\"text\":\"❌ ${DAG_NAME} failed\",\"parse_mode\":\"HTML\"}" 2>> /var/lib/dagu/data/alert_errors.log || echo "$(date) alert failed for ${DAG_NAME}" >> /var/lib/dagu/data/alert_errors.log'
 
 # History
 hist_retention_days: 30

@@ -264,7 +264,7 @@ def compute_indices_ee(lat: float, lon: float) -> dict:
 
 def post_to_ingest(site_id, lat, lon, thumb_b64, scene_date, sar, country, site_type, indices=None):
     """POST satellite data to ingest API."""
-    api_url = os.environ.get("ESTWARDEN_API_URL", "http://ingest:9090")
+    api_url = os.environ.get("ESTWARDEN_API_URL", "http://ingest:8090")
     api_key = os.environ.get("ESTWARDEN_API_KEY", "")
 
     payload = {

@@ -31,7 +31,7 @@ import yaml
 
 # ── Scraping ──
 
-from lib.ua import random_ua, jitter, jitter_sleep
+from ua import random_ua, jitter, jitter_sleep
 
 HEADERS = {
     "User-Agent": random_ua(),

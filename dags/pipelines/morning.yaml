@@ -47,3 +47,9 @@ steps:
     retry_policy:
       limit: 2
       interval_sec: 60
+
+  - id: publish_briefing
+    type: dag
+    call: private/publish-estwarden-briefing
+    depends: [generate_report]
+    # Approval workflow: sends preview to admin, waits for approval, publishes to channel

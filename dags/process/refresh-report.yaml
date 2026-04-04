@@ -1,6 +1,6 @@
 name: refresh-daily-report
 description: Regenerate today's daily report with latest data (runs every 2 hours)
-schedule: "30 */2 * * *"
+schedule: "50 */2 * * *"
 
 type: graph
 
@@ -17,7 +17,10 @@ steps:
   - id: flush_cache
     shell: /bin/bash
     script: |
-      # Clear cached pages so dashboard shows fresh data
-      redis-cli -h redis DEL dashboard:page:cache intelligence:page:cache 2>/dev/null || true
+      # Clear cached indicator + briefing pages so dashboard shows fresh data
+      for pattern in 'topic:*' 'briefing:*' 'dashboard:*'; do
+        redis-cli -h redis KEYS "$pattern" 2>/dev/null | xargs -r redis-cli -h redis DEL 2>/dev/null
+      done
+      echo "Cache cleared"
     depends:
       - regenerate

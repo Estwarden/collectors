@@ -121,12 +121,14 @@ def query_report_data(region: str = "baltic") -> dict:
 
 def write_report(date: str, threat_level: str, raw_intel: str, summary: str,
                  cti_score: float, cti_level: str, cti_trend: str,
-                 indicators: list = None) -> dict:
+                 indicators: list = None, cti_components: dict = None) -> dict:
     payload = {"date": date, "threat_level": threat_level, "raw_intel": raw_intel,
                "summary": summary, "cti_score": cti_score, "cti_level": cti_level,
                "cti_trend": cti_trend}
     if indicators:
         payload["indicators"] = indicators
+    if cti_components:
+        payload["cti_components"] = cti_components
     return _api_post("/api/v1/process/write-report", payload)
 
 def detect_campaigns() -> dict:
