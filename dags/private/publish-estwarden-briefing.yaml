@@ -1,6 +1,6 @@
 name: publish-estwarden-briefing
 description: Generate briefing screenshot, send preview for approval, and publish to channel
-overlapPolicy: skip
+overlap_policy: skip
 
 steps:
   - id: publish
