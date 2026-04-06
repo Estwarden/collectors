@@ -1,0 +1,13 @@
+name: generate-podcast
+description: Generate EN + ET podcast audio from daily report via Google TTS, send for approval
+overlap_policy: skip
+
+steps:
+  - id: podcast
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 processors/podcast_generator.py --date "$(date +%Y-%m-%d)"
+    retry_policy:
+      limit: 2
+      interval_sec: 30
