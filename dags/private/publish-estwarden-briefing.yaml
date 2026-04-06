@@ -1,0 +1,13 @@
+name: publish-estwarden-briefing
+description: Generate briefing screenshot, send preview for approval, and publish to channel
+overlapPolicy: skip
+
+steps:
+  - id: publish
+    shell: /bin/bash
+    script: |
+      cd /dags
+      python3 processors/briefing_publish.py --date "$(date +%Y-%m-%d)"
+    retry_policy:
+      limit: 2
+      interval_sec: 30
