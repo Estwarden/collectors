@@ -128,7 +128,9 @@ def get_thumbnail(lat: float, lon: float) -> tuple:
 def get_sar_change(lat: float, lon: float) -> dict:
     """Compute Sentinel-1 SAR backscatter change vs 30-day baseline.
 
-    Returns {"mean_change_db": float, "std_change_db": float}.
+    Returns VV + VH change and VH/VV polarimetric ratio.
+    VH/VV ratio separates vegetation (high, -6 to -3 dB) from
+    urban/metal (low, -12 to -15 dB) and water (very low).
     """
     try:
         point = ee.Geometry.Point(lon, lat)
@@ -141,7 +143,7 @@ def get_sar_change(lat: float, lon: float) -> dict:
                 .filterBounds(point)
                 .filterDate(start, end)
                 .filter(ee.Filter.eq("instrumentMode", "IW"))
-                .select("VV")
+                .select(["VV", "VH"])
             )
 
         recent = s1_col(
@@ -154,10 +156,16 @@ def get_sar_change(lat: float, lon: float) -> dict:
         )
 
         if recent.size().getInfo() == 0 or baseline.size().getInfo() == 0:
-            return {"mean_change_db": 0.0, "std_change_db": 0.0}
+            return {"mean_change_db": 0.0, "std_change_db": 0.0,
+                    "vh_change_db": 0.0, "vh_vv_ratio_db": 0.0}
 
-        diff = recent.mean().subtract(baseline.mean())
-        stats = diff.reduceRegion(
+        recent_mean = recent.mean()
+        baseline_mean = baseline.mean()
+        diff = recent_mean.subtract(baseline_mean)
+        # VH/VV ratio (dB): high = vegetation, low = urban/metal
+        vh_vv = recent_mean.select("VH").subtract(recent_mean.select("VV")).rename("VH_VV")
+
+        stats = diff.addBands(vh_vv).reduceRegion(
             reducer=ee.Reducer.mean().combine(ee.Reducer.stdDev(), sharedInputs=True),
             geometry=region,
             scale=10,
@@ -166,10 +174,13 @@ def get_sar_change(lat: float, lon: float) -> dict:
         return {
             "mean_change_db": round(stats.get("VV_mean", 0) or 0, 2),
             "std_change_db": round(stats.get("VV_stdDev", 0) or 0, 2),
+            "vh_change_db": round(stats.get("VH_mean", 0) or 0, 2),
+            "vh_vv_ratio_db": round(stats.get("VH_VV_mean", 0) or 0, 2),
         }
     except Exception as e:
         print("  SAR error: %s" % e, file=sys.stderr)
-        return {"mean_change_db": 0.0, "std_change_db": 0.0}
+        return {"mean_change_db": 0.0, "std_change_db": 0.0,
+                "vh_change_db": 0.0, "vh_vv_ratio_db": 0.0}
 
 
 def compute_indices_ee(lat: float, lon: float) -> dict:
@@ -224,22 +235,41 @@ def compute_indices_ee(lat: float, lon: float) -> dict:
         baseline = ee.ImageCollection(baselines[0].merge(baselines[1]).merge(baselines[2])).median()
 
         def idx(im):
-            B2, B3, B4, B8 = im.select("B2"), im.select("B3"), im.select("B4"), im.select("B8")
+            B2, B3, B4 = im.select("B2"), im.select("B3"), im.select("B4")
+            B5, B8 = im.select("B5"), im.select("B8")
             B11, B12 = im.select("B11"), im.select("B12")
+            # Core indices
             ndvi = B8.subtract(B4).divide(B8.add(B4).add(0.001)).rename("ndvi")
             ndbi = B11.subtract(B8).divide(B11.add(B8).add(0.001)).rename("ndbi")
             bsi = (B11.add(B4).subtract(B8.add(B2))
                    .divide(B11.add(B4).add(B8).add(B2).add(0.001))).rename("bsi")
+            # EVI — better than NDVI in dense vegetation, less atmospheric sensitivity
+            evi = B8.subtract(B4).multiply(2.5).divide(
+                B8.add(B4.multiply(6)).subtract(B2.multiply(7.5)).add(10000)
+            ).rename("evi")
+            # Water indices
+            ndwi = B3.subtract(B8).divide(B3.add(B8).add(0.001)).rename("ndwi")
+            mndwi = B3.subtract(B11).divide(B3.add(B11).add(0.001)).rename("mndwi")
+            # Burn ratio
+            nbr = B8.subtract(B12).divide(B8.add(B12).add(0.001)).rename("nbr")
+            # Red edge NDVI — camouflage detection: real vegetation has steep
+            # red edge (high NDRE), artificial green materials lack it
+            ndre = B8.subtract(B5).divide(B8.add(B5).add(0.001)).rename("ndre")
+            # Derived masks
             fuel = ndvi.lt(0.1).And(B12.gt(1500)).rename("fuel")
             metal = B8.gt(3000).And(ndvi.lt(0.2)).rename("metal")
             active = ndbi.gt(0).And(bsi.gt(0)).rename("active")
-            return ndvi.addBands([ndbi, bsi, fuel, metal, active])
+            # Camouflage suspect: appears green but lacks red edge response
+            camo = ndvi.gt(0.3).And(ndre.lt(0.1)).rename("camo")
+            return ndvi.addBands([ndbi, bsi, evi, ndwi, mndwi, nbr, ndre,
+                                  fuel, metal, active, camo])
 
         cur = idx(img_masked)
         bas = idx(baseline)
-        delta = (cur.select(["ndvi", "ndbi", "bsi"])
-                 .subtract(bas.select(["ndvi", "ndbi", "bsi"]))
-                 .rename(["d_ndvi", "d_ndbi", "d_bsi"]))
+        _delta_bands = ["ndvi", "ndbi", "bsi", "evi", "ndwi", "mndwi", "nbr", "ndre"]
+        delta = (cur.select(_delta_bands)
+                 .subtract(bas.select(_delta_bands))
+                 .rename(["d_" + b for b in _delta_bands]))
 
         stats = cur.addBands(delta).reduceRegion(
             ee.Reducer.mean(), region, 10, maxPixels=MP
@@ -249,13 +279,24 @@ def compute_indices_ee(lat: float, lon: float) -> dict:
             "ndvi": round(stats.get("ndvi", 0) or 0, 4),
             "ndbi": round(stats.get("ndbi", 0) or 0, 4),
             "bsi": round(stats.get("bsi", 0) or 0, 4),
+            "evi": round(stats.get("evi", 0) or 0, 4),
+            "ndwi": round(stats.get("ndwi", 0) or 0, 4),
+            "mndwi": round(stats.get("mndwi", 0) or 0, 4),
+            "nbr": round(stats.get("nbr", 0) or 0, 4),
+            "ndre": round(stats.get("ndre", 0) or 0, 4),
             "fuel_pct": round((stats.get("fuel", 0) or 0) * 100, 2),
             "metal_pct": round((stats.get("metal", 0) or 0) * 100, 2),
             "active_pct": round((stats.get("active", 0) or 0) * 100, 2),
+            "camo_pct": round((stats.get("camo", 0) or 0) * 100, 2),
             "snow_pct": snow_frac,
             "delta_ndvi": round(stats.get("d_ndvi", 0) or 0, 4),
             "delta_ndbi": round(stats.get("d_ndbi", 0) or 0, 4),
             "delta_bsi": round(stats.get("d_bsi", 0) or 0, 4),
+            "delta_evi": round(stats.get("d_evi", 0) or 0, 4),
+            "delta_ndwi": round(stats.get("d_ndwi", 0) or 0, 4),
+            "delta_mndwi": round(stats.get("d_mndwi", 0) or 0, 4),
+            "delta_nbr": round(stats.get("d_nbr", 0) or 0, 4),
+            "delta_ndre": round(stats.get("d_ndre", 0) or 0, 4),
         }
     except Exception as e:
         print("  Indices error: %s" % e, file=sys.stderr)
