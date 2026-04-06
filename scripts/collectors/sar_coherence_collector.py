@@ -109,7 +109,7 @@ def compute_coherence(site, end_date):
     date2 = datetime.fromtimestamp(img_recent.get('system:time_start').getInfo() / 1000, tz=timezone.utc)
     
     return {
-        'coherence': mean_coherence,
+        'coherence': coherence,
         'date1': date1.isoformat(),
         'date2': date2.isoformat(),
     }
