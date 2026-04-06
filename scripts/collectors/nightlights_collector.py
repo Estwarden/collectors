@@ -45,8 +45,9 @@ def init_gee():
             cred_data = json.load(f)
             email = cred_data.get('client_email')
         
+        project = os.environ.get("GCP_PROJECT", "")
         credentials = ee.ServiceAccountCredentials(email, cred_file)
-        ee.Initialize(credentials)
+        ee.Initialize(credentials, project=project)
         print("GEE initialized successfully")
     except Exception as e:
         print(f"ERROR: Failed to initialize GEE: {e}", file=sys.stderr)
@@ -147,7 +148,7 @@ def main():
                 severity = "HIGH" if z_score > 3.0 else "MODERATE"
                 signals.append({
                     "source_type": "nightlights",
-                    "source_id": f"nightlights:{site['name']}:{result['date']}",
+                    "source_id": f"nightlights:{site['name']}:{now.strftime('%Y-%m-%d')}",
                     "title": f"Nighttime activity anomaly at {site['name']}: z={z_score:.2f}",
                     "content": (
                         f"VIIRS nighttime lights at {site['name']} show anomalous radiance: "

@@ -58,8 +58,9 @@ def init_gee():
             cred_data = json.load(f)
             email = cred_data.get('client_email')
         
+        project = os.environ.get("GCP_PROJECT", "")
         credentials = ee.ServiceAccountCredentials(email, cred_file)
-        ee.Initialize(credentials)
+        ee.Initialize(credentials, project=project)
         print("GEE initialized successfully")
     except Exception as e:
         print(f"ERROR: Failed to initialize GEE: {e}", file=sys.stderr)
@@ -98,8 +99,9 @@ def compute_landcover_changes(site, end_date):
     # Dynamic World V1 - real-time 10m land cover
     collection = ee.ImageCollection('GOOGLE/DYNAMICWORLD/V1')
     
-    # Get recent composite (last 7 days)
-    recent_start = (end_date - timedelta(days=7)).strftime("%Y-%m-%d")
+    # Get recent composite (last 30 days — Dynamic World has processing lag
+    # and high-latitude sites often lack cloud-free imagery for weeks)
+    recent_start = (end_date - timedelta(days=30)).strftime("%Y-%m-%d")
     recent_end = end_date.strftime("%Y-%m-%d")
     
     recent_images = collection.filterBounds(aoi).filterDate(recent_start, recent_end)
