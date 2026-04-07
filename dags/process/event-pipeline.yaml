@@ -149,7 +149,7 @@ steps:
       sys.path.insert(0, 'scripts/lib')
       from estwarden_client import _api_post
       # flat API
-      r = _api_post('/api/v1/detect/narrative-velocity', {})
+      r = _api_post('/api/v1/detect/narrative-velocity', {}) or {}
       print('Narrative velocity: %d alerts' % r.get('count', 0))
       for a in r.get('alerts', []):
           print('  %s: %s velocity=%s' % (a.get('topic','?')[:50], a.get('state_ratio',''), a.get('velocity','')))
