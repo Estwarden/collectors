@@ -22,12 +22,18 @@ def main():
                 data = json.loads(r.read())
         except (urllib.error.URLError, json.JSONDecodeError, OSError): continue
 
-        for series in data.get("data", []):
-            values = series.get("values", [])
+        # data is [[{datasource1}, {datasource2}, ...]] — flatten nested list
+        raw = data.get("data", [])
+        entries = raw[0] if raw and isinstance(raw[0], list) else raw
+        for series in entries:
+            if not isinstance(series, dict): continue
+            # merit-nt has normalized 0-1 connectivity scores
+            if series.get("datasource") != "merit-nt": continue
+            values = [v for v in series.get("values", []) if v is not None]
             if not values: continue
-            latest = values[-1] if values else [0, 0]
-            level = latest[1] if len(latest) > 1 else 0
-            if level is not None and level < 0.5:
+            level = values[-1]
+            if not isinstance(level, (int, float)): continue
+            if level < 0.5:
                 signals.append({
                     "source_type": "ioda", "source_id": f"ioda:{asn}:{now.strftime('%Y-%m-%dT%H')}",
                     "title": f"IODA: {label} connectivity drop ({level:.0%})",

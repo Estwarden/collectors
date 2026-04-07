@@ -52,8 +52,3 @@ steps:
     type: dag
     call: private/publish-estwarden-briefing
     depends: [generate_report]
-
-  - id: generate_podcast
-    type: dag
-    call: private/generate-podcast
-    depends: [generate_report]

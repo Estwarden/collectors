@@ -18,13 +18,13 @@ steps:
       with urllib.request.urlopen(url, timeout=15) as r:
           rows = json.loads(r.read())
 
-      # Skip header row, take last 8 entries
+      # NOAA returns list of dicts: {time_tag, Kp, a_running, station_count}
       signals = []
       for row in rows[-8:]:
-          if len(row) < 2 or row[0] == 'time_tag':
+          if not isinstance(row, dict) or 'time_tag' not in row:
               continue
-          ts = row[0]
-          kp = float(row[1])
+          ts = row['time_tag']
+          kp = float(row['Kp'])
           severity = 'LOW' if kp < 4 else 'MODERATE' if kp < 6 else 'HIGH' if kp < 8 else 'EXTREME'
           signals.append({
               'source_type': 'space_weather',
