@@ -1,4 +1,6 @@
+# Shadowed at runtime by top-level ./private/dags bind mount; keep in sync with ../../private/dags
 name: publish-estwarden-briefing
+type: graph
 description: Generate briefing screenshot, send preview for approval, and publish to channel
 overlap_policy: skip
 
