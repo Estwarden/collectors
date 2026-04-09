@@ -7,6 +7,9 @@ steps:
   - id: collect
     shell: /bin/bash
     script: |
+      set -a
+      [ -f /var/lib/dagu/dags/.env ] && . /var/lib/dagu/dags/.env
+      set +a
       cd /dags
       python3 scripts/collectors/acled_collector.py
     retry_policy:

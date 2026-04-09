@@ -18,7 +18,6 @@ Collectors never touch the database directly. All writes go through the authenti
 |--------|--------|----------|-----------------|
 | **RSS feeds** (54) | `rss_collector.py` | every 2h | Baltic/Russian media, think tanks, government |
 | **Telegram channels** (73) | `telegram_collector.py` | every 4h | Public channel posts for narrative monitoring |
-| **YouTube transcripts** (65) | `youtube_collector.py` | every 6h | Video metadata + auto-generated captions |
 | **ADS-B aircraft** | `adsb_collector.py` | every 15min | Military flights in Baltic airspace |
 | **AIS vessels** | `ais_collector.py` | every 5min | Ship positions, shadow fleet detection |
 | **NASA FIRMS** | `firms_collector.py` | every 6h | Thermal anomalies at military bases |
@@ -46,9 +45,9 @@ Collectors never touch the database directly. All writes go through the authenti
 
 ## Media Monitor
 
-EstWarden tracks 138 media sources (Telegram + YouTube) for narrative amplification patterns. Each source is rated on five [epistemic rationality metrics](https://www.lesswrong.com/rationality) — see the [Media Monitor page](https://estwarden.eu/media) for the full list.
+EstWarden tracks Telegram media sources for narrative amplification patterns. Each source is rated on five [epistemic rationality metrics](https://www.lesswrong.com/rationality) — see the [Media Monitor page](https://estwarden.eu/media) for the full list.
 
-Channel watchlists are maintained in `config/watchlists/`. Adding a new channel is one of the easiest ways to contribute.
+Channel watchlists are maintained in `config/watchlists/`. The Telegram list is active; the YouTube list is legacy metadata from the retired YouTube collector.
 
 ---
 
@@ -65,7 +64,7 @@ cd collectors
 
 ### 1. Add a media channel to monitor
 
-**Easiest contribution.** Add a Telegram channel or YouTube channel to the watchlist.
+**Easiest contribution.** Add a Telegram channel to the watchlist.
 
 Edit `config/watchlists/telegram_channels.yaml`:
 
@@ -85,35 +84,12 @@ Edit `config/watchlists/telegram_channels.yaml`:
     independence: unknown
 ```
 
-Or `config/watchlists/youtube_channels.yaml`:
-
-```yaml
-- handle: channel_handle
-  name: Channel Display Name
-  channel_id: UCxxxxxxxxxxxxxxxxxxxxxxxx   # from youtube.com/@handle page source
-  lang: en
-  category: untrusted
-  tier: T2
-  notes: "Brief description"
-  rationality:
-    calibration: unknown
-    updating: unknown
-    evidence: unknown
-    uncertainty: unknown
-    independence: unknown
-```
-
 **Rules:**
 - New channels always start as `category: untrusted` and `rationality: unknown`
 - The auto-scoring pipeline will fill in rationality scores from observed behavior
 - To propose a channel as `trusted`, include evidence (editorial standards, institutional backing, fact-checking track record)
 - To propose a channel as `ru_proxy`, cite a published source (Detector Media, EUvsDisinfo, DFRLab, etc.)
 - Don't set rationality scores manually unless you have specific published evidence
-
-**Finding a YouTube channel ID:**
-1. Go to the channel page (e.g., `youtube.com/@PerunAU`)
-2. View page source (Ctrl+U)
-3. Search for `channelId` — it starts with `UC`
 
 ### 2. Add an RSS feed
 
@@ -271,9 +247,9 @@ scripts/
 └── processors/       — Enrichment & scoring scripts
 config/
 ├── feeds.yaml        — RSS feed registry (54 feeds)
-└── watchlists/       — Media channel watchlists (138 channels)
+└── watchlists/       — Media channel watchlists
     ├── telegram_channels.yaml
-    └── youtube_channels.yaml
+    └── youtube_channels.yaml   — legacy metadata, collector retired
 ```
 
 ## License
